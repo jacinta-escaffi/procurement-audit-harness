@@ -1,0 +1,661 @@
+{
+  "memo": "## Scope and basis\nThe auditor approved {{$.pack.risks_in_scope}} risks for testing. The work uses the council's Contract Procedure Rules, three monthly spend workbooks, the public Contracts Finder notice export, and supplied committee papers. Public notices are an incomplete proxy for the council's contract register. All analytics are risk indicators requiring corroboration, not findings of breach.\n\n## Risk focus\nThreshold and potential split-purchase indicators include {{$.tests.split_purchases.overall.windows}} overlapping windows [metric:$.tests.split_purchases.overall.windows]. Potential duplicate pairs total {{$.tests.duplicates.overall.candidate_pairs}} [metric:$.tests.duplicates.overall.candidate_pairs]. The unmatched high-value notice population contains {{$.tests.off_contract.overall.supplier_groups}} supplier groups [metric:$.tests.off_contract.overall.supplier_groups]. The expiry and award-profile tests each flag {{$.tests.expired_notice_spend.overall.supplier_groups}} and {{$.tests.spend_vs_award.overall.supplier_groups}} supplier groups respectively [metric:$.tests.expired_notice_spend.overall.supplier_groups] [metric:$.tests.spend_vs_award.overall.supplier_groups].\n\n## Approach and limits\nFor each sampled indicator, obtain the underlying procurement and payment evidence, verify the applicable contract value and route, then determine whether the indicator has a legitimate explanation. Overlapping windows, recurring payments, name aliases, frameworks, unlisted notices, and estimated award values can produce false positives. The sample is targeted and does not support a population-wide compliance rate. History records recent Contract Letting Reasonable Assurance, but action-level due dates and statuses are unavailable in the supplied papers.",
+  "risks": [
+    {
+      "risk_id": "R-01",
+      "controls": [
+        {
+          "id": "C-01",
+          "text": "Officers aggregate estimated requirements across the full potential contract term and choose the applicable competition and approval route before commitment.",
+          "rules": [
+            "CPR-037",
+            "CPR-038",
+            "CPR-039",
+            "CPR-108"
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "id": "T-01A",
+          "control_ids": [
+            "C-01"
+          ],
+          "step": "For flagged supplier windows, reconcile the constituent payments to the underlying requirement, procurement strategy, aggregated contract-value calculation, quotation or tender route, and approvals. Treat recurring legitimate purchases as a possible explanation. The selected windows prioritize two-payment candidates, then higher window values, to broaden supplier coverage across the repeated-window population.",
+          "citations": [
+            "[rule:CPR-038]",
+            "[metric:$.tests.split_purchases.overall.windows]"
+          ],
+          "sample": {
+            "file": "split_purchase_windows.csv",
+            "filter": {},
+            "sort": [
+              "payment_rows",
+              "-window_total_gbp"
+            ],
+            "count": 15
+          },
+          "pbc": [
+            "For T-01A, provide procurement plans, aggregate value calculations, quotations or tenders, approval records, purchase orders, and contracts for sampled suppliers and periods."
+          ]
+        },
+        {
+          "id": "T-01B",
+          "control_ids": [
+            "C-01"
+          ],
+          "step": "For payments near a printed threshold, compare full contract value and linked payments with the applicable quoted route; establish whether the payment is part of a larger purchase.",
+          "citations": [
+            "[rule:CPR-037]",
+            "[metric:$.tests.threshold_clustering.overall.payment_threshold_pairs]"
+          ],
+          "sample": {
+            "file": "threshold_clustering.csv",
+            "filter": {},
+            "sort": [
+              "-net_amount",
+              "supplier_normalized"
+            ],
+            "count": 15
+          },
+          "pbc": [
+            "For T-01B, provide purchase orders, contract values, procurement route records, quotation or tender files, and approvals for sampled transactions."
+          ]
+        }
+      ]
+    },
+    {
+      "risk_id": "R-02",
+      "controls": [
+        {
+          "id": "C-02",
+          "text": "As an expected accounts-payable control, staff check invoice identity, supporting evidence and prior payments before release; CPR-025 supplies only the general procurement-compliance context, not this payment-specific requirement.",
+          "rules": [
+            "CPR-025"
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "id": "T-02",
+          "control_ids": [
+            "C-02"
+          ],
+          "step": "Compare each candidate pair's invoice numbers, source invoices, credit notes, recurring-payment schedules, approval trail and any recovery record; establish whether two distinct valid liabilities exist.",
+          "citations": [
+            "[metric:$.tests.duplicates.overall.candidate_pairs]"
+          ],
+          "sample": {
+            "file": "duplicates.csv",
+            "filter": {},
+            "sort": [
+              "-signed_amount_gbp",
+              "pair_id"
+            ],
+            "count": 15
+          },
+          "pbc": [
+            "For T-02, provide invoice images and identifiers, purchase orders, payment approvals, supplier statements, credit notes, and recovery records for sampled pairs."
+          ]
+        }
+      ]
+    },
+    {
+      "risk_id": "R-03",
+      "controls": [
+        {
+          "id": "C-03",
+          "text": "Procurement staff document the applicable route to market and maintain evidence of award, framework use or approved exception, including required publication.",
+          "rules": [
+            "CPR-025",
+            "CPR-032",
+            "CPR-108",
+            "CPR-115"
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "id": "T-03",
+          "control_ids": [
+            "C-03"
+          ],
+          "step": "Use the sampled payment as an anchor. Obtain each sampled supplier's complete spend ledger for the three-month window, reconcile the supplier total and procurement category, then compare the current council contract register, frameworks, aliases, waivers and portal records before assessing the applicable route and publication.",
+          "citations": [
+            "[rule:CPR-108]",
+            "[metric:$.tests.off_contract.overall.supplier_groups]"
+          ],
+          "sample": {
+            "file": "off_contract.csv",
+            "filter": {},
+            "sort": [
+              "-window_total_gbp",
+              "supplier_normalized"
+            ],
+            "count": 15
+          },
+          "pbc": [
+            "For T-03, provide each sampled supplier's complete three-month spend ledger, the current contract register, procurement portal and CDP records, framework call-offs, supplier aliases, approved waivers, and relevant contract files."
+          ]
+        }
+      ]
+    },
+    {
+      "risk_id": "R-04",
+      "controls": [
+        {
+          "id": "C-04",
+          "text": "Before spend continues after a recorded term, the service confirms a live replacement or a contractual extension with the required approval.",
+          "rules": [
+            "CPR-116"
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "id": "T-04",
+          "control_ids": [
+            "C-04"
+          ],
+          "step": "For each flagged supplier, use the sampled payment as an anchor, obtain the complete payment sequence across the spend window, and compare all payment dates with executed contract terms, any replacement contract, extension clause and S151 Officer approval; resolve notice-export gaps before concluding.",
+          "citations": [
+            "[rule:CPR-116]",
+            "[metric:$.tests.expired_notice_spend.overall.supplier_groups]"
+          ],
+          "sample": {
+            "file": "expired_notice_spend.csv",
+            "filter": {},
+            "sort": [
+              "-window_total_gbp",
+              "supplier_normalized"
+            ],
+            "count": 10
+          },
+          "pbc": [
+            "For T-04, provide the complete payment ledger for each flagged supplier throughout the spend window, current and preceding signed contracts, extension clauses and approvals, replacement procurement files, and sampled payment support."
+          ]
+        }
+      ]
+    },
+    {
+      "risk_id": "R-05",
+      "controls": [
+        {
+          "id": "C-05",
+          "text": "Contract owners track cumulative spend against award value and obtain the applicable advance approval for variations.",
+          "rules": [
+            "CPR-117",
+            "CPR-118"
+          ]
+        }
+      ],
+      "tests": [
+        {
+          "id": "T-05",
+          "control_ids": [
+            "C-05"
+          ],
+          "step": "Compare the flagged annualised estimate with actual cumulative contract spend, original award basis, scope, indexation, term and approved variations; establish the applicable threshold and approval route.",
+          "citations": [
+            "[rule:CPR-117]",
+            "[metric:$.tests.spend_vs_award.overall.supplier_groups]"
+          ],
+          "sample": {
+            "file": "spend_vs_award.csv",
+            "filter": {},
+            "sort": [
+              "-ratio",
+              "supplier_normalized"
+            ],
+            "count": 15
+          },
+          "pbc": [
+            "For T-05, provide signed contracts, award-value basis, cumulative spend ledgers, variation requests, prior approvals, and sampled invoice support."
+          ]
+        }
+      ]
+    }
+  ],
+  "not_tested_rules": [
+    {
+      "rule_id": "CPR-001",
+      "reason": "Outside the five approved risk tests: Use the applicable Procurement Legislation threshold published on the Procurement Intranet page, as amended from time to time. Requires Procurement Intranet threshold publication and procurement record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-002",
+      "reason": "Outside the five approved risk tests: Treat steps leading to commitment of public funds to obtain something externally as procurement. Requires Procurement, purchase order, contract, quotation or payment records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-003",
+      "reason": "Outside the five approved risk tests: Treat a formal written or verbal agreement committing the Council to receive external provision for payment or other value as a contract. Requires Agreement, purchase order, accepted quotation, terms or correspondence; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-004",
+      "reason": "Outside the five approved risk tests: Treat renewal or extension of an existing contract as entering a contract. Requires Renewal or extension record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-005",
+      "reason": "Outside the five approved risk tests: Treat providing funding or a grant to an external organisation as entering a contract. Requires Funding or grant agreement; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-006",
+      "reason": "Outside the five approved risk tests: Apply the Rules to purchases by or on behalf of the Council. Requires Procurement or contract file; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-007",
+      "reason": "Outside the five approved risk tests: Apply the Rules except where the contract or purchasing method is expressly excluded under Procurement Legislation. Requires Contract file and documented legislative exclusion; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-008",
+      "reason": "Outside the five approved risk tests: The Headteacher or a person delegated by them must follow these Rules. Requires School procurement and delegation records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-009",
+      "reason": "Outside the five approved risk tests: Make the purchase for implementing Council policies and in accordance with Best Value, Equality, Sustainable Commissioning and the Social Value Policy. Requires Business case and procurement record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-010",
+      "reason": "Outside the five approved risk tests: Consider how the procurement or contract might improve West Berkshire's economic, social and environmental wellbeing. Requires Business case, social value assessment or procurement strategy; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-011",
+      "reason": "Outside the five approved risk tests: Ensure the contract accords with a decision of the Council. Requires Council decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-012",
+      "reason": "Outside the five approved risk tests: Ensure the contract accords with a decision of the Executive. Requires Executive decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-013",
+      "reason": "Outside the five approved risk tests: Ensure the contract accords with a decision within the Council's Scheme of Delegation. Requires Delegated decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-014",
+      "reason": "Outside the five approved risk tests: Obtain a decision from an Executive Decision Maker where this delegated route is used. Requires Delegated decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-015",
+      "reason": "Outside the five approved risk tests: Obtain a decision from a Council Committee or Sub-Committee where this delegated route is used. Requires Committee or Sub-Committee decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-016",
+      "reason": "Outside the five approved risk tests: Obtain a decision from an officer or their delegate where this delegated route is used. Requires Officer delegated decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-017",
+      "reason": "Outside the five approved risk tests: Do not enter a contract unless it accords with existing provision in the Council-approved Budget. Requires Budget approval and budget availability record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-018",
+      "reason": "Outside the five approved risk tests: Treat the contract award as a Key Decision of the Council. Requires Key Decision and contract award record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-019",
+      "reason": "Outside the five approved risk tests: Obtain the approval required by Appendix A before award. Requires Appendix A approval record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-020",
+      "reason": "Outside the five approved risk tests: Publish the expenditure, including payments to suppliers and contractors. Requires Published expenditure data; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-021",
+      "reason": "Outside the five approved risk tests: Publish details of every invitation to tender. Requires Published invitation-to-tender details; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-022",
+      "reason": "Outside the five approved risk tests: Publish a contract register containing key information including value, duration and supplier. Requires Published contract register; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-023",
+      "reason": "Outside the five approved risk tests: Report contract information monthly to the relevant board in the format required by Procurement Legislation. Requires Monthly board report; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-024",
+      "reason": "Outside the five approved risk tests: Ensure compliance with all relevant statutory requirements. Requires Procurement compliance record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-026",
+      "reason": "Outside the five approved risk tests: Ensure compliance with the Council Constitution, these Rules, the Financial Rules and the Scheme of Delegation. Requires Procurement compliance record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-027",
+      "reason": "Outside the five approved risk tests: Ensure compliance with applicable approved codes, guidance or conditions governing delegated powers. Requires Procurement compliance record and applicable approved guidance; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-028",
+      "reason": "Outside the five approved risk tests: Ensure compliance with conditions attached by the Executive or Council to delegated powers. Requires Delegation conditions and procurement record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-029",
+      "reason": "Outside the five approved risk tests: Ensure compliance with applicable Legal and Procurement intranet guidance and other Council policies and procedures. Requires Procurement record and applicable guidance; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-030",
+      "reason": "Outside the five approved risk tests: Give Procurement Legislation precedence, followed by the requirements in clause 6.1.6. Requires Procurement decision record addressing the conflict; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-031",
+      "reason": "Outside the five approved risk tests: Ensure awarded persons meet the Council's minimum suitability, capability, legal-status and financial-standing standards. Requires Supplier due-diligence and selection records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-033",
+      "reason": "Outside the five approved risk tests: Advertise on the CDP before any other advertising medium; a compliant Framework further competition instead invites only framework providers and requires no further advertisement. Requires CDP publication timestamp, other advertisement records, or framework invitation records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-034",
+      "reason": "Outside the five approved risk tests: Publicise the contract so tenderers from other member states can participate and conduct the process fairly and transparently. Requires Publication and tender-process records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-035",
+      "reason": "Outside the five approved risk tests: Use the correct and appropriate procedure and seek Procurement and Commissioning and Legal advice as necessary. Requires Procurement strategy and advice record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-036",
+      "reason": "Outside the five approved risk tests: Obtain approval and issue of the notice by the Service Lead for Procurement and Commissioning or their delegate. Requires CDP notice approval and issue record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-040",
+      "reason": "Outside the five approved risk tests: Issue an electronic Invitation to Tender and require electronic submission via the Council Procurement Portal. Requires Invitation to Tender and Procurement Portal submission record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-041",
+      "reason": "Outside the five approved risk tests: Specify the electronic submission format and store tenders in a secure portal account locked until the specified opening time. Requires Procurement Portal configuration and Invitation to Tender; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-042",
+      "reason": "Outside the five approved risk tests: Do not accept or consider a late tender unless the Monitoring Officer is satisfied exceptional circumstances exist and other tenders have not been opened. Requires Portal timestamps, tender-opening record and exceptional-circumstances approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-043",
+      "reason": "Outside the five approved risk tests: Have a Procurement Officer conduct the opening and maintain an audit record in the e-tendering system. Requires E-tendering audit record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-044",
+      "reason": "Outside the five approved risk tests: Evaluate using criteria notified in advance to those submitting quotes or tenders. Requires Published evaluation criteria and evaluation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-045",
+      "reason": "Outside the five approved risk tests: Evaluate in accordance with the legislative provisions. Requires Tender evaluation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-046",
+      "reason": "Outside the five approved risk tests: Award on the most advantageous quote or tender representing best value, having regard to Social Value Policy, rather than lowest price alone. Requires Award evaluation and any advance exceptional-circumstances approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-047",
+      "reason": "Outside the five approved risk tests: An exception or waiver from competitive purchasing may be used for the stated urgency circumstance, subject to clause 7.4. Requires Urgency evidence, waiver or exception request and approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-048",
+      "reason": "Outside the five approved risk tests: Record reasons in writing when the relevant Executive Director or Chief Executive lawfully proceeds in the manner most expedient for efficient Council management, subject to clause 7.4. Requires Written reasons and waiver or exception approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-049",
+      "reason": "Outside the five approved risk tests: Seek a waiver only in advance and only in exceptional circumstances; only the Monitoring Officer and/or S.151 Officer may grant it subject to applicable values and delegations. Requires Advance waiver or exception request and approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-050",
+      "reason": "Outside the five approved risk tests: Obtain S.151 Officer approval for the exception. Requires Exception approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-051",
+      "reason": "Outside the five approved risk tests: The S.151 Officer must consult the Monitoring Officer and appropriate Executive Director; obtain prior relevant-board approval of an exception report unless urgency prevents it, then supply a retrospective report. Requires Exception report, consultation record and board approval or retrospective report; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-052",
+      "reason": "Outside the five approved risk tests: The S.151 Officer and Monitoring Officer must recommend to the Executive after an exception report is prepared and approved by the relevant board and Corporate Board. Requires Exception report, board approvals, recommendation and Executive decision; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-053",
+      "reason": "Outside the five approved risk tests: Fully document the exception or waiver. Requires Exception or waiver file; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-054",
+      "reason": "Outside the five approved risk tests: Submit an advance written exception report to the relevant board that states reasons demonstrating genuine need. Requires Written exception report and board submission; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-055",
+      "reason": "Outside the five approved risk tests: Obtain S.151 Officer approval and a record that the reasons were considered and circumstances found genuinely exceptional. Requires S.151 Officer approval and recorded assessment; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-056",
+      "reason": "Outside the five approved risk tests: Seek all relevant approval required under the Rules. Requires Approval records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-057",
+      "reason": "Outside the five approved risk tests: Meet the Procurement Legislation conditions in addition to the Rules' general requirements. Requires Legal compliance assessment and exception file; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-058",
+      "reason": "Outside the five approved risk tests: Seek advice confirming the Council is legally entitled to use the scheme. Requires Recorded advice on Purchasing Scheme entitlement; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-059",
+      "reason": "Outside the five approved risk tests: Seek advice confirming the intended purchases fall within the scheme's coverage. Requires Recorded advice on Purchasing Scheme coverage; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-060",
+      "reason": "Outside the five approved risk tests: Seek advice confirming the scheme complies with applicable Procurement Legislation and Council requirements. Requires Recorded advice on Purchasing Scheme compliance; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-061",
+      "reason": "Outside the five approved risk tests: Seek advice from the Commissioning and Procurement Team before entering the arrangement. Requires Commissioning and Procurement Team advice; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-062",
+      "reason": "Outside the five approved risk tests: The relevant Service Director must produce the written report required by Procurement Legislation documenting key decisions and steps leading to award. Requires Procurement report; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-063",
+      "reason": "Outside the five approved risk tests: Keep the report for three years and make it available if requested by the Cabinet Office. Requires Retained procurement report; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-064",
+      "reason": "Outside the five approved risk tests: Document procurement progress and decision-supporting information and retain it for three years from contract award. Requires Procurement file; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-065",
+      "reason": "Outside the five approved risk tests: Retain written or electronic evidence of the purchase. Requires Written or electronic purchase record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-066",
+      "reason": "Outside the five approved risk tests: Put the contract in writing using a form approved by the Monitoring Officer or their delegated officer. Requires Written contract and form approval; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-067",
+      "reason": "Outside the five approved risk tests: Legal Services must retain the documents. Requires Legal Services contract repository; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-068",
+      "reason": "Outside the five approved risk tests: The relevant Service Director must formally notify the Service Lead for Commissioning and Procurement or nominee for Contract Register recording. Requires Formal award notification and Contract Register entry; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-069",
+      "reason": "Outside the five approved risk tests: Include the standard clauses in the applicable Standard Form of Agreement issued by the Monitoring Officer or nominee. Requires Executed contract and applicable Standard Form of Agreement; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-070",
+      "reason": "Outside the five approved risk tests: Have the relevant Service Director prepare or amend the form and obtain approval from the Monitoring Officer or delegated officer. Requires Amended form and approval record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-071",
+      "reason": "Outside the five approved risk tests: Include clauses describing the works, supplies, goods, services, materials, matters or things to be supplied or carried out. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-072",
+      "reason": "Outside the five approved risk tests: Include clauses setting the time for performance. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-073",
+      "reason": "Outside the five approved risk tests: Include clauses stating required quality requirements or standards. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-074",
+      "reason": "Outside the five approved risk tests: Include clauses requiring the contractor to hold and maintain appropriate insurance. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-075",
+      "reason": "Outside the five approved risk tests: Include clauses setting consequences for whole or partial non-compliance with contractual obligations. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-076",
+      "reason": "Outside the five approved risk tests: Include clauses requiring contractor compliance with relevant legislation, including equality and health and safety law. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-077",
+      "reason": "Outside the five approved risk tests: Include clauses on personal data and complete a Data Protection Impact Assessment to inform them. Requires Executed contract and Data Protection Impact Assessment; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-078",
+      "reason": "Outside the five approved risk tests: Include clauses entitling the Council to cancel and recover losses for improper contractor conduct or a Bribery Act offence. Requires Executed contract; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-079",
+      "reason": "Outside the five approved risk tests: Require payment no later than 30 days after the relevant invoice is regarded as valid and undisputed. Requires Executed contract and invoice-payment record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-080",
+      "reason": "Outside the five approved risk tests: Require each subcontract to impose the same payment obligations and pass them into any further subcontract. Requires Executed contract and subcontract terms; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-081",
+      "reason": "Outside the five approved risk tests: Include enforceable specifications, briefs or technical requirements addressing effectiveness, quality, sustainability and efficiency as appropriate. Requires Executed contract and specification or brief; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-082",
+      "reason": "Outside the five approved risk tests: Do not allow a relaxation without written authorisation. Requires Written authorisation and contract indemnity terms; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-083",
+      "reason": "Outside the five approved risk tests: The relevant Service Director should consider requiring a performance bond of at least 10% of contract value. Requires Performance-bond assessment and bond if required; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-084",
+      "reason": "Outside the five approved risk tests: Use a form approved by Legal Services and include the bond in the Invitation to Tender. Requires Approved bond form and Invitation to Tender; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-085",
+      "reason": "Outside the five approved risk tests: Undertake a written risk assessment. Requires Written risk assessment; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-086",
+      "reason": "Outside the five approved risk tests: Seek approval from the Service Director for Finance and Property. Requires Approval record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-087",
+      "reason": "Outside the five approved risk tests: Keep the risk assessment on the contract file for inspection. Requires Contract file; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-088",
+      "reason": "Outside the five approved risk tests: In consultation with the Service Director for Finance and Property or nominee, set adequate insurance cover levels. Requires Insurance risk assessment and consultation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-089",
+      "reason": "Outside the five approved risk tests: In consultation with the Service Director for Finance and Property or nominee, ensure required contractor insurance is held and current or renewed. Requires Insurance certificates and consultation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-090",
+      "reason": "Outside the five approved risk tests: In consultation with the Service Director for Finance and Property or nominee, ensure the contractor's Construction Industry Tax Deduction Scheme status. Requires Tax-scheme status check and consultation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-091",
+      "reason": "Outside the five approved risk tests: In consultation with the Service Director for Finance and Property, set case-specific professional indemnity cover. Requires Professional indemnity assessment and consultation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-092",
+      "reason": "Outside the five approved risk tests: Keep the Seal in the Monitoring Officer's custody and in a safe place at their discretion. Requires Seal custody arrangements; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-093",
+      "reason": "Outside the five approved risk tests: Affix the Seal only to a document or proposal approved by the Council, Executive, appropriate Committee, or delegated officer. Requires Approval resolution or delegated decision; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-094",
+      "reason": "Outside the five approved risk tests: Have the Monitoring Officer or duly designated officer attest and witness the affixing in writing. Requires Written attestation and witness record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-095",
+      "reason": "Outside the five approved risk tests: Make a consecutively numbered entry in the sealing book or electronic record and have the attesting person sign it. Requires Sealing book or electronic record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-096",
+      "reason": "Outside the five approved risk tests: Affix the Council Seal. Requires Sealed petition and sealing record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-097",
+      "reason": "Outside the five approved risk tests: Affix the Council Seal. Requires Sealed mortgage and sealing record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-098",
+      "reason": "Outside the five approved risk tests: Affix the Council Seal. Requires Sealed transfer and sealing record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-099",
+      "reason": "Outside the five approved risk tests: Seal the contract. Requires Sealed contract and sealing record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-100",
+      "reason": "Outside the five approved risk tests: Have the Monitoring Officer or duly authorised officer sign unless an enactment or Council authority provides otherwise. Requires Signed document and authority record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-101",
+      "reason": "Outside the five approved risk tests: Have the Monitoring Officer or designated officer sign and keep a register of such documents. Requires Signed document and document register; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-102",
+      "reason": "Outside the five approved risk tests: Only the Monitoring Officer or nominated officer may select and instruct Counsel. Requires Counsel instruction record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-103",
+      "reason": "Outside the five approved risk tests: The relevant Service Director or officers nominated by the Service Director in writing may award the contract. Requires Delegation and award decision record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-104",
+      "reason": "Outside the five approved risk tests: The relevant Service Director may award following S151 and Monitoring Officer recommendations and approval by the relevant board of a written Service Director report. Requires Written report, board approval, recommendations and award decision; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-105",
+      "reason": "Outside the five approved risk tests: Treat the award as a Key Decision delegated to the relevant Service Director in consultation with the Portfolio Holder, following Executive Director, S151 and Monitoring Officer recommendations, relevant-board approval of a written report, and compliance with the stated Call-In and Forward Plan parts. Requires Key Decision, report, board approval, recommendations and consultation record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-106",
+      "reason": "Outside the five approved risk tests: Obtain Executive approval; the Executive receives quarterly procurement reports and may delegate award to the relevant Service Director following the stated consultation. Requires Executive approval, quarterly report and any delegated award record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-107",
+      "reason": "Outside the five approved risk tests: Seek at least one quote from an appropriate source; no advertising is mandated. Requires Quotation and procurement record; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-109",
+      "reason": "Outside the five approved risk tests: Send invitations to quote through the Procurement Portal to at least three appropriate sources, including one SME or VCSE and one local supplier where appropriate and possible, and publish a contract notice on the CDP. Requires Portal invitations, supplier classifications and CDP notice; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-110",
+      "reason": "Outside the five approved risk tests: Run a full competitive tender, seek at least five written tenders through the Procurement Portal, and advertise on the Portal with information on the CDP. Requires Tender, Procurement Portal and CDP records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-111",
+      "reason": "Outside the five approved risk tests: Apply Procurement Legislation procedures, run a full competitive tender seeking at least five written tenders where appropriate through the Procurement Portal, and advertise on the CDP. Requires Tender, Procurement Portal and CDP records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-112",
+      "reason": "Outside the five approved risk tests: Do not give preference to SME, VCSE or local suppliers; reduce barriers only lawfully, without discrimination or unacceptable Council risk. Requires Supplier-selection and invitation records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-113",
+      "reason": "Outside the five approved risk tests: Competition is excluded only with prior written Monitoring Officer approval and, where applicable, prior relevant-board approval. Requires Legislative exclusion assessment and prior written approvals; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-114",
+      "reason": "Outside the five approved risk tests: Record key decisions and follow the relevant Provider Selection Regime process. Requires Provider Selection Regime process and decision records; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-119",
+      "reason": "Outside the five approved risk tests: Maintain the reasons for the provider choice in the individual's case notes. Requires Individual case notes; no corresponding approved risk focuses on this obligation."
+    },
+    {
+      "rule_id": "CPR-120",
+      "reason": "Outside the five approved risk tests: Obtain relevant-board approval when applying an exemption. Requires Relevant-board approval; no corresponding approved risk focuses on this obligation."
+    }
+  ]
+}

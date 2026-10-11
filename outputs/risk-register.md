@@ -4,6 +4,9 @@ Ratings describe risk indicators for auditor investigation, not established non-
 
 Scoring: current (Actual) likelihood × impact. The 25-cell council matrix in `history.json` supplies the score and displayed band. Its High label is used for cells where the response table says Medium-High (scores 8–12); the response-table wording is retained here as a source conflict. The strategy also conflicts on the Corporate Risk Register threshold (Extreme 15–25 versus score 9 or above), so this register makes no escalation decision. For the overlapping Medium/Major financial impact ranges, the printed £500k boundary is used; Section 4.3's Medium (2) conflicts with Table 1's Medium (3), and Table 1 controls the impact label.
 
+## Revision after auditor gate
+
+
 ## R-01: Purchasing may be split or timed around procurement thresholds, so the required competition and approval route may not be applied.
 
 - **Likelihood:** 3 Likely (base 3). Repeated indicators appear across 1380 overlapping windows and 338 payment-threshold pairs [metric:$.tests.split_purchases.overall.windows] [metric:$.tests.threshold_clustering.overall.payment_threshold_pairs]. The window method can count recurring expenditure more than once, so the lower adjacent rating is used.
@@ -50,8 +53,8 @@ Record Approve, Reject, or Change and any requested change in `outputs/auditor-c
 
 | Risk ID | Decision | Comment |
 | --- | --- | --- |
-| R-01 |  |  |
-| R-02 |  |  |
-| R-03 |  |  |
-| R-04 |  |  |
-| R-05 |  |  |
+| R-01 | Approve | Repeated threshold indicators justify targeted testing; overlapping windows are already acknowledged. |
+| R-02 | Approve | Change: impact rating inconsistent with the £500k Major boundary applied elsewhere (R-05). Re-assessed: £27.3M is an overlapping candidate-pair exposure population, not a quantified loss, so Medium is retained. |
+| R-03 | Approve | Retain reconciliation testing and the revised compliance impact justification. |
+| R-04 | Approve | Exact matches to expired notices justify checking extensions and replacement contracts at the cautious current rating. |
+| R-05 | Approve | Retain the revised impact assessment based on potential exposure. |

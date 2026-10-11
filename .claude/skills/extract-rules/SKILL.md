@@ -1,6 +1,7 @@
 ---
 name: extract-rules
 description: Extract and verify testable procurement rules from the supplied West Berkshire Council Contract Rules PDF when a human invokes /extract-rules.
+disable-model-invocation: true
 ---
 
 # Extract contract rules
@@ -36,6 +37,6 @@ Each `excluded` item has `clause`, `page`, and a one-line `reason`. Each `notes`
 
 ## Verify and finish
 
-Run `.venv/Scripts/python.exe .claude/skills/extract-rules/verify_quotes.py outputs/rules.json data/contract-rules.pdf` on Windows, or the equivalent venv Python path on another platform. The verifier checks structure, coverage of numbered clauses and appendix entries, rule IDs, parameter references, threshold representation, and each quote against its stated page. Correct extraction or source interpretation errors and rerun. If a printed quote cannot be recovered from text extraction, report the limitation; do not weaken the quote check or fabricate text.
+With the project virtual environment active, run `python .claude/skills/extract-rules/verify_quotes.py outputs/rules.json data/contract-rules.pdf`. The verifier checks structure, coverage of numbered clauses and appendix entries, rule IDs, parameter references, threshold representation, and each quote against its stated page. Correct extraction or source interpretation errors and rerun. If a printed quote cannot be recovered from text extraction, report the limitation; do not weaken the quote check or fabricate text.
 
 Report the number of rules and exclusions, unresolved parameters, notable notes, and verification result. Keep source-derived statements as indicators or audit criteria for human review.

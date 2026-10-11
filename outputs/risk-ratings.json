@@ -70,5 +70,24 @@
       "evidence": "The analysis identifies {{$.tests.spend_vs_award.overall.supplier_groups}} supplier groups and {{$.tests.spend_vs_award.overall.signed_window_total_gbp}} of signed window spend under its award-profile comparison [metric:$.tests.spend_vs_award.overall.supplier_groups] [metric:$.tests.spend_vs_award.overall.signed_window_total_gbp].",
       "proposed_focus": "Compare the flagged spend with contract scope, duration, award basis, indexation, approved variations, and cumulative contract ledger values."
     }
-  ]
+  ],
+  "revision": {
+    "old_changes": [
+      {
+        "id": "R-02",
+        "fields": ["impact.score", "impact.justification"],
+        "reason": "The auditor requested impact reassessment because the candidate-pair population may overlap and does not quantify financial loss."
+      },
+      {
+        "id": "R-03",
+        "fields": ["impact.score", "impact.justification"],
+        "reason": "The auditor requested impact reassessment because missing public notices do not establish a likely legal challenge."
+      },
+      {
+        "id": "R-05",
+        "fields": ["impact.score", "impact.justification"],
+        "reason": "The auditor requested impact reassessment using potential excess exposure instead of the full spend population."
+      }
+    ]
+  }
 }

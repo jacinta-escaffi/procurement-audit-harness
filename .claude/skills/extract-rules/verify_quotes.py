@@ -3,10 +3,11 @@
 import argparse
 import json
 import re
-import subprocess
 import sys
 import unicodedata
 from pathlib import Path
+
+from pypdf import PdfReader
 
 
 PARAMETERS = {
@@ -30,17 +31,13 @@ RULE_ID_PATTERN = re.compile(r"CPR-(\d{3})\Z")
 
 
 def normalized(value):
-    return " ".join(unicodedata.normalize("NFC", value).split())
+    text = " ".join(unicodedata.normalize("NFKC", value).replace("\u00ad", "").replace("�", " ").split())
+    text = re.sub(r"\s+([,.;:!?%\)])", r"\1", text)
+    return re.sub(r"[‐‑–—]", "-", text)
 
 
 def pages_from_pdf(pdf):
-    result = subprocess.run(
-        ["pdftotext", "-layout", str(pdf), "-"],
-        capture_output=True, text=True, encoding="utf-8", check=True,
-    )
-    pages = result.stdout.split("\f")
-    if pages and not pages[-1].strip():
-        pages.pop()
+    pages = [page.extract_text(extraction_mode="layout") or "" for page in PdfReader(str(pdf)).pages]
     if not pages:
         raise ValueError("PDF has no extractable text")
     return pages
@@ -212,7 +209,7 @@ def main():
         data = json.loads(args.rules_json.read_text(encoding="utf-8"))
         pages = pages_from_pdf(args.source_pdf)
         errors = validate(data, pages)
-    except (OSError, ValueError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"verification could not run: {exc}", file=sys.stderr)
         return 2
     for error in errors:
