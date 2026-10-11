@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-10-11T20:24:49.174288+00:00",
+  "method": "Independent source reload through clean.py; first deterministically sorted flag per nonempty test re-derived from source rows/notices/rules.",
+  "checks": [
+    {
+      "test": "threshold_clustering",
+      "selected_identifier": "Over500_2026_P04_-_published.xlsx|Data to publish|2239",
+      "recomputed_values": {
+        "source_amount": 24926.0,
+        "threshold": 25000.0,
+        "source_file": "Over500_2026_P04_-_published.xlsx",
+        "sheet_row": "2239"
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "split_purchases",
+      "selected_identifier": "SW-29878d8e699c6928",
+      "recomputed_values": {
+        "source_rows": 55,
+        "source_total": 2987475.97,
+        "threshold": 500000.0,
+        "days": 30
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "duplicates",
+      "selected_identifier": "DP-b50c4074ebef96be",
+      "recomputed_values": {
+        "same_supplier": true,
+        "amount_1": 101925.86,
+        "amount_2": 101925.86,
+        "days": 2
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "high_value_suppliers",
+      "selected_identifier": "VOLKERHIGHWAYS",
+      "recomputed_values": {
+        "source_total": 7377922.21,
+        "annualised": 29511688.84,
+        "threshold": 25000.0
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "off_contract",
+      "selected_identifier": "VOLKERHIGHWAYS",
+      "recomputed_values": {
+        "annualised": 29511688.84,
+        "threshold": 25000.0,
+        "active_exact_match": false
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "expired_notice_spend",
+      "selected_identifier": "HOPE CLAY CONSTRUCTION",
+      "recomputed_values": {
+        "matching_notices": 2,
+        "all_ended_before_window": true
+      },
+      "result": "passed",
+      "error": null
+    },
+    {
+      "test": "spend_vs_award",
+      "selected_identifier": "NEC SOFTWARE SOLUTIONS UK",
+      "recomputed_values": {
+        "active_notice_ids": 1,
+        "contract_years": 2.9979466119096507,
+        "recomputed_ratio": 6.1247370342889855
+      },
+      "result": "passed",
+      "error": null
+    }
+  ],
+  "counts": {
+    "passed": 7,
+    "skipped": 0,
+    "failed": 0
+  },
+  "status": "passed"
+}

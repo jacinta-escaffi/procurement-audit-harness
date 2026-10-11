@@ -1,0 +1,641 @@
+{
+  "workbooks": [
+    {
+      "file": "Over500_2026_P02_-_published.xlsx",
+      "header_excel_row": 1,
+      "columns": [
+        "Service",
+        "Expenditure category",
+        "Narrative",
+        "Date",
+        "Net amount",
+        "Supplier name"
+      ],
+      "rows": 2892,
+      "date_types": {
+        "Timestamp": 2892
+      },
+      "date_min": "2026-05-01 09:47:59.643000",
+      "date_max": "2026-06-04 19:53:23.093000",
+      "months": {
+        "2026-05": 2891,
+        "2026-06": 1
+      },
+      "non_midnight_dates": 2892,
+      "redacted_rows": 597,
+      "redacted_net": 864244.25,
+      "missing_supplier_rows": 0,
+      "narrative_values": {
+        "Private Contractors": 1337,
+        "Allowances for provision care": 342,
+        "Transport Hire": 224,
+        "Direct Payment": 158,
+        "Voluntary Associations": 100,
+        "Other agencies": 78,
+        "Rents": 76,
+        "Payment to contractor": 75,
+        "Grants": 59,
+        "Adult Placement Allowances": 59,
+        "Corporate R&M": 42,
+        "Cleaning": 32,
+        "IT": 30,
+        "Professional Fees": 30,
+        "Grounds Maintenance": 22,
+        "ASC Deferred Debt": 22,
+        "Rent Rebates": 18,
+        "Subscriptions": 13,
+        "Minor Works": 12,
+        "Purchase - Equipment": 11,
+        "Catering": 11,
+        "Charges": 11,
+        "Consultants": 11,
+        "Postage": 10,
+        "Direct Transport Costs": 9,
+        "Public Transport": 9,
+        "Training Third Parties": 9,
+        "Energy costs": 8,
+        "Training": 7,
+        "Print & Stationery": 6,
+        "Licences": 6,
+        "Agency & Temporary Staff": 5,
+        "Legal Fees": 5,
+        "Water Rates": 3,
+        "Telephones": 3,
+        "Advertising": 3,
+        "Survey": 3,
+        "Project": 3,
+        "Payments to Carers": 3,
+        "Repairs - Furniture": 2,
+        "Repairs - Equipment": 2,
+        "Clothing": 2,
+        "Contributions": 2,
+        "Employers LGPS Deficit Contribution": 1,
+        "Fixtures & Fittings": 1,
+        "Storage": 1,
+        "Equipment Rentals": 1,
+        "Purchases Books & Publications": 1,
+        "External audit costs": 1,
+        "Archiving internal documents": 1,
+        "General Expenses": 1,
+        "Insurance Premiums": 1,
+        "Purchase of Equipment": 1,
+        "IT Equipment": 1,
+        "Supplies & Services Expenses": 1,
+        "Payments to Other Local Authorities (excl Joint Arrangements)": 1,
+        "LGPS Employees Control": 1,
+        "LGPS Employers Control": 1,
+        "Teachers LGPS ERS Control": 1,
+        "Court Order Control": 1,
+        "Council Tax Court Orders": 1,
+        "Prudential AVC Teachers": 1
+      },
+      "category_values": {
+        "Third Party Payments": 1591,
+        "Transfer Payment": 580,
+        "Supplies & Services": 260,
+        "Transport": 233,
+        "Premises": 187,
+        "<missing>": 28,
+        "Employees": 13
+      }
+    },
+    {
+      "file": "Over500_2026_P03_-_published.xlsx",
+      "header_excel_row": 2,
+      "columns": [
+        "Service",
+        "Expenditure category",
+        "Narrative",
+        "Date",
+        "Net amount",
+        "Supplier name"
+      ],
+      "rows": 3547,
+      "date_types": {
+        "Timestamp": 3547
+      },
+      "date_min": "2026-06-01 08:58:34.760000",
+      "date_max": "2026-06-30 19:53:30.373000",
+      "months": {
+        "2026-06": 3547
+      },
+      "non_midnight_dates": 3547,
+      "redacted_rows": 809,
+      "redacted_net": 1037903.8,
+      "missing_supplier_rows": 0,
+      "narrative_values": {
+        "Private Contractors": 1640,
+        "Allowances for provision care": 521,
+        "Grants": 184,
+        "Direct Payment": 155,
+        "Transport Hire": 139,
+        "Other agencies": 126,
+        "Adult Placement Allowances": 100,
+        "Voluntary Associations": 94,
+        "Rents": 73,
+        "Professional Fees": 53,
+        "Payment to contractor": 50,
+        "Corporate R&M": 45,
+        "IT": 34,
+        "Minor Works": 30,
+        "Public Transport": 23,
+        "ASC Deferred Debt": 23,
+        "Consultants": 20,
+        "Cleaning": 16,
+        "Training": 14,
+        "Rent Rebates": 14,
+        "Training Third Parties": 12,
+        "Grounds Maintenance": 11,
+        "Direct Transport Costs": 11,
+        "Agency & Temporary Staff": 10,
+        "Legal Fees": 10,
+        "Energy costs": 9,
+        "Charges": 9,
+        "Payments to Other Local Authorities (excl Joint Arrangements)": 9,
+        "Purchase - Equipment": 8,
+        "Catering": 8,
+        "Postage": 6,
+        "Subscriptions": 6,
+        "General Expenses": 6,
+        "IT Equipment": 6,
+        "Private Contractors Additional Cost": 6,
+        "Telephones": 5,
+        "Licences": 5,
+        "Insurance Premiums": 5,
+        "Water Rates": 4,
+        "Repairs - Equipment": 3,
+        "Purchases Books & Publications": 3,
+        "Print & Stationery": 3,
+        "Payments to Carers": 3,
+        "Lease car costs re employees": 2,
+        "Exhibition Expenses": 2,
+        "Advertising": 2,
+        "Clothing": 2,
+        "Survey": 2,
+        "Project": 2,
+        "Employers LGPS Deficit Contribution": 1,
+        "Recruitment Advertising": 1,
+        "Fixtures & Fittings": 1,
+        "Waste": 1,
+        "External audit costs": 1,
+        "Archiving internal documents": 1,
+        "Animal welfare": 1,
+        "Storage": 1,
+        "Equipment Rentals": 1,
+        "Conference provision": 1,
+        "Contributions": 1,
+        "Reimbursements": 1,
+        "Curriculum Activities": 1,
+        "Highways Drainage": 1,
+        "Joint Arrangements (with Other Local Authorities or NHS)": 1,
+        "Purchase of Equipment": 1,
+        "Payments to NHS (excl Joint Arrangement)": 1,
+        "LGPS Employees Control": 1,
+        "Teachers LGPS ERS Control": 1,
+        "Prudential AVC Teachers": 1,
+        "Court Order Control": 1,
+        "LGPS Employers Control": 1,
+        "Council Tax Court Orders": 1
+      },
+      "category_values": {
+        "Third Party Payments": 1927,
+        "Transfer Payment": 793,
+        "Supplies & Services": 458,
+        "Premises": 162,
+        "Transport": 150,
+        "<missing>": 29,
+        "Employees": 28
+      }
+    },
+    {
+      "file": "Over500_2026_P04_-_published.xlsx",
+      "header_excel_row": 2,
+      "columns": [
+        "Service",
+        "Expenditure category",
+        "Narrative",
+        "Date",
+        "Net amount",
+        "Supplier name"
+      ],
+      "rows": 4168,
+      "date_types": {
+        "Timestamp": 4168
+      },
+      "date_min": "2026-07-01 07:03:47.777000",
+      "date_max": "2026-07-31 17:53:34.623000",
+      "months": {
+        "2026-07": 4168
+      },
+      "non_midnight_dates": 4168,
+      "redacted_rows": 609,
+      "redacted_net": 844598.6599999999,
+      "missing_supplier_rows": 0,
+      "narrative_values": {
+        "Private Contractors": 2404,
+        "Allowances for provision care": 347,
+        "Transport Hire": 233,
+        "Direct Payment": 162,
+        "Voluntary Associations": 141,
+        "Grants": 103,
+        "Other agencies": 96,
+        "Payment to contractor": 85,
+        "Corporate R&M": 79,
+        "Adult Placement Allowances": 60,
+        "Rents": 53,
+        "Professional Fees": 52,
+        "Cleaning": 35,
+        "IT": 29,
+        "Minor Works": 21,
+        "Consultants": 21,
+        "ASC Deferred Debt": 21,
+        "Charges": 18,
+        "Public Transport": 17,
+        "Grounds Maintenance": 16,
+        "Rent Rebates": 16,
+        "Subscriptions": 10,
+        "Agency & Temporary Staff": 9,
+        "Training": 9,
+        "Direct Transport Costs": 9,
+        "Purchase - Equipment": 8,
+        "Training Third Parties": 8,
+        "Postage": 8,
+        "Catering": 8,
+        "Payments to Other Local Authorities (excl Joint Arrangements)": 8,
+        "Print & Stationery": 7,
+        "Project": 7,
+        "Repairs - Equipment": 6,
+        "Legal Fees": 6,
+        "Advertising": 6,
+        "Licences": 6,
+        "Payments to Carers": 4,
+        "Purchases Books & Publications": 3,
+        "Survey": 3,
+        "Projects or Minor Works": 3,
+        "Storage": 2,
+        "Equipment Rentals": 2,
+        "Telephones": 2,
+        "Ex-Gratia payment": 2,
+        "Insurance Premiums": 2,
+        "Court Order Control": 2,
+        "Council Tax Court Orders": 2,
+        "Employers LGPS Deficit Contribution": 1,
+        "Employee Expenses": 1,
+        "Premises Insurance": 1,
+        "Water Rates": 1,
+        "Contributions": 1,
+        "General Expenses": 1,
+        "Archiving internal documents": 1,
+        "Animal welfare": 1,
+        "ICT Software Licences": 1,
+        "Lease car costs re employees": 1,
+        "IT Equipment": 1,
+        "Payments to NHS (excl Joint Arrangement)": 1,
+        "LGPS Employees Control": 1,
+        "LGPS Employers Control": 1,
+        "Teachers LGPS ERS Control": 1,
+        "Children in Care: Savings": 1,
+        "Prudential AVC Teachers": 1
+      },
+      "category_values": {
+        "Third Party Payments": 2735,
+        "Transfer Payment": 589,
+        "Supplies & Services": 360,
+        "Transport": 242,
+        "Premises": 188,
+        "<missing>": 30,
+        "Employees": 21,
+        "Fees & Charges": 3
+      }
+    }
+  ],
+  "method": {
+    "annualisation": "sum of signed Net amount across all three files times 4; strictly above GBP 25000",
+    "match": "exact normalized supplier name; punctuation removed, uppercase, terminal LTD/LIMITED/PLC/LLP removed",
+    "population": "named suppliers; redacted/missing names excluded; no unapproved procurement exclusions or deduplication",
+    "active": "specification filter: Contract end date >= first spend date, or blank; start-date overlap reported separately"
+  },
+  "spend": {
+    "rows": 10607,
+    "window_start": "2026-05-01",
+    "window_end": "2026-07-31",
+    "net": 80427254.25999999,
+    "narrative_values": {
+      "Private Contractors": 5381,
+      "Allowances for provision care": 1210,
+      "Transport Hire": 596,
+      "Direct Payment": 475,
+      "Grants": 346,
+      "Voluntary Associations": 335,
+      "Other agencies": 300,
+      "Adult Placement Allowances": 219,
+      "Payment to contractor": 210,
+      "Rents": 202,
+      "Corporate R&M": 166,
+      "Professional Fees": 135,
+      "IT": 93,
+      "Cleaning": 83,
+      "ASC Deferred Debt": 66,
+      "Minor Works": 63,
+      "Consultants": 52,
+      "Grounds Maintenance": 49,
+      "Public Transport": 49,
+      "Rent Rebates": 48,
+      "Charges": 38,
+      "Training": 30,
+      "Direct Transport Costs": 29,
+      "Training Third Parties": 29,
+      "Subscriptions": 29,
+      "Purchase - Equipment": 27,
+      "Catering": 27,
+      "Agency & Temporary Staff": 24,
+      "Postage": 24,
+      "Legal Fees": 21,
+      "Payments to Other Local Authorities (excl Joint Arrangements)": 18,
+      "Energy costs": 17,
+      "Licences": 17,
+      "Print & Stationery": 16,
+      "Project": 12,
+      "Repairs - Equipment": 11,
+      "Advertising": 11,
+      "Telephones": 10,
+      "Payments to Carers": 10,
+      "Water Rates": 8,
+      "General Expenses": 8,
+      "Insurance Premiums": 8,
+      "IT Equipment": 8,
+      "Survey": 8,
+      "Purchases Books & Publications": 7,
+      "Private Contractors Additional Cost": 6,
+      "Storage": 4,
+      "Equipment Rentals": 4,
+      "Clothing": 4,
+      "Contributions": 4,
+      "Court Order Control": 4,
+      "Council Tax Court Orders": 4,
+      "Employers LGPS Deficit Contribution": 3,
+      "Archiving internal documents": 3,
+      "LGPS Employees Control": 3,
+      "LGPS Employers Control": 3,
+      "Teachers LGPS ERS Control": 3,
+      "Prudential AVC Teachers": 3,
+      "Lease car costs re employees": 3,
+      "Projects or Minor Works": 3,
+      "Fixtures & Fittings": 2,
+      "Repairs - Furniture": 2,
+      "External audit costs": 2,
+      "Purchase of Equipment": 2,
+      "Exhibition Expenses": 2,
+      "Animal welfare": 2,
+      "Payments to NHS (excl Joint Arrangement)": 2,
+      "Ex-Gratia payment": 2,
+      "Supplies & Services Expenses": 1,
+      "Recruitment Advertising": 1,
+      "Waste": 1,
+      "Conference provision": 1,
+      "Reimbursements": 1,
+      "Curriculum Activities": 1,
+      "Highways Drainage": 1,
+      "Joint Arrangements (with Other Local Authorities or NHS)": 1,
+      "Employee Expenses": 1,
+      "Premises Insurance": 1,
+      "ICT Software Licences": 1,
+      "Children in Care: Savings": 1
+    },
+    "category_values": {
+      "Third Party Payments": 6253,
+      "Transfer Payment": 1962,
+      "Supplies & Services": 1078,
+      "Transport": 625,
+      "Premises": 537,
+      "<missing>": 87,
+      "Employees": 62,
+      "Fees & Charges": 3
+    }
+  },
+  "contracts": {
+    "rows": 150,
+    "buyer_counts": {
+      "West Berkshire Council": 115,
+      "West Berkshire": 20,
+      "WEST BERKSHIRE COUNCIL": 6,
+      "Ministry of Defence": 5,
+      "Westworks Procurement Ltd": 1,
+      "SOUTHAMPTON CITY COUNCIL": 1,
+      "CITY OF BRADFORD METROPOLITAN DISTRICT COUNCIL": 1,
+      "Health Education England": 1
+    },
+    "strict_council_rows": 135,
+    "case_insensitive_council_rows": 141,
+    "date_fields_all_buyers": {
+      "Start Date": {
+        "min": "2018-05-01 00:00:00",
+        "max": "2026-08-31 00:00:00",
+        "blank": 0
+      },
+      "End Date": {
+        "min": "2021-11-01 00:00:00",
+        "max": "2034-12-04 00:00:00",
+        "blank": 0
+      },
+      "Awarded Date": {
+        "min": "2018-04-30 00:00:00",
+        "max": "2029-03-09 00:00:00",
+        "blank": 0
+      },
+      "Contract start date": {
+        "min": "2018-05-01 00:00:00",
+        "max": "2026-08-31 00:00:00",
+        "blank": 0
+      },
+      "Contract end date": {
+        "min": "2022-02-28 00:00:00",
+        "max": "2055-07-31 00:00:00",
+        "blank": 0
+      },
+      "Published Date": {
+        "min": "2021-02-23 12:32:46+00:00",
+        "max": "2026-09-09 13:51:47+00:00",
+        "blank": 0
+      }
+    },
+    "status_counts": {
+      "Awarded": 150
+    },
+    "variants": {
+      "strict": {
+        "rows": 135,
+        "unique_notice_ids": 135,
+        "published_by_year": {
+          "2024": 52,
+          "2023": 39,
+          "2025": 28,
+          "2022": 10,
+          "2026": 4,
+          "2021": 2
+        },
+        "date_fields": {
+          "Start Date": {
+            "min": "2018-05-01 00:00:00",
+            "max": "2026-08-31 00:00:00",
+            "blank": 0
+          },
+          "End Date": {
+            "min": "2022-05-27 00:00:00",
+            "max": "2034-12-04 00:00:00",
+            "blank": 0
+          },
+          "Awarded Date": {
+            "min": "2018-04-30 00:00:00",
+            "max": "2029-03-09 00:00:00",
+            "blank": 0
+          },
+          "Contract start date": {
+            "min": "2018-05-01 00:00:00",
+            "max": "2026-08-31 00:00:00",
+            "blank": 0
+          },
+          "Contract end date": {
+            "min": "2022-05-27 00:00:00",
+            "max": "2055-07-31 00:00:00",
+            "blank": 0
+          },
+          "Published Date": {
+            "min": "2021-12-10 11:08:27+00:00",
+            "max": "2026-09-09 13:51:47+00:00",
+            "blank": 0
+          }
+        },
+        "live_spec_count": 61,
+        "date_overlap_count": 60,
+        "expired_count": 74,
+        "future_start_among_spec_live": 1,
+        "blank_supplier_notices": 0,
+        "supplier_blocks": 204,
+        "multi_supplier_notices": 9,
+        "max_blocks_per_notice": 19,
+        "malformed_blocks": 0,
+        "companies_house_blocks": 121,
+        "zero_award_notices": 7,
+        "live_by_spend_month": {
+          "2026-05": 61,
+          "2026-06": 61,
+          "2026-07": 61
+        }
+      },
+      "case_insensitive": {
+        "rows": 141,
+        "unique_notice_ids": 141,
+        "published_by_year": {
+          "2024": 52,
+          "2023": 39,
+          "2025": 28,
+          "2022": 10,
+          "2021": 7,
+          "2026": 5
+        },
+        "date_fields": {
+          "Start Date": {
+            "min": "2018-05-01 00:00:00",
+            "max": "2026-08-31 00:00:00",
+            "blank": 0
+          },
+          "End Date": {
+            "min": "2022-04-30 00:00:00",
+            "max": "2034-12-04 00:00:00",
+            "blank": 0
+          },
+          "Awarded Date": {
+            "min": "2018-04-30 00:00:00",
+            "max": "2029-03-09 00:00:00",
+            "blank": 0
+          },
+          "Contract start date": {
+            "min": "2018-05-01 00:00:00",
+            "max": "2026-08-31 00:00:00",
+            "blank": 0
+          },
+          "Contract end date": {
+            "min": "2022-04-30 00:00:00",
+            "max": "2055-07-31 00:00:00",
+            "blank": 0
+          },
+          "Published Date": {
+            "min": "2021-02-23 12:32:46+00:00",
+            "max": "2026-09-09 13:51:47+00:00",
+            "blank": 0
+          }
+        },
+        "live_spec_count": 62,
+        "date_overlap_count": 61,
+        "expired_count": 79,
+        "future_start_among_spec_live": 1,
+        "blank_supplier_notices": 0,
+        "supplier_blocks": 210,
+        "multi_supplier_notices": 9,
+        "max_blocks_per_notice": 19,
+        "malformed_blocks": 0,
+        "companies_house_blocks": 126,
+        "zero_award_notices": 7,
+        "live_by_spend_month": {
+          "2026-05": 62,
+          "2026-06": 62,
+          "2026-07": 62
+        }
+      }
+    }
+  },
+  "matches": {
+    "named_supplier_groups": 1102,
+    "eligible_supplier_groups": 685,
+    "eligible_3month_net": 76632673.04,
+    "variants": {
+      "strict": {
+        "any_notice": {
+          "matched_suppliers": 37,
+          "unmatched_suppliers": 648,
+          "supplier_share_pct": 5.401459854014599,
+          "matched_3month_net": 2625660.1300000004,
+          "spend_share_pct": 3.4262932843664253
+        },
+        "spec_active_notice": {
+          "matched_suppliers": 32,
+          "unmatched_suppliers": 653,
+          "supplier_share_pct": 4.671532846715328,
+          "matched_3month_net": 2391894.21,
+          "spend_share_pct": 3.1212459583022785
+        },
+        "date_overlap_notice": {
+          "matched_suppliers": 32,
+          "unmatched_suppliers": 653,
+          "supplier_share_pct": 4.671532846715328,
+          "matched_3month_net": 2391894.21,
+          "spend_share_pct": 3.1212459583022785
+        }
+      },
+      "case_insensitive": {
+        "any_notice": {
+          "matched_suppliers": 38,
+          "unmatched_suppliers": 647,
+          "supplier_share_pct": 5.547445255474453,
+          "matched_3month_net": 2642024.69,
+          "spend_share_pct": 3.447647831129342
+        },
+        "spec_active_notice": {
+          "matched_suppliers": 33,
+          "unmatched_suppliers": 652,
+          "supplier_share_pct": 4.817518248175182,
+          "matched_3month_net": 2401244.2100000004,
+          "spend_share_pct": 3.133447020367698
+        },
+        "date_overlap_notice": {
+          "matched_suppliers": 33,
+          "unmatched_suppliers": 652,
+          "supplier_share_pct": 4.817518248175182,
+          "matched_3month_net": 2401244.2100000004,
+          "spend_share_pct": 3.133447020367698
+        }
+      }
+    }
+  }
+}

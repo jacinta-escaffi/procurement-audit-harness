@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {"source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_pages": 2, "plain_text_path": "outputs/committee-text/audit-completed-work-2024-25-annual.plain.txt", "layout_text_path": "outputs/committee-text/audit-completed-work-2024-25-annual.layout.txt"},
+    {"source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_pages": 1, "plain_text_path": "outputs/committee-text/audit-completed-work-2025-26-q3.plain.txt", "layout_text_path": "outputs/committee-text/audit-completed-work-2025-26-q3.layout.txt"},
+    {"source_file": "internal-audit-plan-2025-28.pdf", "pdf_pages": 7, "plain_text_path": "outputs/committee-text/internal-audit-plan-2025-28.plain.txt", "layout_text_path": "outputs/committee-text/internal-audit-plan-2025-28.layout.txt"},
+    {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_pages": 35, "plain_text_path": "outputs/committee-text/risk-management-strategy-2024-27.plain.txt", "layout_text_path": "outputs/committee-text/risk-management-strategy-2024-27.layout.txt"}
+  ],
+  "audit_coverage": [
+    {"reporting_period": "End of March 2025", "directorate_service": "Finance, Property and Procurement", "audit_title": "Contract Letting", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Finance, Property and Procurement Contract Letting Reasonable Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Finance, Property and Procurement", "audit_title": "Housing Benefit and Council Tax Hardship Fund", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Finance, Property and Procurement Housing Benefit and Council Tax Hardship Fund Reasonable Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Finance, Property and Procurement", "audit_title": "Bank Reconciliation", "overall_opinion": "Substantial Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Finance, Property and Procurement Bank Reconciliation Substantial Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Transformation", "audit_title": "Systems Security (Firewall, Antivirus, Traffic Management)", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Transformation Systems Security (Firewall, Antivirus, Traffic Management) Reasonable Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Public Health", "audit_title": "Joint Agreement Governance", "overall_opinion": "Advisory - no opinion given", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Public Health Joint Agreement Governance Advisory - no opinion given"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Communities", "audit_title": "Public Protection Partnership – Financial Control Processes", "overall_opinion": "Substantial Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Public Protection Partnership – Financial Control Processes"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Schools / Primary", "audit_title": "Springfield", "overall_opinion": "Substantial Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Primary Springfield Substantial Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Schools / Primary", "audit_title": "St Paul’s", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "St Paul’s Reasonable Assurance"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Schools / Primary", "audit_title": "St John and St Nicolas Federation", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "St John and St Nicolas Federation Reasonable Assurance"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Strategy and Governance", "audit_title": "Recruitment (Talent Attraction) and Retention", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Recruitment (Talent Attraction) and Retention"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Finance, Property and Procurement", "audit_title": "Accounts Payable", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Accounts Payable"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Children with Disabilities and SEN Teams", "audit_title": "Personal Budgets (Direct Payments)", "overall_opinion": "Limited Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Children with Disabilities and SEN Teams Personal Budgets (Direct Payments) Limited Assurance"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Children and Family", "audit_title": "Separated Children (UASC)", "overall_opinion": "Substantial Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Children and Family Separated Children (UASC) Substantial Assurance"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Adult Social Care", "audit_title": "Purchase of Residential and Nursing Care Provision", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Adult Social Care Purchase of Residential and Nursing Care Provision Reasonable Assurance"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Schools / Primary", "audit_title": "Winchcombe", "overall_opinion": "Reasonable Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Primary Winchcombe Reasonable Assurance"},
+    {"reporting_period": "End of December 2025", "directorate_service": "Schools / Primary", "audit_title": "Curridge", "overall_opinion": "Substantial Assurance", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "Curridge Substantial Assurance"}
+  ],
+  "follow_ups": [
+    {"reporting_period": "End of March 2025", "directorate_service": "Resources/Finance, Property and Procurement", "audit_title": "Fixed Asset Register", "report_opinion": "Advisory – no opinion", "implementation_progress_opinion": "Satisfactory", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 1, "quote": "Fixed Asset Register"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Schools / Primary", "audit_title": "Garland (now Burghfield Common Federation)", "report_opinion": "Weak", "implementation_progress_opinion": "Unsatisfactory", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 2, "quote": "Garland (now Burghfield Common Federation) Weak Unsatisfactory"},
+    {"reporting_period": "End of March 2025", "directorate_service": "Schools / Primary", "audit_title": "Westwood Farm", "report_opinion": "Limited Assurance", "implementation_progress_opinion": "Satisfactory", "source_file": "audit-completed-work-2024-25-annual.pdf", "pdf_page": 2, "quote": "Westwood Farm"}
+  ],
+  "agreed_actions": [],
+  "risk_themes": [],
+  "risk_method": {
+    "evaluation_levels": [
+      {"level": "Gross", "definition": "likelihood and impact without additional, specific mitigation action", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 13, "quote": "Gross level – likelihood and impact without additional, specific mitigation action."},
+      {"level": "Actual", "definition": "current likelihood and impact based on mitigation already in place, excluding planned mitigation", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 13, "quote": "Actual level - this is the current likelihood and impact, based on mitigation action already put in place but excluding further mitigation action planned."},
+      {"level": "Expected", "definition": "future likelihood and impact based on additional planned mitigation", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "Expected level – this is a future level of likelihood and impact based on any additional mitigation action (if any) planned to further address the triggers and the consequences of risks."}
+    ],
+    "impact_scale": [
+      {"rating": 1, "label": "Negligible", "financial": "Less than 0.01% annual WBC budget; £17.5k", "people": "Minor financial loss up to £1,000 / complaint / grievance", "assets_information": "Loss of minor ICT system - up to one day", "reputation": "Adverse publicity locally", "compliance": "Negligible possibility of legal challenge or regulatory interest", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "1 Negligible"},
+      {"rating": 2, "label": "Minor", "financial": "0.01%-0.1% of annual WBC budget; £17.5k-£175k", "people": "Major financial loss £1,000+; illness e.g. stress / minor accident / RIDDOR", "assets_information": "Partial loss of minor building; temporary loss of minor ICT system up to one week; loss of major system up to one day", "reputation": "Ombudsman complaint upheld", "compliance": "Low possibility of legal challenge; low possibility regulatory interest", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "2 Minor"},
+      {"rating": 3, "label": "Medium", "financial": "0.1%-0.3% annual WBC budget; £175k-£500k", "people": "Major injury / hospitalisation", "assets_information": "Partial loss of main building or total loss of minor building; temporary loss of major ICT system up to one week; total loss of minor ICT system", "reputation": "External agency criticism; HSE / Fire Authority enforcement action", "compliance": "Reasonable possibility of successful legal challenge; reasonable possibility of regulatory interest", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "3 Medium"},
+      {"rating": 4, "label": "Major", "financial": "0.25%-1% annual WBC budget; £500k-£2M", "people": "Permanent disability", "assets_information": "Majority loss of main building / loss of main ICT system", "reputation": "Adverse publicity nationally; HSE / Fire Authority prosecution", "compliance": "High possibility of legal challenge; high possibility of regulatory intervention", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "4 Major"},
+      {"rating": 5, "label": "Critical", "financial": ">1% annual WBC budget; >£2m", "people": "Death", "assets_information": "Destruction of building, IT infrastructure", "reputation": "Front page of national press", "compliance": "Probable legal challenge with penalties; probable regulatory intervention", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "5 Critical"}
+    ],
+    "likelihood_scale": [
+      {"rating": 1, "label": "Rare", "incident_description": "Risk is very rare and highly unlikely to occur within a 12 month period", "probability": "<2%", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "Risk is very rare and highly unlikely to occur within a 12 month period"},
+      {"rating": 2, "label": "Unlikely", "incident_description": "Risk is unlikely to occur within a 12 month period", "probability": "2%-29%", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "Risk is unlikely to occur within a 12 month period"},
+      {"rating": 3, "label": "Likely", "incident_description": "Risk is likely to occur within a 12 month period", "probability": "30%-69%", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "Risk is likely to occur within a 12 month period"},
+      {"rating": 4, "label": "Almost Certain", "incident_description": "Risk is almost certain to occur within a 12 month period", "probability": "70%-99%", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "Risk is almost certain to occur within a 12 month period"},
+      {"rating": 5, "label": "Certain", "incident_description": "Risk will occur within a 12 month period", "probability": "100%", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "Risk will occur within a 12 month period"}
+    ],
+    "matrix": [
+      {"impact": 1, "likelihood": 1, "score": 1, "band": "Low", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Low Low Moderate Moderate"},
+      {"impact": 1, "likelihood": 2, "score": 2, "band": "Low", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Low Low Moderate Moderate"},
+      {"impact": 1, "likelihood": 3, "score": 3, "band": "Low", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "1 2 3 4 5"},
+      {"impact": 1, "likelihood": 4, "score": 4, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Low Low Moderate Moderate"},
+      {"impact": 1, "likelihood": 5, "score": 5, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Low Low Moderate Moderate"},
+      {"impact": 2, "likelihood": 1, "score": 2, "band": "Low", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Moderate Moderate High High"},
+      {"impact": 2, "likelihood": 2, "score": 4, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "2 4 6 8 10"},
+      {"impact": 2, "likelihood": 3, "score": 6, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "2 4 6 8 10"},
+      {"impact": 2, "likelihood": 4, "score": 8, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Moderate Moderate High High"},
+      {"impact": 2, "likelihood": 5, "score": 10, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "2 4 6 8 10"},
+      {"impact": 3, "likelihood": 1, "score": 3, "band": "Low", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Moderate High High Extreme"},
+      {"impact": 3, "likelihood": 2, "score": 6, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "3 6 9 12 15"},
+      {"impact": 3, "likelihood": 3, "score": 9, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Moderate High High Extreme"},
+      {"impact": 3, "likelihood": 4, "score": 12, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "3 6 9 12 15"},
+      {"impact": 3, "likelihood": 5, "score": 15, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Low Moderate High High Extreme"},
+      {"impact": 4, "likelihood": 1, "score": 4, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Moderate High High Extreme Extreme"},
+      {"impact": 4, "likelihood": 2, "score": 8, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "4 8 12 16 20"},
+      {"impact": 4, "likelihood": 3, "score": 12, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "4 8 12 16 20"},
+      {"impact": 4, "likelihood": 4, "score": 16, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Moderate High High Extreme Extreme"},
+      {"impact": 4, "likelihood": 5, "score": 20, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "4 8 12 16 20"},
+      {"impact": 5, "likelihood": 1, "score": 5, "band": "Moderate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Moderate High Extreme Extreme Extreme"},
+      {"impact": 5, "likelihood": 2, "score": 10, "band": "High", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "5 10 15 20 25"},
+      {"impact": 5, "likelihood": 3, "score": 15, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Moderate High Extreme Extreme Extreme"},
+      {"impact": 5, "likelihood": 4, "score": 20, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "5 10 15 20 25"},
+      {"impact": 5, "likelihood": 5, "score": 25, "band": "Extreme", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "5 10 15 20 25"}
+    ],
+    "bands": [
+      {"band": "Low", "rag": "Green", "scores": "Up to 3", "escalation": "None", "response": "Consider at next annual review", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 19, "quote": "Consider at next annual review"},
+      {"band": "Moderate", "rag": null, "scores": "4-6", "escalation": "None", "response": "Monitor risk", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 19, "quote": "Moderate 4-6 None Monitor risk"},
+      {"band": "Medium-High", "rag": "Amber", "scores": "8-12", "escalation": "Seek assurance that identified controls are effective", "response": "Allocate to Service Director to put in place Controls Assurance", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 19, "quote": "Seek assurance that identified controls are effective"},
+      {"band": "Extreme", "rag": "Red", "scores": "15-25", "escalation": "Add to Corporate Risk Register and mitigation action", "response": "Allocate to Executive Director to oversee and Service Director implement agreed actions", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 19, "quote": "Add to Corporate Risk Register and mitigation action."}
+    ],
+    "appetite": [
+      {"record_type": "definition", "term": "risk appetite", "definition": "The level of risk with which an organisation aims to operate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 15, "quote": "The level of risk with which an organisation aims to operate"},
+      {"record_type": "levels", "levels": ["Averse", "Cautious", "Flexible", "Open", "Seeking"], "dimensions": ["Financial/Asset", "Compliance", "Reputation", "Operational"], "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 16, "quote": "Risk levels Averse Cautious Flexible Open Seeking"},
+      {"record_type": "stated_appetite", "category": "Financial", "level": "Flexible", "detail": "between £250k-£500k", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 17, "quote": "Financial Risk Appetite – Flexible"},
+      {"record_type": "stated_appetite", "category": "Compliance", "level": "Flexible/Open", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 17, "quote": "Compliance Risk Appetite – Flexible/Open"},
+      {"record_type": "stated_appetite", "category": "Reputation", "level": "Open", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 17, "quote": "Reputation Risk appetite – Open"},
+      {"record_type": "stated_appetite", "category": "Operational", "level": "Open", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 18, "quote": "Operational risk appetite – Open"},
+      {"record_type": "definition", "term": "risk tolerance", "definition": "The level of risk with which an organisation is willing to operate", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 17, "quote": "The level of risk with which an organisation is willing to operate"},
+      {"record_type": "response", "response": "Treatment", "definition": "appropriate control countermeasures to constrain the risk or reduce the impact or likelihood to acceptable levels", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 20, "quote": "appropriate control countermeasures to constrain the risk or reduce the impact or likelihood to acceptable levels."},
+      {"record_type": "response", "response": "Transfer", "definition": "transfer the risk to another party to bear or share the risk", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 20, "quote": "Transfer"},
+      {"record_type": "response", "response": "Tolerate", "definition": "manage consequences when the risk cannot be transferred or treated", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 20, "quote": "Where it is not possible to transfer or treat the risk, consideration needs to be given to how the consequences are managed should they occur."},
+      {"record_type": "response", "response": "Terminate", "definition": "terminate the activity that created the risk when only this can contain it to acceptable levels", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 20, "quote": "Some risks will only be treatable, or containable to acceptable levels by terminating the activity that created them."},
+      {"record_type": "response", "response": "Take the opportunity", "definition": "consider opportunity whenever tolerating, transferring or treating a risk", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 20, "quote": "This option is not an alternative to those above; rather it is an option which should be considered whenever tolerating, transferring or treating a risk."}
+    ]
+  },
+  "gaps": [
+    {"gap": "The supplied papers provide follow-up opinions but no underlying agreed-action descriptions, due dates, owners, or action-level statuses, so open or overdue actions cannot be identified.", "source_file": "internal-audit-plan-2025-28.pdf", "pdf_page": 5, "quote": "Monitoring reports on progress with implementation of agreed audit recommendations."},
+    {"gap": "The Q3 completed-work appendix reports no completed follow-ups.", "source_file": "audit-completed-work-2025-26-q3.pdf", "pdf_page": 1, "quote": "2) COMPLETED FOLLOW UPS None"},
+    {"gap": "Appendices A-F are referenced but are not present in the supplied seven-page audit-plan PDF; detailed planned audit areas and their key risks therefore cannot be extracted.", "source_file": "internal-audit-plan-2025-28.pdf", "pdf_page": 6, "quote": "Appendix A - Internal Audit Charter;"},
+    {"gap": "The Strategic Risk Register is not among the supplied papers; actual registered risk themes cannot be reconstructed from the strategy's description of the register.", "source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 24, "quote": "Corporate Risk Register – this register records the most significant risks for the Council or those risks which may prevent the Council from achieving its strategic objectives as set out in the Council Strategy."}
+  ],
+  "discrepancies": [
+    {"issue": "Section 4.3 calls Medium impact rating 2, while Table 1 labels Medium as rating 3.", "evidence": [
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "Negligible (1), Minor (2), Medium (2), Major (4), or Critical impact(5)"},
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "3 Medium"}
+    ]},
+    {"issue": "The printed financial impact ranges overlap: Medium extends to 0.3% and £500k, while Major begins at 0.25% and £500k.", "evidence": [
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "0.25% - 1% annual WBC budget £500k £2M"},
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 14, "quote": "0.1% - 0.3% annual WBC budget £175k -500k"}
+    ]},
+    {"issue": "Table 4 says only Extreme scores 15-25 are added to the Corporate Risk Register, while Figure 4 says the Corporate Risk Register includes risks scoring 9 or above.", "evidence": [
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 19, "quote": "Add to Corporate Risk Register and mitigation action."},
+      {"source_file": "risk-management-strategy-2024-27.pdf", "pdf_page": 21, "quote": "Score 9 or above"}
+    ]}
+  ],
+  "verification": {"status": "passed", "verifier": "scripts/verify_history.py", "timestamp": "2026-10-11T13:33:54-07:00"}
+}

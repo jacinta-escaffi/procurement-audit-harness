@@ -1,0 +1,2384 @@
+Risk Management Strategy
+
+Risk Management Strategy
+Committee considering report:
+
+Governance
+
+Date of Committee:
+
+12 December 2024
+
+Portfolio Member:
+
+Councillor Iain Cottingham
+
+Report Author:
+
+Joseph Holmes (interim Chief Executive
+Officer)
+
+Forward Plan Ref:
+
+EX4547
+
+1
+
+Purpose of the Report
+
+1.1 This report is the Council’s Risk Management Strategy for the future. It is important that
+the Council has an overarching strategy for how it manages risk; risk can never be
+eradicated, but it is important that the Council is clear on how it proposes to manage
+different risks. This report proposes a changed risk management matrix to a ‘5x5’ matrix
+as well as a new Risk Appetite.
+
+2
+
+Recommendation
+
+2.1 For the Executive to approve the Risk Management Strategy.
+
+3
+
+Implications and Impact Assessment
+
+Implication
+
+Commentary
+
+Financial:
+
+The report sets out updated parameters for financial risk
+management
+
+Human Resource:
+
+None identified
+
+Legal:
+
+The report sets out updated parameters for compliance risk
+management
+
+Risk Management:
+
+The report highlights a change to the overall risk management
+approach and risk appetite. There is a risk of non-compliance
+with the revised approach though this is mitigated by the
+Council having good compliance historically and regular
+reporting to the Governance committee
+
+None identified
+
+Policy:
+
+None identified
+
+Neutral
+
+Positive
+
+Property:
+
+Negative
+
+Risk Management Strategy
+
+Commentary
+
+Equalities Impact:
+A Are there any aspects
+of the proposed decision,
+including how it is
+delivered or accessed,
+that could impact on
+inequality?
+
+X
+
+No decisions change through
+introduction of this strategy.
+
+the
+
+B Will the proposed
+decision have an impact
+upon the lives of people
+with protected
+characteristics, including
+employees and service
+users?
+
+X
+
+See above
+
+Environmental Impact:
+
+X
+
+None identified
+
+Health Impact:
+
+X
+
+None identified
+
+ICT Impact:
+
+X
+
+None identified
+
+Digital Services Impact:
+
+X
+
+None identified
+
+Council Strategy
+Priorities:
+
+X
+
+None identified
+
+Core Business:
+
+X
+
+Continues to support the effective delivery
+of core business
+
+Risk Management Strategy
+
+Data Impact:
+
+X
+
+Consultation and
+Engagement:
+
+4
+
+None identified
+
+Portfolio holder for risk
+
+Executive Summary
+
+4.1 The Strategy in appendix A is the new risk management strategy for the Council. It
+builds on the existing risk management framework and its key changes include:
+
+5
+
+•
+
+Adoption of a 5x5 risk management matrix to provide greater clarity of risk
+management and control
+
+•
+
+A new risk appetite to articulate the levels of risks accepted by the Executive and
+provide a framework for officers to work within
+
+Other options considered
+
+5.1 The Council could keep its existing risk management strategy, though this would not
+include changes and improvements identified to further enhance the Council’s approach
+to risk management.
+
+6
+
+Conclusion
+
+6.1 For the Executive to approve the Risk Management Strategy
+
+7
+
+Appendices
+
+Appendix A – Risk Management Strategy
+
+Subject to Call-In:
+Yes:
+
+No:
+
+The item is due to be referred to Council for final approval
+Delays in implementation could have serious financial implications for the
+Council
+Delays in implementation could compromise the Council’s position
+Considered or reviewed by Scrutiny Commission or associated Committees,
+Task Groups within preceding six months
+Item is Urgent Key Decision
+Report is to note only
+
+Risk Management Strategy
+
+Wards affected: All
+Officer details:
+Name:
+Job Title:
+Tel No:
+E-mail:
+
+Beatriz Teixeira
+Performance, Research and Consultation Manager
+(01635) 115555 9102
+beatriz.teixeira1@westberks.gov.uk
+
+Risk Management Strategy
+
+Appendix A
+
+West Berkshire Council
+
+Risk Management Strategy 2024-27
+
+5
+
+Risk Management Strategy
+
+Contents
+1.
+
+Introduction .................................................................................................................8
+
+2.
+
+Risk Management Policy Statement ...........................................................................9
+
+3.
+
+Context .....................................................................................................................10
+Internal Context…………………………………………………………………………………10
+a. The three lines model .................................................................................................................... 10
+b. Significant pressure on the Council’s finances ...................................................................... 11
+c. High demand – social care .......................................................................................................... 12
+d. The streamlined internal governance arrangements ........................................................... 12
+External Context………………………………………………………………………………..12
+
+4. How do we evaluate risks? ..............................................................................................13
+Risk analysis and Risk evaluation……………………………………………………………13
+Impact Rating……………………………………………………………………….……………14
+Likelihood Rating………………………………………………………………………………...14
+5.
+
+How we respond to risks – Risk Appetite / Risk Criteria ...............................................15
+Risk Appetite……………………………………………………………………….…………….15
+The Council’s Risk Appetite 2024/25 – 2027/28……………….…………………………….16
+Risk criteria and response…………………………………….………………………………..18
+
+6. Risk Recording and Reporting .........................................................................................21
+7. Risk Registers .................................................................................................................24
+8. Project Risk Management ................................................................................................25
+9. References ......................................................................................................................25
+Appendix 1 - Risk Management Policy ................................................................................26
+Appendix 2 - Definitions of key terminology that is part of West Berkshire Council’s risk
+management framework ......................................................................................................34
+
+6
+
+Risk Management Strategy
+
+Tables
+Table 1. Impact Ratings .......................................................................................................14
+Table 2. Likelihood Ratings .................................................................................................15
+Table 3. West Berkshire Council Risk Appetite ...................................................................17
+Table 4. RAG Levels, Risk Scores, Escalation and Responses ..........................................19
+
+Figures
+Figure 1. 5x5 Risk Matrix Assessments ...............................................................................18
+Figure 2. Positive and negative amendments ......................................................................19
+Figure 3. Managing Risk - Five Ts .......................................................................................20
+Figure 4. Risk Escalation .....................................................................................................21
+
+7
+
+Risk Management Strategy
+
+1.
+
+Introduction
+
+1.1
+
+The Risk Management Strategy is an integral component of West Berkshire Council’s
+(WBC) risk management framework. The strategy provides the details in which the
+risk management activities are aligned with other Council activities and the role that
+they play within WBC’s internal control environment.
+
+1.2
+
+Mandate and commitment – The Risk Management Strategy was produced following
+consultation with Corporate Board, Portfolio Holder for Finance and Resources,
+Councillors and approved by the Executive. It was also submitted to the Governance
+Committee for endorsement.
+
+1.3
+
+The management of the Council and the Executive are committed to ensure that the
+risk management is an intrinsic part of the governance arrangements and that the risk
+management process adds value by informing decision making processes to ensure
+the delivery of the Council’s objectives.
+
+1.4
+
+Applicability - This strategy applies to the whole of West Berkshire Council core
+functions, covering both business-as-usual and improvement/transformation.
+
+8
+
+Risk Management Strategy
+
+2.
+
+Risk Management Policy Statement
+
+2.1
+
+The risk management strategy for the Council is set out in the following risk
+management policy statement:
+
+Risk Management Policy Statement for West Berkshire Council (WBC)
+As part of West Berkshire Council’s arrangements to ensure best practice governance,
+effective risk management provides assurance that the Council is ‘risk aware’. This entails
+identifying risks associated with the Council’s objectives, evaluate their potential likelihood
+and impact, and determine the most effective methods of mitigation.
+The Council believes that risk can be managed rather than avoided and that corporatewide approach to risk management will support a transformational culture of innovation
+and creativity
+This Strategy includes a risk management policy (see Appendix A) which outlines the
+approach the Council takes with regard to its responsibility to manage risks and
+opportunities using a structured, focused and proportional methodology. Risk
+management is integral to all policy planning and operational management throughout the
+Council. It integrates with our corporate governance, performance management and
+project management process and supports the Annual Governance Statement.
+This approach to risk management actively supports the achievement of the agreed
+actions, projects and programmes as set out in the Council Strategy, but also the
+objectives set out in service plans.
+Objectives:
+Based on the information detailed in this document, the objectives of the Risk
+Management Strategy are to:
+•
+•
+•
+•
+•
+•
+•
+
+Implement the updated risk matrix reflecting a changed risk appetite and the
+tolerances set in the risk management strategy.
+Continue a systematic process of risk identification, analysis, assessment,
+treatment and reporting, based on a quarterly cycle, except for project risks,
+some of which are based on a monthly cycle
+Further integrate risk management and performance management processes
+with particular focus on project management integration and identification of Key
+Risk Indicators (KRI) and Key Control Indicators (KCI).
+Maintain a risk aware culture through a common language, training and
+engagement, with a particular focus on the involvement of Councillors through
+more in depth training.
+Increase communication regarding risk exposure especially in relation to fraud
+risk, and the actions being taken to mitigate risks.
+Support the re-introduction of a controls assurance process.
+Strengthen the links to the crisis management process/handover from crisis
+management to business as usual
+
+9
+
+Risk Management Strategy
+
+3.
+
+Context
+
+3.1
+
+The internal and external context within which the Council delivers its objectives must
+be considered in order to ensure that the management of risk is effective.
+
+Internal Context
+3.2
+
+The significant points relating to the internal organisational context of risk management
+are:
+a. Adoption of the revised three lines model of defence arrangements –external
+audit has been unable to sign off our financial statements for 2021/22 and 2022/23
+due to their own resourcing pressures and wider Local Government auditing
+difficulties.
+b. Significant increase of the financial pressures compared to the one experienced
+before 2020/2021.
+c. High demand on services (in particular on social care, education health and care
+plans in education, and housing).
+d. Need to further streamline internal governance arrangements – recommendation
+from the LGA peer review to simplify and communicate the new arrangements.
+e. Implementation of the organisational restructure - Senior Management Review
+2019 and relatively new administration, would require training and support for the new
+‘top team’.
+
+a. The three lines model
+3.3
+
+The revised version published by Institute of Internal Auditors (IIA) sets out 3 areas of
+responsibility (the 3 A’s of Accountability, Action and Assurance) and 6 principles.
+i)
+
+Accountability: The Governing body is accountable to stakeholders for
+oversight.
+Principles 1 (Governance) and 2 (Governing body roles) confirm that
+governance of an organisation requires appropriate structures and
+processes that enable accountability, action and assurance. It is the role of
+the Governing body to ensure appropriate structures and processes are in
+place for effective governance.
+
+ii)
+
+Actions: Management is responsible for taking actions (including risk
+management), including designing and implementing the controls and
+procedures necessary to achieve organisational objectives.
+Principle 3 states that Management's responsibility to achieve
+organisational objectives comprises both first and second line roles. First
+line roles are most directly aligned with the delivery of products and / or
+services to clients of the organisation and include the roles of support
+functions. Second-line roles provide assistance with managing risk.
+
+10
+
+Risk Management Strategy
+
+iii)
+
+Assurance and advice: by an independent internal audit function to
+provide insight, confidence and encouragement for continuous
+improvement.
+Principle 4 requires that in its third-line role, internal audit provides
+independent and objective assurance and advice on the adequacy and
+effectiveness of governance and risk management. It achieves this through
+the competent application of systematic and disciplined processes,
+expertise, and insight. It may consider assurance from other internal and
+external providers.
+Principle 5 reiterates that the independence of internal audit from the
+responsibilities of management is critical to its objectivity, authority, and
+credibility.
+Principle 6 recognises that all roles working collectively contribute to the
+creation and protection of value when they are aligned with each other and
+with the prioritised interests of stakeholders. The emphasis is upon
+collaboration and communication across the “lines” with the collective aim
+of the achievement of business objectives.
+
+3.4
+
+The risk management function is an integral part of the Council’s governance
+arrangements. The three lines concept is widely known among the insurance, audit
+and banking sectors as a risk governance framework. The concept can be used as the
+primary means to demonstrate and structure roles, responsibilities and
+accountabilities for decision making, risk and control to achieve effective risk
+management, governance and assurance.
+
+3.5
+
+Risk management arrangements are functioning as expected overall, as reported in
+the latest Interim Auditor’s Annual Report on West Berkshire Council 2021/22 and
+2022/23, produced by Grant Thornton (March 2024), which concludes that “the council
+has effective arrangements in place for risk management internal control and budget
+setting and monitoring”.
+
+3.6
+
+Accounts not signed off by external auditor. The Financial Statements for 2021-22 and
+2022-23 are likely to have a ‘no-fault disclaimed’ opinion. This is because the external
+auditor, Grant Thornton, have not had the sufficient resource to complete the audit of
+the Council’s financial statements. The Government have been consulting on a
+disclaimer opinion to enable the backlog of local government audits to be cleared by
+the early 2025 and beyond.
+
+b. Significant pressure on the Council’s finances
+3.7
+
+The Medium-Term Financial Strategy MTFS 2024 shows that significant pressures
+on Council finances during 2022/2023 and 2023/24 required utilising almost all
+earmarked reserves, especially risk reserves. Similarly to other places in the country,
+the financial pressures here are due to increase of inflationary costs for adult and
+children social care, increase in complexity and quantity of demand for social care
+services, increase of Home to School Transport costs, to High Needs Block in the
+11
+
+Risk Management Strategy
+
+Dedicated School’s Grant and increase of costs in housing services. Given the
+Councils comparatively low level of reserves over many years, the Council has lower
+levels of financial resilience compared to other Councils. The MTFS prioritises the
+financial resilience in the medium term for the Council, to ensure that there are
+sufficient levels of the general fund reserves to enable greater financial sustainability
+and the need for a cost base reduction of over £30m.
+
+c. High demand – social care
+3.8
+
+Performance data for 2022/23 and 2023/24 shows a significant increase in demand
+for children’s and adult social care services, and housing services. Whilst the former
+has peaked during the previous year and shows signs of declining (albeit at the end
+of 2023/24 at levels still above the maximum from before 2022), the latter is following
+an increasing trend.
+
+d. The streamlined internal governance arrangements
+
+3.9
+
+During 2019, the organisation re-assessed and streamlined its internal governance
+arrangements to ensure clarity of decision making, coordination and oversight of
+business as usual but also transformational activities. However, the report following
+the Corporate Peer Challenge conducted by the Local Government Association
+includes a recommendation to “Simplify the governance structure to increase pace
+and agility.”
+
+e. Implementation of the organisational restructure – Senior Management Review 2019
+3.10
+
+The restructure of the organisation following the Senior Management Review 2019
+has been completed. As Executive Directors and Service Directors have been
+appointed. As a result, previous service risk registers have been amalgamated into
+Department Risk registers. Whilst the areas of responsibility for the Department Risk
+Registers’ owners is expanding, positive benefits are expected in terms of further
+identifying and managing the cumulative effect of risks. In addition to implementing
+the Senior Management Review 2019, senior management structure has been
+strengthened by the creation of additional posts, such as Service Director –
+Transformation and Service Director for Delivering Better Value and SEND
+Transformation.
+
+External Context
+3.11 The external risk context for the organisation is dominated by a number of issues:
+•
+
+Economy – Bank of England (BoE) has raised the interest rates over the last
+two years (2022/23 and 2023/24) to help slow down the inflation, which
+peaked at 11% in 2022 but reduced to 2.2% in August 2024. However, this is
+12
+
+Risk Management Strategy
+
+still higher than the 2% inflation target and the BoE maintains the interest
+rates at 5%.
+•
+
+Ongoing international conflict elsewhere – impact at local level in terms of
+arrivals and support needs following displacement of persons.
+
+•
+
+Pressure on public sector finances – over the last two years an
+unprecedented number of Council either issued a S114 report or have
+requested Exceptional Financial Support from the Government.
+
+•
+
+National political environment – elections results at national Government level
+with potential changes in national policy framework.
+
+•
+
+The updated National risk register 2023 – identified the following high risks:
+o Pandemic (Catastrophic Impact)
+o High scale Chemical, Biological, Radiological and Nuclear (CBRN)
+attacks (Catastrophic Impact)
+o Failure of the National Electricity Transmission System (NETS)
+(Catastrophic Impact)
+o Terrorist attacks in venues and public spaces (Almost certain
+Likelihood)
+o Technological failure at a UK critical financial market infrastructure
+(Almost certain Likelihood)
+o Attack on a UK ally or partner outside NATO or a mutual security
+agreement requiring international assistance (Almost certain
+Likelihood)
+o Major outbreak of plant pest – bacterial disease Xylella fastidiosa
+(Almost certain Likelihood)
+o Cyber attacks on infrastructure
+o Low temperatures and snow
+o Reception and integration of British Nationals arriving from overseas
+
+3.12 Council Strategy 2023 – 2027, highlights the strong social, economic and
+environmental features of the District and the resilience to significant challenges,
+including the Covid-19 pandemic. The focus of the Strategy is to build on these
+strengths and achieve further improvements. This is another important factor
+considered in defining the Council’s risk management approach, including the risk
+appetite.
+3.13 It is expected that any amendments to the Council’s Strategy, associated strategies
+and delivery plans to be robustly reflected in the risk management process.
+
+4. How do we evaluate risks?
+Risk analysis and Risk evaluation
+4.1 Risks are evaluated each time at the following levels:
+•
+
+Gross level – likelihood and impact without additional, specific mitigation action.
+
+•
+
+Actual level - this is the current likelihood and impact, based on mitigation action
+already put in place but excluding further mitigation action planned.
+13
+
+Risk Management Strategy
+
+•
+
+4.2
+
+Expected level – this is a future level of likelihood and impact based on any
+additional mitigation action (if any) planned to further address the triggers and
+the consequences of risks. The additional actions and the associated deadlines
+are listed in the risk register.
+
+The Council evaluates its identified risks on a five-point scale on the likelihood or
+probability of the risk occurring (rated between rare and certain) and the impact caused
+should the risk occur (rated between negligible and critical).
+
+Impact Rating
+4.3
+
+The following table provides the definitions which should be used when determining
+whether a risk would have a Negligible (1), Minor (2), Medium (2), Major (4), or
+Critical impact(5):
+
+Impact
+Rating
+
+Financial
+loss to
+Council
+
+5
+Critical
+
+> 1% annual
+WBC budget
+>£2m
+
+4
+Major
+
+0.25% - 1%
+annual WBC
+budget
+£500k £2M
+
+3
+Medium
+
+0.1% - 0.3%
+annual WBC
+budget
+£175k -500k
+
+2
+Minor
+
+0.01% 0.1% of
+annual WBC
+budget
+£17.5k £175k
+
+1
+Negligible
+
+Less than
+0.01%
+annual WBC
+budget
+£17.5k
+
+Personal /
+Staff or
+Customers
+
+Assets /
+Physical /
+Information
+
+Death
+
+Destruction of
+building, IT
+infrastructure
+
+Permanent
+disability
+
+Majority loss of main
+building / Loss of
+main ICT system –
+e.g. Email / Payroll /
+network
+
+Major injury /
+hospitalisation
+
+Partial loss off main
+building or total loss
+of minor building.
+Temporary loss of
+major ICT system –
+up to one week, total
+loss of minor ICT
+system
+
+Major financial
+loss £1,000+
+Illness e.g.
+stress / minor
+accident /
+RIDDOR
+
+Partial loss of minor
+building. Temporary
+loss of minor ICT
+system – up to one
+week. Loss of Major
+system – up to one
+day
+
+Minor
+Financial loss
+up to £1,000 /
+complaint /
+Grievance
+
+Loss of minor ICT
+system - up to one
+day
+
+Reputation
+
+Front page of
+national press
+Adverse
+publicity
+nationally
+HSE / Fire
+Authority
+prosecution
+External agency
+criticism – EG
+Auditor, Ofsted
+etc.
+HSE / Fire
+Authority
+enforcement
+action
+
+Compliance
+(litigation,
+regulatory,
+contract)
+Probable legal
+challenge with
+penalties.
+Probable
+regulatory
+intervention.
+High possibility
+of legal
+challenge. High
+possibility of
+regulatory
+intervention.
+Reasonable
+possibility of
+successful legal
+challenge.
+Reasonable
+possibility of
+regulatory
+interest.
+
+Ombudsman
+complaint
+upheld
+
+Low possibility
+of legal
+challenge. Low
+possibility
+regulatory
+interest
+
+Adverse
+publicity locally
+
+Negligible
+possibility of
+legal challenge
+or regulatory
+interest
+
+Table 1. Impact Ratings
+
+Likelihood Rating
+14
+
+Risk Management Strategy
+
+4.4
+
+It is unlikely that in many cases the probability of a risk occurring can be calculated in
+a statistically robust fashion, as we do not have the data to do so. However, as an
+indicator, the likelihood is defined by the following probability of a risk occurring:
+Likelihood
+Rating
+5
+Certain
+4
+Almost
+Certain
+3
+Likely
+2
+Unlikely
+1
+Rare
+
+Incidents
+
+Probability
+
+Risk will occur within a 12 month period
+Risk is almost certain to occur within a 12 month
+period
+Risk is likely to occur within a 12 month period
+Risk is unlikely to occur within a 12 month period
+
+100%
+70% - 99%
+30% - 69%
+2% - 29%
+
+Risk is very rare and highly unlikely to occur
+within a 12 month period
+
+–<2%
+
+Table 2. Likelihood Ratings
+
+4.5
+
+Over the short and medium term, due to the ongoing international crisis as a result of
+the coronavirus pandemic, risk management and in particular risk assessment, need
+to consider this external context factor.
+
+5.
+
+How we respond to risks – Risk Appetite / Risk Criteria
+
+5.1
+
+The response to the identified risks is guided by the risk appetite and risk criteria.
+
+Risk Appetite
+5.2
+
+The HM Treasury and the Government Finance Function define risk appetite as “The
+level of risk with which an organisation aims to operate” (Source: Government Finance
+Function – Risk Appetite Guidance v.2., August2021). A clearly understood and
+articulated risk appetite statement assists with the risk awareness for the Council and
+supports decision making in pursuit of its priority outcomes and objectives.
+
+5.3
+
+The Council’s Risk Appetite Statement is an integral part of the Council’s Risk
+Management Strategy and ensures that the opportunities the Council is willing to take
+to achieve its strategic outcomes and objectives are measured, consistent and
+compatible with the Council’s capacity to accept and manage risk and do not expose
+the Council to unknown, unmanaged or unacceptable risks.
+
+5.4
+
+This statement will be reviewed during the period of the strategy. The Council may
+decide to move the line up or down based on a number of influencing factors including
+financial and capacity, and the Council may have a higher ‘aspirational’ risk appetite
+once sufficient assurance is gained and processes put in place to manage the higher
+levels of risk.
+
+15
+
+Risk Management Strategy
+
+The Council’s Risk Appetite 2024/25 – 2027/28
+5.5
+
+The Council, during the course of a year, will take fair, measured and targeted levels
+of risk to achieve the priority objectives included in the Council Strategy. There will be
+opportunities for the Council to be innovative or work differently and any identified risks
+will need to be considered against the anticipated cost and efficiency benefits.
+
+5.6
+
+The Risk Appetite Statement supports Members and officers in decision making, by
+setting out where the Council is comfortable taking different levels of risk, and which
+levels of risk are unacceptable. The Council’s Risk Appetite should be considered in
+conjunction with the risk section of all committee reports when decisions are made.
+
+5.7
+
+Risks that fall above the risk appetite ‘line’ may still happen and should still be
+managed effectively and transparently.
+
+5.8
+
+The potential range of the Council’s appetite for its significant risks included in the
+Corporate Risk Register is shown in the diagram below, with shaded areas identifying
+the Council’s risk appetite levels:
+
+Risk levels
+
+Averse
+
+Cautious
+
+Flexible
+
+Open
+
+Seeking
+
+Up to £100k
+
+£100k £250k
+
+£250k - £500k
+
+£500k - £1m
+
+£1m +
+
+Following
+approved
+standards and
+practices,
+engaging in
+business as
+usual, low value
+transactions
+
+Following
+approved
+standards
+and practices,
+engaging in
+business as
+usual,
+increased
+value
+transactions
+
+Following
+approved
+standards and
+practices as
+far as possible,
+innovating,
+public interest,
+high value
+transactions
+
+Innovating,
+new area of
+work,
+significant
+public
+interest, high
+value
+transaction
+
+Innovating in
+unprecedented
+environment
+
+No chance of
+any
+repercussions /
+negative
+comments
+
+Little chance
+of significant
+repercussions
+and mitigation
+in place
+beforehand
+
+Exposure of
+greater scrutiny
+and public
+interest.
+Management
+through
+listening and
+active
+engagement.
+Risk of
+
+Experimental–
+possible
+significant
+reputational
+damage or
+enhancement
+
+Unprecedented
+– probable
+significant
+reputational
+damage or
+enhancement
+
+Risk description
+Financial/ Asset
+– amount of
+financial loss
+prepared to put
+at risk through
+lost investment
+and/or financial
+loss
+Compliance
+Exposure to
+legal challenge.
+Risk of
+regulatory
+interest/
+involvement
+
+Reputation
+Exposure to
+reputational
+damage or
+enhancement
+
+16
+
+Risk Management Strategy
+reputational
+damage.
+Operational
+Related to the
+delivery of
+Council Strategy
+
+Essential
+development of
+core business
+only
+
+Maintain
+status quo;
+new schemes
+are tried and
+tested only by
+others
+
+Encourage
+innovation
+through new
+schemes
+offered to the
+Council
+
+Proactive
+pursuit of
+innovation
+and crafting
+solutions that
+have not been
+attempted
+before
+
+Desire to
+‘break the
+mould’ and
+challenge
+current working
+practices
+
+Table 3. West Berkshire Council Risk Appetite
+
+5.9
+
+An additional concept, important in defining and understanding the Council’s risk
+framework, is the risk tolerance. The HM Treasury and the Government Finance
+Function define risk tolerance as “The level of risk with which an organisation is willing
+to operate” (Source: Government Finance Function – Risk Appetite Guidance v.2.,
+August2021)
+
+5.10
+
+This Strategy reflects the Executive’s risk appetite and provides clarity about its levels
+as follows:
+Financial Risk Appetite – Flexible
+•
+
+The Council aims to operate with a financial risk between £250k – £500k.
+This relates primarily to the transformation activities rather than the core
+business areas in order to stimulate the initiatives to digitise service delivery
+or to achieve better, faster and cheaper service delivery more effectively
+delivered in partnership.
+
+Compliance Risk Appetite – Flexible/Open
+•
+
+The Council aims to operate with a legal risk that finely balanced between
+flexible and open, following approved standards and practices as far as
+possible but also allowing for innovation, willing to engage in new areas of
+work, of significant public interest, and related to high value transactions.
+
+Reputation Risk appetite – Open
+•
+
+The Council’s reputation is one of the most important assets which employees
+and Councillors aim to protect to ensure there is little chance of significant
+repercussions. This relates primarily to the core business areas. As
+custodians of the public’s trust and public’s funds, even the transformational
+activities are delivered with sound governance arrangements in place and
+follow a strong and consistent corporate project management methodology.
+However, in the process of seeking the benefits of new ways of achieving or
+improving outcomes for the residents the Council is seeking an open
+reputational risk, with possible significant reputational damage or
+enhancement.
+17
+
+Risk Management Strategy
+
+Operational risk appetite – Open
+• The Council aims to operate with an open appetite for innovation and for
+crafting service delivery models and initiatives that redefine the ways in which
+residents and stakeholders are enabled to achieve their outcomes.
+Risk criteria and response
+5.11
+
+The Council has chosen to divide the rating into bands as shown on the risk matrix
+below, defining the criteria used to manage the risk exposure and reflecting the risk
+appetite levels described above.
+
+Moderate
+
+High
+
+Extreme
+
+Extreme
+
+Extreme
+
+5
+
+10
+
+15
+
+20
+
+25
+
+Moderate
+
+High
+
+High
+
+Extreme
+
+Extreme
+
+4
+
+8
+
+12
+
+16
+
+20
+
+Low
+
+Moderate
+
+High
+
+High
+
+Extreme
+
+3
+
+6
+
+9
+
+12
+
+15
+
+Low
+
+Moderate
+
+Moderate
+
+High
+
+High
+
+2
+
+4
+
+6
+
+8
+
+10
+
+Low
+
+Low
+
+Low
+
+Moderate
+
+Moderate
+
+1
+
+2
+
+3
+
+4
+
+5
+
+1
+Rare
+
+2
+Unlikely
+
+3
+Likely
+
+4
+Almost Certain
+
+5
+Certain
+
+3
+Medium
+1.
+Negligible
+
+2.
+Minor
+
+Impact
+
+4
+Major
+
+5
+Critical
+
+5x5 Risk Matrix Assessments
+
+Likelihood
+
+Figure 1. 5x5 Risk Matrix Assessments
+
+5.12
+
+The risk score, as illustrated by the risk matrix, triggers a particular type of response
+for risks relating to the council’s objectives.
+
+5.13
+
+Once a risk has been identified, the Council needs to decide and agree what it is going
+to do about it as described in the following table:
+
+18
+
+Risk Management Strategy
+
+Risk
+Level
+(RAG)
+Extreme
+(Red)
+
+Medium High
+
+Current
+Escalation
+Score
+
+15 -25
+
+Add to Corporate
+Risk Register and
+mitigation action.
+
+Allocate to Executive Director to
+oversee and Service Director
+implement agreed actions.
+
+8-12
+
+Seek assurance
+that identified
+controls are
+effective
+
+Allocate to Service Director to put in
+place Controls Assurance.
+
+4-6
+
+None
+
+Monitor risk
+
+Up to 3
+
+None
+
+Consider at next annual review
+
+(Amber)
+Moderate
+Low
+(Green)
+
+Response
+
+Table 4. RAG Levels, Risk Scores, Escalation and Responses
+
+5.14
+
+Positive and Negative amendments are made regularly to risks in light of the above
+to respond to the risk and continually update risk registers.
+
+The general impression of risks
+is that it is a negative event;
+however it is also possible that
+positive events and
+opportunities can arise and the
+risk score then becomes the
+reverse of the rating for a
+negative risk, e.g. an opportunity
+with a high rating could deliver a
+good return for little effort.
+
+In managing a
+negative risk
+(Threat), we are
+aiming to see the
+risk rating
+decrease so that
+the likelihood and
+consequence of
+the risk decreases
+should it
+materialise.
+
+A positive event
+or opportunity is
+measured in a
+similar way to a
+negative risk,
+but the desired
+direction of
+travel is
+reversed.
+
+Figure 2. Positive and negative amendments
+
+5.15
+
+The recognised approaches to controlling risks are described as the five key elements
+or 5 T’s; tolerate, treat, transfer, terminate and take the opportunity. These are
+described in more detail below. It is generally accepted that where a risk can be
+19
+
+Risk Management Strategy
+
+reduced through some form of treatment or mitigation in a cost effective fashion then
+it is good to do so.
+5.16
+
+As a general principle once a risk has been identified, consideration needs to be given
+to the five T’s and that the chosen approach is seen as being cost-effective so that the
+control of the risk is not disproportionate to the expected benefits.
+
+5.17
+
+The five T’s are:
+
+Treatment
+
+By far the greatest number of risks will be addressed in this way by using
+appropriate control countermeasures to constrain the risk or reduce the
+impact or likelihood to acceptable levels.
+
+Transfer
+
+For some risks the best response may be to transfer them and might be
+done by transferring the risk to another party to bear or share the risk; e.g.
+through insurance or partnership. Reputation risk can never be transferred.
+
+Tolerate
+
+Where it is not possible to transfer or treat the risk, consideration needs to
+be given to how the consequences are managed should they occur. This
+may require having contingency plans in place, for example, Business
+Continuity Plan which creates capacity to tolerate risk to a certain degree.
+
+Terminate
+
+Some risks will only be treatable, or containable to acceptable levels by
+terminating the activity that created them. It should be noted that the option
+of termination of activities may be severely limited in local government when
+compared to the private sector; a number of activities are conducted in the
+government sector because the associated risks are so great that there is
+no other way in which the output or outcome, which is required for the public
+benefit, can be achieved. This option can be particularly important in project
+management if it becomes clear that the projected cost / benefit relationship
+is in jeopardy.
+
+This option is not an alternative to those above; rather it is an option which
+should be considered whenever tolerating, transferring or treating a risk.
+There are two aspects to this. The first is whether or not at the same time as
+mitigating threats; an opportunity arises to exploit positive impact. For
+Take the
+example, if a large sum of capital funding is to be put at risk in a major
+opportunity project, are the relevant controls judged to be good enough to justify
+increasing the sum of money at stake to gain even greater advantages?
+The second is whether or not circumstances arise which, whilst not
+generating threats, offer positive opportunities. For example, a drop in the
+cost of goods or services frees up resources which can be re-deployed
+Figure 3. Managing Risk - Five Ts
+
+5.18
+
+The delivery of controls to mitigate risks’ likelihood and/or impact is the responsibility
+of the Heads of Service/Service Directors.
+
+Objective resulting from the section above:
+Implement the new risk matrix reflecting an increased risk appetite and the tolerances
+set in this risk strategy
+
+20
+
+Risk Management Strategy
+
+6. Risk Recording and Reporting
+6.1
+
+It is the responsibility of all staff to assess risks associated with their work and
+projects and to escalate any potential risks which they feel cannot be managed
+within sensible parameters to their Directorate Management Team. These risks may
+then be escalated further as part of the quarterly review of the Corporate Risk
+Register at Corporate Board.
+
+6.2
+
+The Council’s risk management framework is built on the basis of risks being
+escalated from a service/department level through to a corporate level. As part of risk
+being managed the framework requires consideration of the mitigation measures
+being suggested and whether the tolerance level is appropriate.
+
+6.3
+
+Where risk levels are considered to be extrene (Red) on the risk matrix, the
+appropriate Service Director must escalate the risk to the Executive Director for a
+discussion at Directorate level so that consideration can be given as to whether the
+risk should be moved to the Directorate Risk Register or the Corporate Risk
+Register. Risk escalation to the Corporate Risk Register is the responsibility of the
+Service Director and Executive Director.
+Escalation/Deescalation
+Responsibility
+
+Risk Register
+
+Monitoring and Review
+
+Corporate Risk Register (CRR)
+(Owned by Corporate Board)
+
+Corporate Board
+•
+
+Executive
+Director
+Head of Service/
+Service Director
+
+Head of Service/
+Service Director
+
+Service/Project
+Manager
+
+Includes risks that:
+• Score 9 or above
+Significantly impact on the ability to
+operate and achieve objectives
+
+Directorate Risk Register (DRR)
+Owned by the Directorate SMT
+
+Includes risks that impact:
+• Plans overseen by the Directorate
+• More than one service
+
+Service (operational) Risk Register (SRR) or
+Project Risks Registers (PRR)
+Owned by Head of Service/Service Director and
+Service/Project Managers
+
+Includes risks that impact on:
+• Service, team or project delivery
+• Regulations
+• The council s reputation
+• Finance
+• Health and Safety
+• Business continuity
+• The environment
+• The council s employees and partner organisations
+
+Quarterly Corporate Board
+Six monthly Governance and
+Ethics Committee
+
+Quarterly –
+Directorate SMT,
+Executive
+Members and
+Corporate
+Management
+Team (CMT)
+
+Monthly –
+Head of Service/
+Service Director
+and Service/
+Project Managers
+
+Figure 4. Risk Escalation
+
+Objective resulting from the section above:
+Support the introduction of a control’s assurance process
+21
+
+Risk Management Strategy
+
+6.4
+
+Effective Risk Management requires that there is clarity of the responsibilities for risk
+and ownership of those risks identified. This policy identifies where the responsibility
+lies for identifying, considering and controlling risk and opportunities.
+
+Members
+
+Responsibilities
+
+Operations
+Board
+
+•
+•
+•
+
+Determine overall risk appetite and tolerance for the Council and
+for each corporate risk.
+Ensure consideration of risk in decision making.
+Quarterly review the Corporate Risk Register.
+
+Executive
+Member
+
+•
+
+Governance
+Committee
+
+Provide independent assurance to the Council on the effectiveness of
+risk management and internal control by:
+•
+•
+•
+•
+
+Oversee risks relating to their portfolio, including projects in the
+corporate programme.
+
+Review the Corporate Risk Register to ensure it is reflective of
+the strategic risks to the delivery of the Council’s objectives and
+management of risks is effective.
+Scrutinise the Annual Governance Statement to ensure that it is a
+correct reflection of internal control, risk management and
+governance.
+Receive reports from Internal Audit, External Audit and other
+inspection bodies indicating strengths and weakness in internal
+control, risk management or governance.
+Participate in training and development sessions.
+
+Officers
+
+Responsibilities
+
+Head of Paid
+Service
+
+Overall responsibility to:
+•
+•
+•
+•
+
+Executive
+Directors
+
+•
+
+Ensure the Annual Governance Statement is an accurate
+reflection of internal control risk management and governance.
+Oversee corporate and cross cutting risks, and resolve conflicts
+and competing demands for resources.
+Lead the quarterly review of corporate risks with Corporate
+Board.
+Arrange the review of the Risk Management Policy.
+Ensure that there is effective risk management in their
+Directorates in line with this policy.
+
+22
+
+Risk Management Strategy
+
+•
+•
+
+Service
+Directors /
+Service
+Leads/Service
+Managers
+
+Ensure that risks to services are properly managed and that:
+•
+•
+•
+•
+•
+•
+
+Second Line of
+Defence
+Officers/ Risk
+Managers
+
+•
+
+•
+
+Internal Audit
+
+•
+
+•
+•
+All Staff
+
+Maintain the Directorate Risk Register, ensure that it is reviewed
+at least quarterly by the DMT and that risks are escalated or deescalated to/from the Corporate Risk Register where appropriate.
+Approve action plans with residually high risk (i.e. those outside
+of the Council’s risk tolerance).
+
+•
+•
+
+Service Team Risk registers are maintained and regularly
+reviewed.
+Any significant new risk identified to be fed up to the Service
+Director and/or Directorate SMT. If required the risk could then
+be escalated to Corporate Board.
+The Risk Management Framework is embedded in their service
+areas and that staff are aware of the underlying risk management
+principles.
+Ensure that the controls put in place to mitigate risks are
+adequately deployed and maintained when necessary.
+Ensure awareness of risk impacting other areas than the one
+they manage (e.g. through the CMT meetings) and highlight
+cumulative effect of risks.
+Support the identification of strategic risks, including strategic
+governance risks relevant for the Annual Governance Statement
+(AGS) (R3)
+The Risk Manager - develops and updates the risk management
+policy/strategy, facilitates a risk aware culture, establishes
+internal risk management processes and procedures, provides
+advice, guidance and support in relation to risk management,
+coordinates the risk management activities, compiles risk
+management information and prepares reports.
+Other officers in Finance, Legal Services, Performance and Risk
+Management, HR, Joint Emergency Planning and Insurance –
+see paragraph 3.6.
+Plan audit work to take into account key risks and how effectively
+they are managed providing assurances for the Annual
+Governance Statement, the Corporate Risk Register and
+Governance Committee.
+Undertake periodic reviews of the effectiveness of the risk
+management framework.
+Prepare, on behalf of the Head of Paid Service, the Annual
+Governance Statement.
+Be familiar with the Risk Management Policy.
+Maintain an awareness of risks, and feed into the formal process,
+alerting management to:
+o Risks which are effectively managed, or the level of current
+risk is unacceptably high (red).
+o Issues that arise or near misses.
+23
+
+Risk Management Strategy
+
+Objective resulting from the section above:
+Increase communication regarding risk exposure and the actions being taken to
+mitigate risks
+
+7.
+
+Risk Registers
+
+7.1
+
+The risk registers are reference documents that summarise the different risks that
+might occur and impact the Council. Just because a risk is included on a risk register,
+does not mean that the Council thinks it will happen, but it does mean that the Council
+thinks it is worth seeking to manage. The risk score is, therefore, based on a
+‘reasonable worst case scenario’. The methodology for the scoring of risks is included
+in section 5 above.
+
+7.2
+
+The Council maintains several risk registers, and these are:
+•
+
+Corporate Risk Register – this register records the most significant risks for the
+Council or those risks which may prevent the Council from achieving its strategic
+objectives as set out in the Council Strategy. This is considered by the Corporate
+Management Team, Corporate Board, Operations Boards and the Governance
+Committee.
+
+•
+
+Directorate Risk Registers – include the risks from the Corporate Risk Register but
+also risks that might affect the delivery of individual directorates, but would not in
+isolation threaten the Council’s overall objectives.
+
+•
+
+Service Risk Registers – include the risks from the Corporate Risk Register and the
+Directorate Risk Registers but also risks that might affect the delivery of individual
+services but would not in isolation threaten the Council’s overall objectives.
+Operational risks are managed by Heads of Service/Service Directors or service
+managers.
+
+•
+
+Project Risk Registers – provide a register of the risks that, if occur, will have a
+positive or negative effect on the achievement of the project’s objectives. Significant
+risks from project risk registers are escalated by the Service Director/Head of Service
+to their Service Risk Registers and follow the normal procedure for further escalation
+if necessary.
+
+Objectives resulting from the section above:
+Maintain a risk aware culture through a common language, training and
+engagement, with a particular focus on the involvement of Councillors through
+more in-depth training
+Further develop actions to ensure that the cumulative risk exposure is
+appropriately identified and managed
+
+24
+
+Risk Management Strategy
+
+8.
+
+Project Risk Management
+
+8.1
+
+The Council’s approach to risk management from a project and programme
+perspective has improved through increased training on the Project Management
+Methodology (PMM) based on PRINCE 2 principles.
+
+8.2
+
+At the inception of each new project, the project board should review and approve
+the risk appetite or, where they are not the Governance Board, present to their
+overarching Governance Board for approval.
+
+8.3
+
+All projects should have a risk register which is regularly reviewed at project board
+meetings and adjusted accordingly once mitigating action is taken. The stakeholders
+should be regularly briefed on any changes in risk. A risk, in terms of project
+delivery, is defined as anything which could be potentially harmful to the delivery of
+the project detrimentally affecting budget, delivery timescales or the project outcome.
+
+9. References
+GrantThornton (2024), Interim Auditor’s Annual Report on West Berkshire Council 2021/22
+and 2022/23, Available at: (Auditors Annual Report template - combined reporting for 20-21
+and 21-22 (westberks.gov.uk))
+West Berkshire Council - Council (2024), Creation of Service Director for Delivering Better
+Value and SEND Transformation 26 March 2024, Available at:
+https://decisionmaking.westberks.gov.uk/documents/s121701/Creation%20of%20Service%
+20Director%20DBV%20Report.pdf
+West Berkshire Council - Executive (2023), Senior Management Restructure (Resources)
+2023, Available at:
+https://decisionmaking.westberks.gov.uk/documents/s118739/13.%20Resources%20Restru
+cture%20-%20Part%20I%20report%20Executive%20December%2023.pdf
+Bank of England (2024) Monetary policy report May 2024, Available at:
+https://www.bankofengland.co.uk/monetary-policy-report/2024/may-2024
+Ipsos (2024) Ipsos Political Monitor - Apr 2024 UK Opinion Polls, Available at:
+https://www.ipsos.com/en-uk/uk-opinion-polls
+Local Government Association (2024) Corporate Peer Challenge 2024 Report - West
+Berkshire, Available at:
+https://decisionmaking.westberks.gov.uk/ieListDocuments.aspx?CId=117&MId=7346&Ver=
+4
+HM Government Cabinet Office 2023 National Risk Register 2023 Available at:
+https://www.gov.uk/government/publications/national-risk-register-2023
+
+25
+
+Risk Management Strategy
+
+Appendix 1 - Risk Management Policy
+1. Purpose
+This policy details West Berkshire Council’s approach to risk management. It includes
+details of each stage of the risk management process, providing methodological guidance
+in order to ensure consistency and clarity of approach.
+2.
+
+Definitions
+
+2.1
+There are numerous definitions for risk1, all of them including reference to event,
+probability and impact on objectives. The Council adopts the definition of risk used by the
+ISO 31000 Guide 73:
+2.2
+Risk management is defined as the rigorous and coordinated process of identifying
+significant risks relevant to the achievement of the Council’s strategic and operational
+objectives, evaluating their individual and combined likelihood and impact, and
+implementing the most effective way of mitigating, managing and monitoring them.
+2.3
+The definitions for the other key risk management terminology used in this document
+are listed as part of Appendix 1.
+3. The three lines model
+3.1 As a key function of the Council’s governance arrangements, the risk management
+approach is based on the three lines concept aiming to ensure the delivery of a sound level
+of assurance, accountability and awareness based on access to multifaceted and
+responsive intelligence.
+3.2 July 2020 IIA published revised 3 Lines Model The following diagram is an example of
+the three lines concept:
+Chart 1. Three lines
+
+1 Definitions are provided by the Institute of Risk Management, HM Treasury, Institute of Internal Auditors
+
+26
+
+Risk Management Strategy
+
+3.3
+
+First line role - As the first line , Service Directors own and manage risks within their
+service area with the assistance of their Service Leads and Service Managers. They
+are also responsible for implementing appropriate corrective actions to address,
+process and control weaknesses. Service Directors / Heads of Service are also
+responsible for maintaining effective internal controls and managing risk on a day
+to day basis. They identify, assess and manage risks ensuring that their services are
+delivered in accordance with the Council’s policies in order to achieve the agreed aims
+and objectives.
+
+3.4
+
+Second line - The second line relates to the strategic direction, policies and
+procedures provided by the Council’s oversight functions (e.g. Finance, Legal
+Services, Performance and Risk Management, HR, Joint Emergency Planning and
+Insurance). These teams are responsible for designing policies, setting direction,
+ensuring compliance and providing assurance, including with regard to the existing
+controls put in place to mitigate risks. Included within the Anti-Fraud and Corruption
+Policy is the Council’s Whistleblowing Policy which encourages staff to report
+concerns which may expose the Council to risk.
+
+3.5
+
+Third line - Internal Audit is an independent, objective assurance and consulting
+activity designed to add value and improve the organisations’ operations. It helps the
+organisation accomplish its objectives by bringing a systematic, disciplined approach
+to evaluate and improve the effectiveness of risk management, control and
+governance processes.
+
+3.6
+
+The aim of internal audit’s work programme is to provide assurance to management,
+in relation to the business activities, systems or processes under review, that the
+framework of internal control, risk management and governance is appropriate and
+operating effectively; and risks to the achievement of the Council’s objectives are
+identified, assessed and managed to a defined acceptable level.
+
+3.7
+
+Such risks are identified through senior management liaison and internal audit’s own
+assessment of risk. External audit, inspectors and regulators also provide assurance
+on the management of risk and delivery of objectives.
+
+We recommend that the link to the crisis management process/handover from crisis management to BAU
+should be documented in the Risk Management Policy. The Policy should include documentation of the
+approach to alternative escalation/risk reporting routes for rapidly changing/ time-critical risks where steering
+is required. Emergency Response Framework
+
+4.
+
+Our corporate approach to risk management
+
+4.1
+
+Risk management is about providing assurance by being ‘risk aware’. Risk is ever
+present in everything that we do and some risk taking is inevitable if the Council is to
+achieve its objectives. Risk management is about making the most of opportunities
+when they arise and achieving objectives once those decisions are made. By being
+‘risk aware’ the Council is better placed to avoid threats and take advantage of
+opportunities. Proper project management and service planning processes and
+principles will identify potential risks early in the process and set out how these can be
+avoided or mitigated. Staff training in project management principles is essential to
+embed these good practices.
+27
+
+Risk Management Strategy
+
+4.2
+
+By embedding a culture of risk management into the Council, Members and officers
+are able to make effective decisions about services and the use of financial resources
+to ensure that the Council’s objectives are met.
+
+4.3
+
+The assessment that the culture of the organisation is ‘risk aware’ is based on the
+following:
+•
+
+•
+
+•
+
+•
+
+•
+
+4.3
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+Leadership – there is strong leadership within the organisation in relation
+to strategy, policy and operations as evidenced by the drive to ensure a
+strong approach regarding the Council Strategy, additional supporting
+strategies and associated delivery plans, all backed up by a strong service
+planning approach.
+Involvement – all stakeholders are involved in all stages of the risk
+management process. This is evidenced by the continuous activity at
+service/department level, directorate level, Corporate Board, Operations
+Board and the Governance Committee. In addition, the involvement of all
+three lines in risk management is also evident.
+Learning – training on risk management and learning from events are
+covered though formal training sessions for Councillors and specific advice,
+support and ‘critical friend’ challenge to risk owners and strategic decision
+makers.
+Accountability – the approach of the Council is not an automatic blame
+culture but is based on encouragement to identify and address issues,
+report likely underperformance at the earliest stages and agree corrective
+actions, on a background of clear accountability for objectives and actions.
+Communication – the approach to accountability is supplemented by an
+openness on all risk management issues, reporting of causes of
+underperformance and actions implemented to address them (up to the
+public arena at the Executive and scrutinised by the Overview and Scrutiny
+Management Commission – see performance framework). Risk information
+is also reported to Corporate Management Team, Directorate Management
+Meetings, Corporate Board and Operations Board. In terms of public
+meetings, risk is reported as a Part II (confidential information) report to the
+Governance Committee.
+
+An effective corporate approach to risk management will:
+Make it more likely that the Council’s objectives will be achieved,
+Safeguard the organisation and provide assurance to Members and officers,
+Become part of every manager’s competency framework, job description and
+performance appraisal,
+Provide support to the overall governance of the organisation,
+Improve decision making,
+Identify issues early on,
+Provide a greater risk awareness and reduce surprises or unexpected events,
+Develop a framework for structured thinking,
+Ensure better use of finances as risks are managed and exposure to risk is reduced,
+Facilitate achievement of long-term objectives and
+Ensure a consistent understanding of and approach to risks.
+28
+
+Risk Management Strategy
+
+The principles
+4.4
+
+It is important to maintain a sense of proportionality with day to day risk and the
+following principles will be applied:
+•
+
+Managers have a good understanding of their services and service developments, and
+are able to adequately identify the risks involved.
+
+•
+
+Managers understand the limits that the organisation places on the action that can be
+taken by any individual officer. There is a general awareness of what management
+action is appropriate and where further consultation and approval are required with
+colleagues and more senior managers. The organisation therefore recognises its risk
+appetite in relation to the decisions it takes.
+
+•
+
+There is a good level of understanding, of what risk it is acceptable to take, during the
+normal course of work and the organisation recognises its risk appetite in relation to
+its ongoing activities.
+
+•
+
+Unnecessary bureaucracy should be avoided, in particular by preparing
+documentation solely to demonstrate (rather than support or enhance) effective
+management. The cost (in terms of the time involved) relative to the benefit gained by
+defining every possible risk in detail and assigning impact and likelihood scores to
+each risk associated with every planned or current activity is deemed too great to be
+generally worthwhile. However, where there are known concentrations of risk, such as
+in new service developments or relating to our programme of projects, managers
+understand that they should document, monitor and manage these risks using the
+Council’s scoring framework. Similarly, the corporate management team (or specific
+services that deliver specific corporate functions) should seek to identify, assess and
+manage those risks that seem likely to cause problems or bring benefits at a corporate
+level.
+
+•
+
+The internal audit team works with the Executive Director (Resources) and Service
+Director (Strategy & Governance) and Corporate Board to consider the Council’s
+assurance needs, and makes its own assessment of the internal audit work required
+to provide this assurance. This is presented to the Governance Committee annually.
+
+•
+
+Managers are encouraged and supported to consider the potential threats and
+opportunities, involved in any new service developments and improvements, and to
+monitor ongoing performance. Documentation of risks, related controls and
+mitigating action plans should be considered where this is helpful and appropriate
+and, where this is the case, risk registers should be prepared. This is likely to be
+appropriate for specific service development projects, when project risk registers
+should be monitored closely by the lead project manager and sponsor. Individual
+teams should also consider risk, specifically when updating annual service plans.
+
+29
+
+Risk Management Strategy
+
+•
+
+Partnership risks are managed and owned by the Council’s service that has entered
+into such a partnership with the aim to achieve specific service objectives. Risks are
+identified in relation to these objectives in the service risk register.
+
+5.
+
+Our risk management process
+
+5.1
+
+The Process arrangements that support risk management at the Council include the
+following components:
+•
+
+•
+•
+5.2
+
+Risk Assessment:
+o Risk identification and the Council’s strategic and operational planning
+processes (see Section 6)
+o Risk analysis and Risk evaluation (see Section 7)
+Risk response/treatment, including the Risk Appetite (see Section 8 and Section 9)
+Risk recording and reporting (see Section 10)
+The diagram below shows the Risk Management process and the systematic
+approach to the identification, evaluation, prioritisation and control of risks and
+opportunities facing the Council.
+
+Graph 2 Risk Management process
+
+Objective resulting from the section above:
+Continue a systematic process of risk identification, analysis, assessment,
+treatment and reporting, based on a quarterly cycle.
+
+6.
+
+How do we assess risks?
+•
+
+6.1
+
+Risk Assessment - Risk identification and the Council’s strategic and
+operational planning processes
+A Council Strategy is produced every four years and refreshed every two years and
+is accompanied by a Strategy Delivery Plan which is reviewed annually. Additional
+supporting strategies are developed with supplementary delivery plans. Annual
+30
+
+Risk Management Strategy
+
+Service/Department Plans are produced to detail the delivery of the Council’s
+objectives by its services/departments.
+6.2
+
+The report templates for the approval of strategies, delivery plans and the associated
+specific decisions with actions from the service plans, require authors to consider
+and comment on risks. This translates into a risk identification process, with
+significant risks being reflected in the Service/Department Risk Registers and in
+Project Risk Registers.
+
+6.3
+
+A significant aspect of the Council’s performance management framework, with
+implications for this risk management strategy, is that the strategic goals of the
+organisation are grouped in two main categories:
+•
+•
+
+Core business – reflecting the ‘business as usual’, highly visible functions of the
+Council for residents and stakeholders. These include typically objectives for
+maintaining/continuing the delivery of high performing activities.
+Priorities for improvement – more transformational type objectives, which are aiming
+to improve outcomes, either where they are judged below expected levels or where
+they are already strong (compared with similar local authorities) but, given the
+importance at local level, the decision is to improve even more.
+
+6.4
+
+The efforts made by the performance management function to ensure the planning
+approach is non-silo working, together with centralised governance arrangements for
+approval of strategies and plans (including risk implications) are factors that
+contribute to creating an overall picture of risk exposure.
+
+6.5
+
+The Council is using a sophisticated approach to performance management,
+monitoring contextual intelligence (measures of volume), performance measures
+(targeted KPIs) and measures of corporate health. Many of these measures are also
+Key Risk Indicators that inform the risk assessment process.
+
+6.6
+
+Similarly, the developments relating to the Corporate Programme Office enhance the
+governance arrangements and ensure that the corporate project management
+approach is followed by all projects. As part of the corporate approach all projects
+are required to ensure they identify, assess, manage and report risk and
+performance.
+
+Objective resulting from the section above:
+Further integrate risk management and performance management processes
+with particular focus on project management integration and identification of
+Key Risk Indicators (KRI) and Key Control Indicators (KCI).
+6.7
+
+When identifying risks, it can be helpful to use the following sources of risk as
+prompts to ensure that all areas of risk are considered:
+
+Sources of
+Risk
+
+Risk Examples
+
+31
+
+Risk Management Strategy
+
+Infrastructure
+
+Functioning of transport, communications and utilities infrastructure.
+The impact of storms, floods and pollution.
+
+Politics & Law
+
+Effects of change of government policy, UK or movement from EU
+legislation, national or local political or control, meeting the
+administration’s manifesto commitments. Issues of timing. Following
+the organisation’s stated/agreed policy. Legality of operations.
+Includes regulatory issues, Ofsted or Care Quality Commission’s
+inspection outcomes, and Ombudsmen’s decisions.
+
+Social Factors
+
+Effects of changes in demographic, residential and social trends on
+ability to deliver objectives.
+
+Technology
+
+Capacity to deal with obsolescence and innovation, product reliability,
+development and adaptability or ability to use technology to address
+changing demands.
+
+Competition &
+Markets
+
+Affecting the competitiveness (cost and quality) of the service and/or
+ability to deliver value for money and general market effectiveness.
+
+Customer &
+Stakeholder –
+related
+
+Satisfaction of: citizens, users, central and regional government and
+other stakeholders. Managing expectations – consulting &
+communication on difficult issues
+
+Sustainability /
+Environmental
+
+Environmental consequences arising from option (e.g. in terms of
+energy efficiency, pollution, recycling emissions etc.)
+
+Finance
+
+Costs, long term financial sustainability/ reliance on finite or
+vulnerable funding streams. Financial control, fraud and corruption.
+
+People
+Management
+
+Managing changes to services that may affect staff and/or ways of
+working. Resourcing the implementation of the option. Employment
+Issues (TUPE etc.). Maintaining effective health & safety of staff and
+users.
+
+Human
+resources
+
+32
+
+Risk Management Strategy
+
+Contracts &
+Partnerships
+
+Dependency on, or failure of, contractors to deliver services or
+products to the agreed cost and specification. Procurement contract
+and relationship management. Overall partnership arrangements, e.g.
+for pooled budgets or community safety. PFI, LSVT and regeneration.
+
+Tangible Assets
+
+Security of land and buildings, safety of plant and equipment,
+control of IT hardware.
+
+Reputation
+
+Affecting the public standing of the Council, partnerships, or
+individuals in it (affecting you). Management of issues that may be
+contentious with the public or the media.
+
+Professional
+Judgement &
+Activities
+
+Risks inherent in professional work such as assessing clients’ welfare
+or planning or response to the Human Rights Act.
+
+33
+
+Risk Management Strategy
+
+Appendix 2 - Definitions of key terminology that is part of West
+Berkshire Council’s risk management framework
+Risk - is the effect (a positive or negative deviation from the expected) of uncertainty on
+objectives. Risk is often expressed as a combination of the consequences of an event and
+the associated likelihood.
+Risk management - is defined as the rigorous and coordinated process of identifying
+significant risks relevant to the achievement of the Council’s strategic and operational
+objectives, evaluating their individual and combined likelihood and potential consequences,
+and implementing the most effective way of managing and monitoring them.
+Risk aware – term relating to the risk culture within the organisation and denoting a higher
+maturity level of the risk management processes.
+Risk response - once a risk has been identified, assessed and analysed actions are put in
+place to respond/manage the risk. British Standard 31100 and ISO 31000 use the term
+‘Risk treatment’ as ‘the process of developing, selecting and implementing controls’ or ‘the
+process to modify risk’ respectively.
+Gross risk rating - likelihood and impact without additional, specific mitigation action. Size
+of the event when a risk materialises and representing the inherent level of risk.
+Current risk rating - this is the likelihood and impact at the time of assessment and each
+re-assessment, based on mitigation action already put in place but excluding further
+mitigation action planned.
+Expected Net risk rating - this is a future level of likelihood and impact based on any
+additional mitigation action (if any) planned to further address the triggers and the
+consequences of risks
+Risk appetite - the level of risk with which an organisation aims to operate (Source:
+Government Finance Function – Risk Appetite Guidance note V1.0, October 2020)), similar
+definitions are:
+The amount of risk that an organisation is willing to seek or accept in the pursuit of longterm objectives. (IRM 2011)
+The amount and the type of risk that an organisation is willing to pursue or retain (ISO
+Guide 73 (2009)
+Risk tolerance - The level of risk with which an organisation is willing to operate (HM
+Treasury and the Government Finance Function) (Source: Government Finance Function –
+Risk Appetite Guidance note V1.0, October 2020)
+Risk Control / Mitigation – Actions to reduce the likelihood and/or the magnitude of a risk,
+being owned by a Service Director.
+
+34
+
+Risk Management Strategy
+
+Impact – the effect on the finances, infrastructure, reputation and marketplace when a risk
+materialises at a particular likelihood level.
+Likelihood – evaluation or judgement regarding the chances of a risk materialising,
+sometimes established as a ‘probability’ or ‘frequency’.
+Risk Owner - The individual officer stated to be responsible for "day-to-day" management
+of a risk, in effect the person accountable for this risk. The risks are owned by Heads of
+Service / Service Directors and, for risks on the project risk registers, by Project Managers.
+Even cross-cutting risks are allocated each to a specific Head of Service/Service Director to
+own.
+Cross-cutting risks - West Berkshire Council defines cross-cut risks as those that affect
+more than one Service/Department.
+Key Risk Indicators (KRI) - A key risk indicator (KRI) is a metric for measuring the
+likelihood that the combined probability of an event and its consequence will exceed the
+organization's risk appetite and have a profoundly negative impact on an organization's
+ability to be successful. West Berkshire Council is using an extensive number of
+performance indicators, many of them acting as the organisation’s KRIs.
+Key Control Indicators (KCI) - A Key Control Indicator (KCI) is a metric that provides
+information on the extent to which a given control is meeting its intended objectives in terms
+of loss prevention, reduction, etc. In so doing KCIs can be used to measure the
+effectiveness of particular operational risk controls at a particular point in time.
+
+35
+
+
