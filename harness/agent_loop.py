@@ -16,8 +16,12 @@ from .tools import Toolbox, ToolError, tool_schemas, summarize_args
 ELIDED = "[older tool output removed by the harness to keep the context small; re-run the tool if you need it again]"
 
 
+class StoppedByUser(Exception):
+    pass
+
+
 class Agent:
-    def __init__(self, name: str, system: str, toolbox: Toolbox, llm, emit, transcript_path: Path = None):
+    def __init__(self, name: str, system: str, toolbox: Toolbox, llm, emit, transcript_path: Path = None, should_stop=None):
         self.name = name
         self.system = system
         self.toolbox = toolbox
@@ -26,6 +30,7 @@ class Agent:
         self.emit = emit                    # callback(event_dict) -> activity feed
         self.messages = []
         self.transcript_path = transcript_path
+        self.should_stop = should_stop or (lambda: False)
         self.last_input_tokens = 0
         self.usage = {"input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0}
 
@@ -59,6 +64,9 @@ class Agent:
         self.messages.append({"role": "user", "content": user_text})
         final_text = ""
         for _ in range(max_iterations or config.MAX_TOOL_ITERATIONS):
+            if self.should_stop():
+                self._save()
+                raise StoppedByUser(f"{self.name} stopped by the user")
             self._compact()
             response = self.llm.create(self.system, self.tools, self.messages)
             for k in self.usage:

@@ -232,3 +232,87 @@ def test_harness_recheck_blocks_a_bad_pack_even_if_qa_says_done(orch):
     assert status == "blocked"
     assert run.stage("team")["verdict"] == "BLOCKED"
     assert run.stage("signoff")["status"] == "locked"  # never reaches the auditor
+
+
+def test_conversation_cache_breakpoint_does_not_mutate_transcript():
+    from harness.llm import with_cache_breakpoint
+    msgs = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": [{"type": "text", "text": "ok"}]},
+            {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "t1", "content": "x"}]}]
+    out = with_cache_breakpoint(msgs)
+    assert out[-1]["content"][-1]["cache_control"] == {"type": "ephemeral"}
+    assert "cache_control" not in msgs[-1]["content"][-1]  # the saved transcript stays clean
+    assert with_cache_breakpoint([{"role": "user", "content": "go"}])[0]["content"][0]["cache_control"]
+
+
+def test_stop_button_halts_agents_before_next_model_call(orch):
+    import threading
+    calls = {"n": 0}
+    gate = threading.Event()
+
+    def assessor(text):
+        return [[("list_files", {"path": "outputs"})]] * 50 + ["never reached"]
+
+    o = orch({"risk-assessor": assessor})
+    original = o._llm_factory
+
+    class Slow:
+        def __init__(self, inner): self.inner = inner
+        def create(self, *a, **k):
+            calls["n"] += 1
+            if calls["n"] == 3:
+                gate.set()
+            time.sleep(0.05)
+            return self.inner.create(*a, **k)
+
+    o._llm_factory = lambda: Slow(original())
+    run = o.store.create()
+    for stage in ("extract_rules", "analysis"):
+        o.start_stage(run.id, stage, "replay")
+        wait(run, stage)
+    o.start_stage(run.id, "risk", "agent")
+    gate.wait(30)
+    o.stop(run.id)
+    assert wait(run, "risk") == "failed"
+    assert "stopped by the user" in run.stage("risk")["error"]
+    assert calls["n"] < 10
+
+
+def test_conversation_cache_breakpoint_does_not_mutate_transcript():
+    from harness.llm import with_cache_breakpoint
+    msgs = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": [{"type": "text", "text": "ok"}]},
+            {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "t1", "content": "x"}]}]
+    out = with_cache_breakpoint(msgs)
+    assert out[-1]["content"][-1]["cache_control"] == {"type": "ephemeral"}
+    assert "cache_control" not in msgs[-1]["content"][-1]  # the saved transcript stays clean
+    assert with_cache_breakpoint([{"role": "user", "content": "go"}])[0]["content"][0]["cache_control"]
+
+
+def test_stop_halts_agent_before_next_model_call(orch):
+    import threading
+    calls = {"n": 0}
+    third_call = threading.Event()
+    o = orch({"risk-assessor": lambda text: [[("list_files", {"path": "outputs"})]] * 50 + ["never reached"]})
+    inner_factory = o._llm_factory
+
+    class Counting:
+        def __init__(self, inner):
+            self.inner = inner
+
+        def create(self, *a, **k):
+            calls["n"] += 1
+            if calls["n"] == 3:
+                third_call.set()
+            time.sleep(0.05)
+            return self.inner.create(*a, **k)
+
+    o._llm_factory = lambda: Counting(inner_factory())
+    run = o.store.create()
+    for stage in ("extract_rules", "analysis"):
+        o.start_stage(run.id, stage, "replay")
+        wait(run, stage)
+    o.start_stage(run.id, "risk", "agent")
+    assert third_call.wait(30)
+    o.stop(run.id)
+    assert wait(run, "risk") == "failed"
+    assert "stopped by the user" in run.stage("risk")["error"]
+    assert calls["n"] < 10

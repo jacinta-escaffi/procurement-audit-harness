@@ -71,7 +71,7 @@ The harness implements each layer of the agent-harness model from class:
 | Agent loop | Built in | `agent_loop.py`: the LLM picks an action, the harness runs it, the result goes back, and this repeats until the LLM stops calling tools |
 | Permissions | Approval prompts, plus "you own only X" in the prompts | Enforced in code (`permissions.py`): each agent can write only its own files and run only its own scripts. The challenger cannot read `data/` at all |
 | Memory | Files in `outputs/` | The same files, in a separate workspace per run, plus a saved transcript for each agent |
-| Context management | Built in | Long tool outputs are truncated, and older tool results are dropped once the context gets large. The system prompt is cached |
+| Context management | Built in | Long tool outputs are truncated, and older tool results are dropped once the context gets large. The system prompt, the tool list and the growing conversation are all prompt-cached, so each step re-reads earlier history at the cached rate |
 | Hooks | Settings | After each stage, the harness re-runs the project's own verification scripts and records every tool call in the activity log |
 | Orchestration (the lead) | The main Claude Code session | `orchestrator.py`: a state machine with two human gates and a message bus for the agent team |
 
@@ -134,6 +134,7 @@ python -m pytest -q                      # 23 tests, including the harness tests
 3. Add two environment variables:
    - `ANTHROPIC_API_KEY`: your API key.
    - `APP_ACCESS_CODE`: a code you share with graders. Starting runs and recording decisions require it, so strangers can't spend your API credit.
+   - `ANTHROPIC_WORKSPACE_ID` (optional): only needed if your API key is not scoped to a workspace. The API then requires this header.
 4. Set the health check path to `/healthz` and deploy.
 
 **Hosting notes:**
@@ -141,6 +142,8 @@ python -m pytest -q                      # 23 tests, including the harness tests
 - A paid instance avoids spin-down. Add a persistent disk and set `HARNESS_RUNS_DIR` to a path on it if you want runs to survive redeploys.
 
 ## Design notes and limits
+
+- **Cost control.** Each agent step resends that agent's history, so the harness caches the conversation as it grows. A **Stop** button ends a running stage before the agents' next model call. A first version without conversation caching cost about $10 for a run with the risk and team stages live.
 
 - **Python computes, the LLM judges.** The harness never asks an agent for a number it could compute. Every figure comes from the project's scripts.
 - **Existing Part A code.** The spend-analyst's scripts already exist in the repo, so the harness tells it to review and run them rather than rewrite working code.

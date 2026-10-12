@@ -117,6 +117,14 @@ def start_stage(run_id: str, stage: str, body: StageStart, x_access_code: str = 
     return {"ok": True}
 
 
+@app.post("/api/runs/{run_id}/stop")
+def stop(run_id: str, x_access_code: str = Header("")):
+    require_code(x_access_code)
+    get_run(run_id)
+    orch.stop(run_id)
+    return {"ok": True}
+
+
 @app.post("/api/runs/{run_id}/gate1")
 def gate1(run_id: str, body: Gate1, x_access_code: str = Header("")):
     require_code(x_access_code)

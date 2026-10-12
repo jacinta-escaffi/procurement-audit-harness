@@ -66,7 +66,8 @@ class Orchestrator:
     def agent(self, run: Run, name: str, outbox=None, suffix: str = "") -> Agent:
         toolbox = Toolbox(run.workspace, name, POLICIES[name], outbox=outbox)
         return Agent(name, system_prompt(run.workspace, name), toolbox, self.llm(), run.emit,
-                     transcript_path=run.folder / "transcripts" / f"{name}{suffix}.json")
+                     transcript_path=run.folder / "transcripts" / f"{name}{suffix}.json",
+                     should_stop=lambda: run.state.get("stop_requested", False))
 
     def restore(self, run: Run, *rels):
         """Replay mode: copy Part A outputs into the run's workspace."""
@@ -97,6 +98,7 @@ class Orchestrator:
             if run.state["busy"]:
                 raise StageError("another step is still running for this run")
             run.state["busy"] = True
+            run.state["stop_requested"] = False
             run.save()
 
         def worker():
@@ -133,6 +135,16 @@ class Orchestrator:
         run.save()
 
     # ------------------------------------------------------------------ public API
+    def stop(self, run_id: str):
+        """Ask the running agents to stop before their next LLM call (no further API spend)."""
+        run = self.store.get(run_id)
+        if not run.state["busy"]:
+            raise StageError("nothing is running")
+        with run.lock:
+            run.state["stop_requested"] = True
+            run.save()
+        run.emit({"type": "warning", "text": "Stop requested: agents will stop before their next model call."})
+
     def start_stage(self, run_id: str, stage: str, mode: str = "agent"):
         run = self.store.get(run_id)
         if stage not in ("extract_rules", "analysis", "risk", "team"):

@@ -39,7 +39,7 @@ def preamble(name: str) -> str:
         "- run_command runs one command with no shell: no pipes, redirects or `&&`. Only `python <permitted script> [args]`"
         + (" and `pdftotext`" if policy.pdftotext else "") + " are allowed.",
         f"- The harness enforces file ownership. You may write only: {', '.join(policy.writable)}; scratch space: outputs/.scratch/{name}/.",
-        "- Tool output longer than about 20,000 characters is truncated; read long files in pages with offset/limit.",
+        "- Tool output longer than about 12,000 characters is truncated; read long files in pages with offset/limit.",
         "- The human auditor uses the web interface, not this conversation. Do not ask questions and wait; if you are blocked, "
         "say so in your final report.",
         "- When your work is complete, give your final report as plain text with no tool call. That ends your turn.",

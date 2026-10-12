@@ -15,13 +15,30 @@ class LLMResponse:
     usage: dict = field(default_factory=dict)
 
 
+def with_cache_breakpoint(messages: list) -> list:
+    """Return a copy of messages whose last content block carries cache_control."""
+    if not messages:
+        return messages
+    out = list(messages[:-1])
+    last = dict(messages[-1])
+    content = last["content"]
+    if isinstance(content, str):
+        content = [{"type": "text", "text": content}]
+    content = [dict(b) for b in content]
+    content[-1]["cache_control"] = {"type": "ephemeral"}
+    last["content"] = content
+    out.append(last)
+    return out
+
+
 class AnthropicLLM:
     def __init__(self, api_key: str = None, model: str = None):
         import anthropic  # imported lazily so tests run without the package configured
         key = api_key or config.ANTHROPIC_API_KEY
         if not key:
             raise RuntimeError("ANTHROPIC_API_KEY is not set on the server")
-        self.client = anthropic.Anthropic(api_key=key, max_retries=4)
+        headers = {"anthropic-workspace-id": config.ANTHROPIC_WORKSPACE_ID} if config.ANTHROPIC_WORKSPACE_ID else None
+        self.client = anthropic.Anthropic(api_key=key, max_retries=4, default_headers=headers)
         self.model = model or config.MODEL
 
     def create(self, system: str, tools: list, messages: list, max_tokens: int = None) -> LLMResponse:
@@ -31,6 +48,9 @@ class AnthropicLLM:
         if cached_tools:
             cached_tools[-1]["cache_control"] = {"type": "ephemeral"}
         system_blocks = [{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}]
+        # Incremental conversation caching: mark the end of the transcript so the next call reads the
+        # whole history from the cache instead of paying full price for it again on every step.
+        messages = with_cache_breakpoint(messages)
         # Streaming is required by the API for long generations (e.g. writing rules.json).
         with self.client.messages.stream(model=self.model, max_tokens=max_tokens or config.MAX_TOKENS,
                                          system=system_blocks, tools=cached_tools, messages=messages) as stream:

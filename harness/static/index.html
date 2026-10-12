@@ -243,7 +243,7 @@ async function init() {
   };
   $("#new-run").onclick = newRun;
   $("#run-select").onchange = (e) => selectRun(e.target.value);
-  $("#show-results").onchange = () => { $("#feed").innerHTML = ""; lastSeq = -1; renderFeed(data?.events || [], true); };
+  $("#show-results").onchange = () => renderFeed(data?.events || [], true);
   const runs = await api("/api/runs");
   fillRuns(runs);
   const fromHash = location.hash.slice(1);
@@ -278,7 +278,7 @@ async function refresh() {
   if (!runId) return;
   try {
     const fresh = await api(`/api/runs/${runId}?after=${lastSeq}`);
-    const events = fresh.events;
+    const events = fresh.events.filter((e) => e.seq > lastSeq);
     const all = (data?.events || []).concat(events);
     const prevStages = JSON.stringify(data?.state?.stages || {});
     data = { ...fresh, events: all };
@@ -337,6 +337,11 @@ async function renderWork() {
   html += `<div id="gate-area"></div><div class="files" id="files"></div>`;
   w.innerHTML = html;
   w.querySelectorAll("[data-run-mode]").forEach((b) => (b.onclick = () => startStage(s.key, b.dataset.runMode)));
+  const stopBtn = $("#stop-run");
+  if (stopBtn) stopBtn.onclick = async () => {
+    try { await api(`/api/runs/${runId}/stop`, { method: "POST" }); toast("Stopping after the current step.", "good"); risksCache = null; renderWork(); refresh(); }
+    catch (e) { toast(e.message, "bad"); }
+  };
   if (s.key === "gate1" && ["waiting", "failed"].includes(st.status)) await renderGate1();
   if (s.key === "signoff" && st.status === "waiting") renderSignoff();
   if (s.key === "signoff" && st.status === "done") $("#gate-area").innerHTML = `<div class="notice good">Signed off by ${esc(st.signed_by)}. Download the pack below.</div>`;
@@ -351,7 +356,8 @@ function automatedControls(s, st) {
   return `<div class="actions">
     <button class="btn" data-run-mode="agent" ${can && !noKey ? "" : "disabled"}>${again ? "Run again with agents" : "Run with agents"}</button>
     <button class="btn ghost" data-run-mode="replay" ${can ? "" : "disabled"}>Replay Part A output</button>
-    <span class="hint">${st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
+    ${st.status === "running" ? `<button class="btn pen" id="stop-run" ${data.state.stop_requested ? "disabled" : ""}>${data.state.stop_requested ? "Stopping…" : "Stop"}</button>` : ""}
+    <span class="hint">${st.status === "running" ? "Stop ends the agents before their next model call, so no further API credit is spent." : st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
       again ? "Running a step again resets every step after it." : "Replay restores your teammate's Part A result and re-runs the Python, with no API cost."}</span>
   </div>`;
 }
