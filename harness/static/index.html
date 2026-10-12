@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit Planner Harness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="/static/marked.min.js"></script>
+<script src="/static/purify.min.js"></script>
+<style>
+:root {
+  --paper: #f3f5f7; --sheet: #ffffff; --ink: #1b2a3a; --ink-2: #4a5a6b; --rule: #d5dce3;
+  --tick: #2e7d5b; --tick-bg: #e3f1ea; --pen: #b3261e; --pen-bg: #f8e5e3; --amber: #9a6a00; --amber-bg: #fbf0d4;
+  --focus: #2563eb; --log: #f7f9fb;
+  --a-extract: #6b4fbb; --a-spend: #0f6c8f; --a-findings: #8a5a16; --a-risk: #a23a6c;
+  --a-planner: #2e7d5b; --a-challenger: #b3261e; --a-qa: #3b5bdb; --a-lead: #4a5a6b;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121a22; --sheet: #18222c; --ink: #e4ebf2; --ink-2: #9fb0c0; --rule: #2c3a47;
+  --tick: #5cc497; --tick-bg: #173328; --pen: #f08279; --pen-bg: #3a1d1b; --amber: #e6b84f; --amber-bg: #3a2f14; --log: #141d26;
+  --a-extract: #a991f0; --a-spend: #5bb8db; --a-findings: #d9a55a; --a-risk: #e07cab;
+  --a-planner: #5cc497; --a-challenger: #f08279; --a-qa: #8ea6ff; --a-lead: #9fb0c0;
+}}
+:root[data-theme="dark"] {
+  --paper: #121a22; --sheet: #18222c; --ink: #e4ebf2; --ink-2: #9fb0c0; --rule: #2c3a47;
+  --tick: #5cc497; --tick-bg: #173328; --pen: #f08279; --pen-bg: #3a1d1b; --amber: #e6b84f; --amber-bg: #3a2f14; --log: #141d26;
+  --a-extract: #a991f0; --a-spend: #5bb8db; --a-findings: #d9a55a; --a-risk: #e07cab;
+  --a-planner: #5cc497; --a-challenger: #f08279; --a-qa: #8ea6ff; --a-lead: #9fb0c0;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 "Public Sans", system-ui, sans-serif; }
+button, input, textarea, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+a { color: inherit; }
+
+header.top { display: flex; align-items: center; gap: 16px; padding: 14px 24px; border-bottom: 1px solid var(--rule); background: var(--sheet); flex-wrap: wrap; }
+header.top h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+header.top .sub { color: var(--ink-2); font-size: 13px; }
+header.top .spacer { flex: 1; }
+.pill { font-size: 12.5px; color: var(--ink-2); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.code-box { display: flex; gap: 6px; align-items: center; }
+.code-box input { width: 130px; padding: 4px 8px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+
+.shell { display: grid; grid-template-columns: 290px minmax(0, 1fr) minmax(320px, 420px); min-height: calc(100vh - 58px); }
+aside.rail { border-right: 1px solid var(--rule); padding: 20px 18px; background: var(--sheet); }
+main.work { padding: 24px 32px 60px; min-width: 0; }
+section.trail { border-left: 1px solid var(--rule); background: var(--log); display: flex; flex-direction: column; min-width: 0; max-height: calc(100vh - 58px); position: sticky; top: 0; }
+
+.runbar { display: flex; gap: 8px; margin-bottom: 20px; }
+.runbar select { flex: 1; min-width: 0; padding: 7px 8px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
+.btn { border: 1px solid var(--ink); background: var(--ink); color: var(--sheet); border-radius: 6px; padding: 8px 14px; font-weight: 600; cursor: pointer; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn.ghost:hover:not(:disabled) { border-color: var(--ink); }
+.btn.pen { background: var(--pen); border-color: var(--pen); color: #fff; }
+
+/* The pipeline: the memorable element. Agents are dots on a wire; human gates are stamps. */
+ol.flow { list-style: none; margin: 0; padding: 0; position: relative; }
+ol.flow::before { content: ""; position: absolute; left: 15px; top: 16px; bottom: 16px; width: 2px; background: var(--rule); }
+ol.flow li { position: relative; padding: 8px 8px 14px 46px; border-radius: 8px; cursor: pointer; }
+ol.flow li:hover { background: var(--paper); }
+ol.flow li.sel { background: var(--paper); }
+ol.flow .node { position: absolute; left: 6px; top: 9px; width: 20px; height: 20px; border-radius: 50%; background: var(--sheet); border: 2px solid var(--rule); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--ink-2); }
+ol.flow li.gate .node { border-radius: 4px; transform: rotate(-6deg); width: 22px; height: 22px; left: 5px; }
+ol.flow li[data-status="done"] .node { background: var(--tick); border-color: var(--tick); color: #fff; }
+ol.flow li[data-status="running"] .node { border-color: var(--a-qa); color: var(--a-qa); animation: pulse 1.4s ease-in-out infinite; }
+ol.flow li[data-status="waiting"] .node { background: var(--pen); border-color: var(--pen); color: #fff; }
+ol.flow li[data-status="failed"] .node, ol.flow li[data-status="blocked"] .node { background: var(--pen-bg); border-color: var(--pen); color: var(--pen); }
+ol.flow li[data-status="ready"] .node { border-color: var(--ink); color: var(--ink); }
+@keyframes pulse { 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--a-qa) 25%, transparent); } }
+@media (prefers-reduced-motion: reduce) { ol.flow li[data-status="running"] .node { animation: none; } }
+ol.flow .name { font-weight: 600; font-size: 14.5px; }
+ol.flow .who { font-size: 12.5px; color: var(--ink-2); }
+ol.flow .state { font-size: 12px; margin-top: 2px; }
+.s-done { color: var(--tick); } .s-running { color: var(--a-qa); } .s-waiting, .s-failed, .s-blocked { color: var(--pen); } .s-locked { color: var(--ink-2); } .s-ready { color: var(--ink); }
+.usage { margin-top: 18px; font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 12px; }
+
+.kind { display: inline-block; font-size: 12.5px; font-weight: 600; padding: 2px 9px; border-radius: 4px; background: var(--paper); border: 1px solid var(--rule); color: var(--ink-2); }
+.kind.gate { background: var(--pen-bg); border-color: transparent; color: var(--pen); }
+h2.stage-title { font-size: 28px; line-height: 1.15; letter-spacing: -0.02em; margin: 10px 0 6px; }
+p.lede { color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
+.meta { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; font-size: 13.5px; margin-bottom: 20px; }
+.meta dt { color: var(--ink-2); } .meta dd { margin: 0; }
+.meta code, p code, li code { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; background: var(--paper); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--rule); }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 4px 0 18px; }
+.hint { font-size: 13px; color: var(--ink-2); }
+.notice { border-left: 3px solid var(--ink-2); background: var(--sheet); padding: 10px 14px; margin: 14px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+.notice.bad { border-color: var(--pen); background: var(--pen-bg); }
+.notice.good { border-color: var(--tick); background: var(--tick-bg); }
+.notice.warn { border-color: var(--amber); background: var(--amber-bg); }
+.report { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 4px 18px; margin: 12px 0; max-height: 420px; overflow: auto; }
+
+.risk { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; margin: 0 0 12px; }
+.risk.revised { border-color: var(--amber); }
+.risk h3 { font-size: 15.5px; margin: 0 0 4px; line-height: 1.35; }
+.risk .score { font-size: 13px; color: var(--ink-2); }
+.risk details { margin: 8px 0; font-size: 14px; }
+.risk details summary { cursor: pointer; color: var(--ink-2); font-size: 13px; }
+.choices { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 8px; }
+.choices label { border: 1px solid var(--rule); border-radius: 6px; padding: 5px 12px; cursor: pointer; font-size: 14px; }
+.choices input { position: absolute; opacity: 0; pointer-events: none; }
+.choices label:has(input:checked) { border-color: var(--ink); background: var(--ink); color: var(--sheet); }
+.choices label:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.choices label.disabled { opacity: .4; cursor: not-allowed; }
+textarea, input.field { width: 100%; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--paper); resize: vertical; }
+.form-row { margin: 12px 0; } .form-row label { display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
+
+.files { margin-top: 30px; border-top: 1px solid var(--rule); padding-top: 18px; }
+.files h3 { font-size: 15px; margin: 0 0 10px; }
+.filelist { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.filelist button { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; border: 1px solid var(--rule); background: var(--sheet); border-radius: 5px; padding: 4px 8px; cursor: pointer; }
+.filelist button.on { border-color: var(--ink); }
+.viewer { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 20px; max-height: 70vh; overflow: auto; }
+.viewer pre { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
+.md table, .viewer table { border-collapse: collapse; font-size: 13px; margin: 10px 0; display: block; overflow-x: auto; }
+.md th, .md td, .viewer th, .viewer td { border: 1px solid var(--rule); padding: 4px 8px; text-align: left; vertical-align: top; }
+.md h1 { font-size: 21px; } .md h2 { font-size: 17px; } .md h3 { font-size: 15px; }
+
+.trail-head { padding: 14px 18px 10px; border-bottom: 1px solid var(--rule); display: flex; align-items: baseline; gap: 10px; }
+.trail-head h2 { font-size: 15px; margin: 0; }
+.trail-head label { font-size: 12.5px; color: var(--ink-2); margin-left: auto; display: flex; gap: 5px; align-items: center; }
+#feed { overflow-y: auto; padding: 10px 14px 40px; flex: 1; font-size: 13px; }
+.ev { padding: 5px 0; border-bottom: 1px dashed color-mix(in srgb, var(--rule) 70%, transparent); overflow-wrap: anywhere; }
+.ev .who { font-weight: 600; margin-right: 6px; }
+.ev .t { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-2); }
+.ev.tool .t b { color: var(--ink); font-weight: 500; }
+.ev.err { color: var(--pen); }
+.ev.stage { font-weight: 600; padding-top: 10px; }
+.ev.gate { background: var(--pen-bg); padding: 6px 8px; border-radius: 6px; border: 0; margin: 4px 0; }
+.ev.msg { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 7px 10px; margin: 6px 0; }
+.ev.msg .route { font-size: 12px; color: var(--ink-2); margin-bottom: 2px; }
+.ev.say { padding: 6px 0; }
+.ev.say .md { font-size: 13px; max-height: 220px; overflow: auto; }
+.ev details summary { cursor: pointer; color: var(--ink-2); font-size: 12px; }
+.ev pre { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; white-space: pre-wrap; margin: 4px 0; max-height: 220px; overflow: auto; }
+.empty { color: var(--ink-2); padding: 20px 4px; }
+
+@media (max-width: 1100px) {
+  .shell { grid-template-columns: 250px minmax(0, 1fr); }
+  section.trail { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--rule); max-height: 60vh; position: static; }
+}
+@media (max-width: 720px) {
+  header.top { padding: 12px 16px; }
+  .shell { grid-template-columns: 1fr; }
+  aside.rail { border-right: 0; border-bottom: 1px solid var(--rule); padding: 16px; }
+  main.work { padding: 18px 16px 40px; }
+  h2.stage-title { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Procurement Audit Planner</h1>
+  <span class="sub">Skills and agents from Part A, running in an independent harness</span>
+  <span class="spacer"></span>
+  <span class="pill" id="model-pill">model …</span>
+  <div class="code-box" id="code-box" hidden>
+    <input id="code" type="password" placeholder="Access code" aria-label="Access code">
+    <button class="btn ghost" id="code-save">Unlock</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="runbar">
+      <select id="run-select" aria-label="Run"></select>
+      <button class="btn" id="new-run">New run</button>
+    </div>
+    <ol class="flow" id="flow"></ol>
+    <div class="usage" id="usage"></div>
+  </aside>
+
+  <main class="work" id="work">
+    <p class="empty">Start a new run to create a fresh workspace. Each run is a full copy of the project: its data, agents, skills and scripts.</p>
+  </main>
+
+  <section class="trail" aria-label="Activity">
+    <div class="trail-head">
+      <h2>Activity</h2>
+      <label><input type="checkbox" id="show-results"> tool output</label>
+    </div>
+    <div id="feed"><p class="empty">Agent actions, tool calls, team messages and verification hooks appear here as they happen.</p></div>
+  </section>
+</div>
+
+<script>
+const STAGES = [
+  { key: "extract_rules", n: 1, name: "Extract rules", who: "/extract-rules skill", kind: "Skill",
+    lede: "You invoke the extract-rules skill. It reads the council's Contract Procedure Rules and writes every testable rule with a verbatim quote, then the harness verifies each quote against the PDF.",
+    reads: "data/contract-rules.pdf", writes: "outputs/rules.json" },
+  { key: "analysis", n: 2, name: "Analyse spend and history", who: "spend-analyst and findings-analyst", kind: "Sub-agents",
+    lede: "Two sub-agents work in parallel. The spend-analyst runs Python over every payment to compute risk indicators; the findings-analyst extracts past audit opinions and the council's risk-scoring method from committee papers.",
+    reads: "rules.json, data/spend/*.xlsx, data/contracts.csv, data/committee/*.pdf", writes: "outputs/analytics.json, outputs/history.json" },
+  { key: "risk", n: 3, name: "Rate the risks", who: "risk-assessor with the risk-assessment skill", kind: "Sub-agent",
+    lede: "The risk-assessor rates each risk on the council's likelihood × impact matrix. Every rating must cite a rule, a computed metric or an audit finding, or the register builder excludes it.",
+    reads: "rules.json, analytics.json, history.json", writes: "outputs/risk-register.md, outputs/auditor-comments.md" },
+  { key: "gate1", n: 4, name: "Approve the risks", who: "You, as the auditor", kind: "Human gate", gate: true,
+    lede: "Nothing is planned until you decide every risk. Approve it, reject it, or ask for a change; a change goes back to the risk-assessor, then returns to you for review.",
+    reads: "outputs/risk-register.md", writes: "outputs/auditor-comments.md" },
+  { key: "team", n: 5, name: "Build and challenge the pack", who: "planner, challenger and qa-reviewer", kind: "Agent team",
+    lede: "Three teammates message each other. The planner builds the audit plan and samples; the challenger questions it with cited evidence for up to two rounds; the qa-reviewer runs four check scripts and blocks sign-off until all pass.",
+    reads: "approved risks, rules.json, analytics", writes: "planning-memo.md, risk-control-matrix.md, audit-program.md, samples/, challenges.md, review.md" },
+  { key: "signoff", n: 6, name: "Sign off the pack", who: "You, as the auditor", kind: "Human gate", gate: true,
+    lede: "Review the QA verdict and the challenger's log, then sign off. Only a pack marked ready for sign-off reaches this step.",
+    reads: "outputs/review.md, outputs/challenges.md", writes: "outputs/review.md (sign-off block)" },
+];
+const STATUS_TEXT = { locked: "Waiting for the previous step", ready: "Ready to run", running: "Running…", done: "Done",
+  failed: "Failed — see the error", waiting: "Waiting for your decision", blocked: "Blocked — back to the team" };
+const AGENT_COLOR = { "extract-rules": "--a-extract", "spend-analyst": "--a-spend", "findings-analyst": "--a-findings",
+  "risk-assessor": "--a-risk", planner: "--a-planner", challenger: "--a-challenger", "qa-reviewer": "--a-qa", lead: "--a-lead" };
+
+let cfg = {}, runId = null, data = null, lastSeq = -1, selected = null, risksCache = null, viewing = null, pollTimer = null;
+let code = "";
+try { code = localStorage.getItem("harness-code") || ""; } catch (e) {}
+
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const md = (s) => DOMPurify.sanitize(marked.parse(String(s ?? "")));
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, { ...opts, headers: { "Content-Type": "application/json", "X-Access-Code": code, ...(opts.headers || {}) } });
+  if (!res.ok) {
+    let msg = res.statusText;
+    try { msg = (await res.json()).detail || msg; } catch (e) {}
+    throw new Error(msg);
+  }
+  const type = res.headers.get("content-type") || "";
+  return type.includes("json") ? res.json() : res.text();
+}
+
+async function init() {
+  cfg = await api("/api/config");
+  $("#model-pill").textContent = `model ${cfg.model}` + (cfg.api_key_configured ? "" : " · no API key: replay only");
+  $("#code-box").hidden = !cfg.access_code_required;
+  $("#code").value = code;
+  $("#code-save").onclick = async () => {
+    code = $("#code").value.trim();
+    try { await api("/api/check-code", { method: "POST" }); try { localStorage.setItem("harness-code", code); } catch (e) {} toast("Unlocked.", "good"); }
+    catch (e) { toast(e.message, "bad"); }
+  };
+  $("#new-run").onclick = newRun;
+  $("#run-select").onchange = (e) => selectRun(e.target.value);
+  $("#show-results").onchange = () => { $("#feed").innerHTML = ""; lastSeq = -1; renderFeed(data?.events || [], true); };
+  const runs = await api("/api/runs");
+  fillRuns(runs);
+  const fromHash = location.hash.slice(1);
+  if (fromHash && runs.some((r) => r.id === fromHash)) selectRun(fromHash);
+  else if (runs.length) selectRun(runs[0].id);
+  else renderFlow();
+}
+
+function fillRuns(runs) {
+  $("#run-select").innerHTML = runs.length ? runs.map((r) => `<option value="${esc(r.id)}">Run ${esc(r.created.slice(0, 16).replace("T", " "))} UTC</option>`).join("")
+    : `<option value="">No runs yet</option>`;
+  if (runId) $("#run-select").value = runId;
+}
+
+async function newRun() {
+  try {
+    const { id } = await api("/api/runs", { method: "POST", body: JSON.stringify({}) });
+    fillRuns(await api("/api/runs"));
+    selectRun(id);
+  } catch (e) { toast(e.message, "bad"); }
+}
+
+function selectRun(id) {
+  runId = id; data = null; lastSeq = -1; selected = null; risksCache = null; viewing = null;
+  location.hash = id; $("#run-select").value = id;
+  $("#feed").innerHTML = "";
+  refresh();
+}
+
+async function refresh() {
+  clearTimeout(pollTimer);
+  if (!runId) return;
+  try {
+    const fresh = await api(`/api/runs/${runId}?after=${lastSeq}`);
+    const events = fresh.events;
+    const all = (data?.events || []).concat(events);
+    const prevStages = JSON.stringify(data?.state?.stages || {});
+    data = { ...fresh, events: all };
+    if (events.length) { lastSeq = events[events.length - 1].seq; renderFeed(events); }
+    const changed = prevStages !== JSON.stringify(data.state.stages) || events.some((e) => e.type === "gate" || e.type === "stage");
+    if (changed) risksCache = null;
+    renderFlow();
+    if (changed || !$("#work").dataset.run) renderWork();
+    else renderFiles(false);
+  } catch (e) { console.error(e); }
+  const busy = data?.state?.busy;
+  pollTimer = setTimeout(refresh, busy ? 2000 : 6000);
+}
+
+function currentStage() {
+  const st = data.state.stages;
+  return STAGES.find((s) => ["running", "waiting", "failed", "blocked"].includes(st[s.key].status))
+    || STAGES.find((s) => st[s.key].status === "ready") || STAGES[STAGES.length - 1];
+}
+
+function renderFlow() {
+  const st = data?.state?.stages;
+  $("#flow").innerHTML = STAGES.map((s) => {
+    const status = st ? st[s.key].status : "locked";
+    const mark = status === "done" ? "✓" : status === "waiting" ? "!" : status === "failed" || status === "blocked" ? "×" : s.n;
+    return `<li class="${s.gate ? "gate" : ""} ${selected === s.key ? "sel" : ""}" data-status="${status}" data-key="${s.key}" tabindex="0">
+      <span class="node" aria-hidden="true">${mark}</span>
+      <div class="name">${esc(s.name)}</div><div class="who">${esc(s.who)}</div>
+      <div class="state s-${status}">${STATUS_TEXT[status] || status}</div></li>`;
+  }).join("");
+  $("#flow").querySelectorAll("li").forEach((li) => {
+    const go = () => { if (!data) return; selected = li.dataset.key; renderFlow(); renderWork(); };
+    li.onclick = go; li.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } };
+  });
+  const u = data?.state?.usage;
+  $("#usage").innerHTML = u ? `Tokens this run: ${(u.input_tokens + u.cache_read_input_tokens + u.cache_creation_input_tokens).toLocaleString()} in
+    (${u.cache_read_input_tokens.toLocaleString()} from cache), ${u.output_tokens.toLocaleString()} out` : "";
+}
+
+async function renderWork() {
+  if (!data) return;
+  const s = STAGES.find((x) => x.key === selected) || currentStage();
+  const st = data.state.stages[s.key];
+  const w = $("#work");
+  w.dataset.run = runId;
+  let html = `<span class="kind ${s.gate ? "gate" : ""}">${esc(s.kind)}</span>
+    <h2 class="stage-title">${esc(s.name)}</h2><p class="lede">${esc(s.lede)}</p>
+    <dl class="meta"><dt>Reads</dt><dd><code>${esc(s.reads)}</code></dd><dt>Writes</dt><dd><code>${esc(s.writes)}</code></dd>
+    ${st.mode ? `<dt>Mode</dt><dd>${st.mode === "agent" ? "Run by the agents" : "Replayed from Part A outputs"}</dd>` : ""}
+    ${st.started_at ? `<dt>Started</dt><dd>${esc(st.started_at.replace("T", " "))}</dd>` : ""}
+    ${st.finished_at ? `<dt>Finished</dt><dd>${esc(st.finished_at.replace("T", " "))}</dd>` : ""}</dl>`;
+  if (st.error) html += `<div class="notice bad"><strong>What went wrong:</strong> ${esc(st.error)}</div>`;
+  if (["extract_rules", "analysis", "risk", "team"].includes(s.key)) html += automatedControls(s, st);
+  if (st.verdict) html += `<div class="notice ${st.verdict === "BLOCKED" ? "bad" : "good"}">QA verdict: <strong>${esc(st.verdict)}</strong></div>`;
+  if (st.report) html += `<div class="report md">${md(st.report)}</div>`;
+  html += `<div id="gate-area"></div><div class="files" id="files"></div>`;
+  w.innerHTML = html;
+  w.querySelectorAll("[data-run-mode]").forEach((b) => (b.onclick = () => startStage(s.key, b.dataset.runMode)));
+  if (s.key === "gate1" && ["waiting", "failed"].includes(st.status)) await renderGate1();
+  if (s.key === "signoff" && st.status === "waiting") renderSignoff();
+  if (s.key === "signoff" && st.status === "done") $("#gate-area").innerHTML = `<div class="notice good">Signed off by ${esc(st.signed_by)}. Download the pack below.</div>`;
+  renderFiles(true);
+}
+
+function automatedControls(s, st) {
+  const busy = data.state.busy;
+  const can = !busy && st.status !== "locked" && st.status !== "running";
+  const again = ["done", "failed", "blocked"].includes(st.status);
+  const noKey = !cfg.api_key_configured;
+  return `<div class="actions">
+    <button class="btn" data-run-mode="agent" ${can && !noKey ? "" : "disabled"}>${again ? "Run again with agents" : "Run with agents"}</button>
+    <button class="btn ghost" data-run-mode="replay" ${can ? "" : "disabled"}>Replay Part A output</button>
+    <span class="hint">${st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
+      again ? "Running a step again resets every step after it." : "Replay restores your teammate's Part A result and re-runs the Python, with no API cost."}</span>
+  </div>`;
+}
+
+async function startStage(key, mode) {
+  try { await api(`/api/runs/${runId}/stages/${key}`, { method: "POST", body: JSON.stringify({ mode }) }); selected = key; refresh(); }
+  catch (e) { toast(e.message, "bad"); }
+}
+
+async function renderGate1() {
+  const area = $("#gate-area");
+  if (!risksCache) risksCache = await api(`/api/runs/${runId}/risks`);
+  const g = data.state.gate1;
+  const review = g.awaiting_review || [];
+  const prev = g.decisions || {};
+  let html = review.length
+    ? `<div class="notice warn">The risk-assessor revised ${review.map(esc).join(", ")} as you asked. Review the revised wording below and approve or reject each risk.</div>`
+    : `<div class="notice">Decide every risk. Ask for a change by choosing Change and saying what should change.</div>`;
+  for (const r of risksCache) {
+    const p = review.includes(r.id) ? {} : (prev[r.id] || {});
+    const lock = review.length > 0;
+    html += `<div class="risk ${review.includes(r.id) ? "revised" : ""}" data-id="${esc(r.id)}">
+      <h3>${esc(r.id)}: ${esc(r.title)}</h3><div class="score">Score and band: ${esc(r.score)}</div>
+      <details><summary>Ratings, evidence and proposed focus</summary><div class="md">${md(r.section)}</div></details>
+      <div class="choices" role="radiogroup" aria-label="Decision for ${esc(r.id)}">
+        ${["Approve", "Change", "Reject"].map((d) => `<label class="${lock && d === "Change" ? "disabled" : ""}"><input type="radio" name="d-${esc(r.id)}" value="${d}"
+          ${p.decision === d ? "checked" : ""} ${lock && d === "Change" ? "disabled" : ""}>${d}</label>`).join("")}
+      </div>
+      <textarea rows="2" placeholder="Comment (required for Change)" aria-label="Comment for ${esc(r.id)}">${esc(p.comment || "")}</textarea></div>`;
+  }
+  html += `<div class="actions"><button class="btn pen" id="submit-gate" ${data.state.busy ? "disabled" : ""}>Record my decisions</button>
+    <a class="hint" href="#" id="view-register">Open the full register</a></div>`;
+  area.innerHTML = html;
+  $("#view-register").onclick = (e) => { e.preventDefault(); openFile("outputs/risk-register.md"); };
+  $("#submit-gate").onclick = async () => {
+    const decisions = {};
+    area.querySelectorAll(".risk").forEach((el) => {
+      decisions[el.dataset.id] = { decision: el.querySelector("input:checked")?.value || "", comment: el.querySelector("textarea").value };
+    });
+    try { await api(`/api/runs/${runId}/gate1`, { method: "POST", body: JSON.stringify({ decisions }) }); toast("Decisions recorded.", "good"); refresh(); }
+    catch (e) { toast(e.message, "bad"); }
+  };
+}
+
+function renderSignoff() {
+  $("#gate-area").innerHTML = `<div class="notice good">The QA reviewer marked this pack ready for sign-off. Read the review and the challenge log before signing.</div>
+    <div class="actions"><button class="btn ghost" id="o-review">Open review.md</button><button class="btn ghost" id="o-chal">Open challenges.md</button></div>
+    <div class="form-row"><label for="so-name">Auditor name</label><input class="field" id="so-name" autocomplete="name"></div>
+    <div class="form-row"><label for="so-comments">Comments</label><textarea id="so-comments" rows="3"></textarea></div>
+    <div class="actions"><button class="btn pen" id="so-sign">Sign off the pack</button><button class="btn ghost" id="so-return">Return to the team</button></div>`;
+  $("#o-review").onclick = () => openFile("outputs/review.md");
+  $("#o-chal").onclick = () => openFile("outputs/challenges.md");
+  const send = async (decision) => {
+    try { await api(`/api/runs/${runId}/signoff`, { method: "POST", body: JSON.stringify({ decision, name: $("#so-name").value, comments: $("#so-comments").value }) });
+      toast(decision === "Sign off" ? "Pack signed off." : "Returned to the team.", "good"); refresh(); }
+    catch (e) { toast(e.message, "bad"); }
+  };
+  $("#so-sign").onclick = () => send("Sign off");
+  $("#so-return").onclick = () => send("Return to team");
+}
+
+function renderFiles(force) {
+  const box = $("#files");
+  if (!box || !data) return;
+  const sig = data.files.join("|");
+  if (!force && box.dataset.sig === sig) return;
+  box.dataset.sig = sig;
+  if (!data.files.length) { box.innerHTML = `<h3>Outputs</h3><p class="hint">No outputs yet. Files appear here as each step writes them.</p>`; return; }
+  box.innerHTML = `<h3>Outputs</h3><div class="filelist">${data.files.map((f) =>
+    `<button data-f="${esc(f)}" class="${viewing === f ? "on" : ""}">${esc(f.replace("outputs/", ""))}</button>`).join("")}</div>
+    <div class="actions"><a class="btn ghost" href="/api/runs/${runId}/download">Download the pack (.zip)</a></div>
+    <div class="viewer" id="viewer" ${viewing ? "" : "hidden"}></div>`;
+  box.querySelectorAll("[data-f]").forEach((b) => (b.onclick = () => openFile(b.dataset.f)));
+  if (viewing) openFile(viewing, false);
+}
+
+async function openFile(path, scroll = true) {
+  viewing = path;
+  const box = $("#files");
+  box?.querySelectorAll("[data-f]").forEach((b) => b.classList.toggle("on", b.dataset.f === path));
+  const v = $("#viewer");
+  if (!v) return;
+  v.hidden = false;
+  try {
+    const text = await api(`/api/runs/${runId}/file?path=${encodeURIComponent(path)}`);
+    if (path.endsWith(".md")) v.innerHTML = `<div class="md">${md(text)}</div>`;
+    else if (path.endsWith(".json")) { let t = text; try { t = JSON.stringify(JSON.parse(text), null, 2); } catch (e) {} v.innerHTML = `<pre>${esc(t)}</pre>`; }
+    else if (path.endsWith(".csv")) v.innerHTML = csvTable(text);
+    else v.innerHTML = `<pre>${esc(text)}</pre>`;
+    if (scroll) v.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (e) { v.innerHTML = `<p class="hint">${esc(e.message)}</p>`; }
+}
+
+function csvTable(text) {
+  const rows = []; let row = [], cell = "", q = false;
+  for (let i = 0; i < text.length && rows.length < 201; i++) {
+    const c = text[i];
+    if (q) { if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; } else if (c === '"') q = false; else cell += c; }
+    else if (c === '"') q = true; else if (c === ",") { row.push(cell); cell = ""; }
+    else if (c === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; } else if (c !== "\r") cell += c;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  const [head, ...body] = rows;
+  return `<table><thead><tr>${(head || []).map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${body.map((r) =>
+    `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>${rows.length > 200 ? `<p class="hint">First 200 rows shown.</p>` : ""}`;
+}
+
+function who(name) {
+  const v = AGENT_COLOR[name];
+  return `<span class="who" style="color: var(${v || "--ink"})">${esc(name)}</span>`;
+}
+
+function renderFeed(events, rebuild = false) {
+  const feed = $("#feed");
+  if (rebuild) feed.innerHTML = "";
+  if (feed.querySelector(".empty")) feed.innerHTML = "";
+  const nearBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 80;
+  const showResults = $("#show-results").checked;
+  const frag = document.createDocumentFragment();
+  for (const e of events) {
+    let html = null, cls = "ev";
+    switch (e.type) {
+      case "stage": cls += " stage"; html = `${esc(STAGES.find((s) => s.key === e.stage)?.name || e.stage)}: ${esc(STATUS_TEXT[e.status] || e.status)}`; break;
+      case "tool_call": cls += " tool"; html = `${who(e.agent)}<span class="t"><b>${esc(e.tool)}</b> ${esc(e.text)}</span>`; break;
+      case "tool_result":
+        if (e.error) { cls += " err"; html = `${who(e.agent)}<span class="t">${esc(e.text)}</span>`; }
+        else if (showResults) html = `<details><summary>${esc(e.agent)} · ${esc(e.tool)} result</summary><pre>${esc(e.text)}</pre></details>`;
+        break;
+      case "agent_text": cls += " say"; html = `${who(e.agent)}<div class="md">${md(e.text)}</div>`; break;
+      case "message": cls += " msg"; html = `<div class="route">${who(e.from)} to ${who(e.to)}</div><div class="md">${md(e.text)}</div>`; break;
+      case "hook": html = `<span class="t">${esc(e.text)}</span>${e.detail ? `<details><summary>output</summary><pre>${esc(e.detail)}</pre></details>` : ""}`; break;
+      case "gate": cls += " gate"; html = esc(e.text); break;
+      case "turn": html = `<span class="t">${esc(e.text)}</span>`; break;
+      case "error": cls += " err"; html = esc(e.text); break;
+      case "warning": cls += " err"; html = `${e.agent ? who(e.agent) : ""}${esc(e.text)}`; break;
+      case "context": html = `${who(e.agent)}<span class="t">${esc(e.text)}</span>`; break;
+      case "info": html = `<span class="t">${esc(e.text)}</span>`; break;
+    }
+    if (html === null) continue;
+    const div = document.createElement("div"); div.className = cls; div.innerHTML = html; frag.appendChild(div);
+  }
+  feed.appendChild(frag);
+  if (nearBottom || rebuild) feed.scrollTop = feed.scrollHeight;
+}
+
+function toast(text, kind) {
+  const n = document.createElement("div");
+  n.className = `notice ${kind || ""}`;
+  n.setAttribute("role", "status");
+  n.style.cssText = "position:fixed;right:16px;bottom:16px;z-index:10;max-width:420px;box-shadow:0 4px 18px rgba(0,0,0,.15)";
+  n.textContent = text;
+  document.body.appendChild(n);
+  setTimeout(() => n.remove(), 4500);
+}
+
+init().catch((e) => { $("#work").innerHTML = `<div class="notice bad">Could not reach the server: ${esc(e.message)}</div>`; });
+</script>
+</body>
+</html>

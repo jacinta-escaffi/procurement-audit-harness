@@ -1,3 +1,11 @@
-pandas
-openpyxl
-pypdf
+# Part A: analysis and builder scripts
+pandas>=2.2
+openpyxl>=3.1
+pypdf>=5.0
+
+# Part B: the independent harness
+anthropic>=0.40
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pytest>=8.0
+httpx>=0.27

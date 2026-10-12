@@ -66,6 +66,7 @@ def main():
     if FULL.exists(): shutil.rmtree(FULL)
     FULL.mkdir(parents=True)
     exclusion_path=write(exclusions,"exclusions.csv")
+    write(spend,"spend-clean.csv")  # clean population used by build_pack.py and QA sample checks
     start,end=spend.payment_date.min(),spend.payment_date.max()
     notices, contract_diag=load_contracts(ROOT/"data/contracts.csv",start,end)
     boundaries, skipped_bounds, quote=thresholds(rules)

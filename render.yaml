@@ -1,0 +1,16 @@
+# Render Blueprint for the Part B harness. In Render: New > Blueprint, pick this repo.
+# Or create a Web Service by hand with Runtime = Docker (same settings as below).
+services:
+  - type: web
+    name: procurement-audit-harness
+    runtime: docker
+    plan: free            # see README: free works for a demo; a paid plan avoids spin-down mid-run
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false       # entered in the Render dashboard, never committed
+      - key: APP_ACCESS_CODE
+        sync: false       # share this code with your grader so they can run the workflow
+      - key: HARNESS_MODEL
+        value: claude-sonnet-5-5

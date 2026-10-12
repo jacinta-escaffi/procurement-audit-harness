@@ -1,4 +1,5 @@
 .venv/
+.env
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -9,3 +10,7 @@ AGENTS.md
 agents.md
 DECISIONS.md
 decisions.md
+
+# Part B harness: per-run workspaces and agent scratch space
+runs/
+outputs/.scratch/
