@@ -30,6 +30,7 @@
   --a-planner: #5cc497; --a-challenger: #f08279; --a-qa: #8ea6ff; --a-lead: #9fb0c0;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { margin: 0; }
 body { background: var(--paper); color: var(--ink); font: 15px/1.55 "Public Sans", system-ui, sans-serif; }
 button, input, textarea, select { font: inherit; color: inherit; }
@@ -68,14 +69,14 @@ ol.flow li.gate .node { border-radius: 4px; transform: rotate(-6deg); width: 22p
 ol.flow li[data-status="done"] .node { background: var(--tick); border-color: var(--tick); color: #fff; }
 ol.flow li[data-status="running"] .node { border-color: var(--a-qa); color: var(--a-qa); animation: pulse 1.4s ease-in-out infinite; }
 ol.flow li[data-status="waiting"] .node { background: var(--pen); border-color: var(--pen); color: #fff; }
-ol.flow li[data-status="failed"] .node, ol.flow li[data-status="blocked"] .node { background: var(--pen-bg); border-color: var(--pen); color: var(--pen); }
+ol.flow li[data-status="failed"] .node, ol.flow li[data-status="blocked"] .node, ol.flow li[data-status="stopped"] .node { background: var(--pen-bg); border-color: var(--pen); color: var(--pen); }
 ol.flow li[data-status="ready"] .node { border-color: var(--ink); color: var(--ink); }
 @keyframes pulse { 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--a-qa) 25%, transparent); } }
 @media (prefers-reduced-motion: reduce) { ol.flow li[data-status="running"] .node { animation: none; } }
 ol.flow .name { font-weight: 600; font-size: 14.5px; }
 ol.flow .who { font-size: 12.5px; color: var(--ink-2); }
 ol.flow .state { font-size: 12px; margin-top: 2px; }
-.s-done { color: var(--tick); } .s-running { color: var(--a-qa); } .s-waiting, .s-failed, .s-blocked { color: var(--pen); } .s-locked { color: var(--ink-2); } .s-ready { color: var(--ink); }
+.s-done { color: var(--tick); } .s-running { color: var(--a-qa); } .s-waiting, .s-failed, .s-blocked, .s-stopped { color: var(--pen); } .s-locked { color: var(--ink-2); } .s-ready { color: var(--ink); }
 .usage { margin-top: 18px; font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: 12px; }
 
 .kind { display: inline-block; font-size: 12.5px; font-weight: 600; padding: 2px 9px; border-radius: 4px; background: var(--paper); border: 1px solid var(--rule); color: var(--ink-2); }
@@ -156,6 +157,7 @@ textarea, input.field { width: 100%; border: 1px solid var(--rule); border-radiu
   <h1>Procurement Audit Planner</h1>
   <span class="sub">Skills and agents from Part A, running in an independent harness</span>
   <span class="spacer"></span>
+  <button class="btn pen" id="top-stop" hidden>Stop the running step</button>
   <span class="pill" id="model-pill">model …</span>
   <div class="code-box" id="code-box" hidden>
     <input id="code" type="password" placeholder="Access code" aria-label="Access code">
@@ -188,27 +190,27 @@ textarea, input.field { width: 100%; border: 1px solid var(--rule); border-radiu
 
 <script>
 const STAGES = [
-  { key: "extract_rules", n: 1, name: "Extract rules", who: "/extract-rules skill", kind: "Skill",
+  { key: "extract_rules", est: { agent: "15–30 min" },  n: 1, name: "Extract rules", who: "/extract-rules skill", kind: "Skill",
     lede: "You invoke the extract-rules skill. It reads the council's Contract Procedure Rules and writes every testable rule with a verbatim quote, then the harness verifies each quote against the PDF.",
     reads: "data/contract-rules.pdf", writes: "outputs/rules.json" },
-  { key: "analysis", n: 2, name: "Analyse spend and history", who: "spend-analyst and findings-analyst", kind: "Sub-agents",
+  { key: "analysis", est: { agent: "20–40 min" },  n: 2, name: "Analyse spend and history", who: "spend-analyst and findings-analyst", kind: "Sub-agents",
     lede: "Two sub-agents work in parallel. The spend-analyst runs Python over every payment to compute risk indicators; the findings-analyst extracts past audit opinions and the council's risk-scoring method from committee papers.",
     reads: "rules.json, data/spend/*.xlsx, data/contracts.csv, data/committee/*.pdf", writes: "outputs/analytics.json, outputs/history.json" },
-  { key: "risk", n: 3, name: "Rate the risks", who: "risk-assessor with the risk-assessment skill", kind: "Sub-agent",
+  { key: "risk", est: { agent: "3–6 min" },  n: 3, name: "Rate the risks", who: "risk-assessor with the risk-assessment skill", kind: "Sub-agent",
     lede: "The risk-assessor rates each risk on the council's likelihood × impact matrix. Every rating must cite a rule, a computed metric or an audit finding, or the register builder excludes it.",
     reads: "rules.json, analytics.json, history.json", writes: "outputs/risk-register.md, outputs/auditor-comments.md" },
-  { key: "gate1", n: 4, name: "Approve the risks", who: "You, as the auditor", kind: "Human gate", gate: true,
+  { key: "gate1", est: { agent: "Your decision, then under 1 min. A Change adds 3–5 min while the risk-assessor revises." },  n: 4, name: "Approve the risks", who: "You, as the auditor", kind: "Human gate", gate: true,
     lede: "Nothing is planned until you decide every risk. Approve it, reject it, or ask for a change; a change goes back to the risk-assessor, then returns to you for review.",
     reads: "outputs/risk-register.md", writes: "outputs/auditor-comments.md" },
-  { key: "team", n: 5, name: "Build and challenge the pack", who: "planner, challenger and qa-reviewer", kind: "Agent team",
+  { key: "team", est: { agent: "30–60 min (three agents, up to two challenge rounds)" },  n: 5, name: "Build and challenge the pack", who: "planner, challenger and qa-reviewer", kind: "Agent team",
     lede: "Three teammates message each other. The planner builds the audit plan and samples; the challenger questions it with cited evidence for up to two rounds; the qa-reviewer runs four check scripts and blocks sign-off until all pass.",
     reads: "approved risks, rules.json, analytics", writes: "planning-memo.md, risk-control-matrix.md, audit-program.md, samples/, challenges.md, review.md" },
-  { key: "signoff", n: 6, name: "Sign off the pack", who: "You, as the auditor", kind: "Human gate", gate: true,
+  { key: "signoff", est: { agent: "Your decision; instant" },  n: 6, name: "Sign off the pack", who: "You, as the auditor", kind: "Human gate", gate: true,
     lede: "Review the QA verdict and the challenger's log, then sign off. Only a pack marked ready for sign-off reaches this step.",
     reads: "outputs/review.md, outputs/challenges.md", writes: "outputs/review.md (sign-off block)" },
 ];
 const STATUS_TEXT = { locked: "Waiting for the previous step", ready: "Ready to run", running: "Running…", done: "Done",
-  failed: "Failed — see the error", waiting: "Waiting for your decision", blocked: "Blocked — back to the team" };
+  failed: "Failed — see the error", waiting: "Waiting for your decision", blocked: "Blocked — back to the team", stopped: "Stopped" };
 const AGENT_COLOR = { "extract-rules": "--a-extract", "spend-analyst": "--a-spend", "findings-analyst": "--a-findings",
   "risk-assessor": "--a-risk", planner: "--a-planner", challenger: "--a-challenger", "qa-reviewer": "--a-qa", lead: "--a-lead" };
 
@@ -242,6 +244,10 @@ async function init() {
     catch (e) { toast(e.message, "bad"); }
   };
   $("#new-run").onclick = newRun;
+  $("#top-stop").onclick = async () => {
+    try { await api(`/api/runs/${runId}/stop`, { method: "POST" }); toast("Stopping before the agents' next model call.", "good"); refresh(); }
+    catch (e) { toast(e.message, "bad"); }
+  };
   $("#run-select").onchange = (e) => selectRun(e.target.value);
   $("#show-results").onchange = () => renderFeed(data?.events || [], true);
   const runs = await api("/api/runs");
@@ -290,12 +296,17 @@ async function refresh() {
     else renderFiles(false);
   } catch (e) { console.error(e); }
   const busy = data?.state?.busy;
+  const top = $("#top-stop");
+  const stages = data?.state?.stages || {};
+  top.hidden = !(busy && Object.values(stages).some((v) => v.status === "running"));
+  top.disabled = !!data?.state?.stop_requested;
+  top.textContent = data?.state?.stop_requested ? "Stopping…" : "Stop the running step";
   pollTimer = setTimeout(refresh, busy ? 2000 : 6000);
 }
 
 function currentStage() {
   const st = data.state.stages;
-  return STAGES.find((s) => ["running", "waiting", "failed", "blocked"].includes(st[s.key].status))
+  return STAGES.find((s) => ["running", "waiting", "failed", "blocked", "stopped"].includes(st[s.key].status))
     || STAGES.find((s) => st[s.key].status === "ready") || STAGES[STAGES.length - 1];
 }
 
@@ -303,11 +314,11 @@ function renderFlow() {
   const st = data?.state?.stages;
   $("#flow").innerHTML = STAGES.map((s) => {
     const status = st ? st[s.key].status : "locked";
-    const mark = status === "done" ? "✓" : status === "waiting" ? "!" : status === "failed" || status === "blocked" ? "×" : s.n;
+    const mark = status === "done" ? "✓" : status === "waiting" ? "!" : status === "failed" || status === "blocked" ? "×" : status === "stopped" ? "■" : s.n;
     return `<li class="${s.gate ? "gate" : ""} ${selected === s.key ? "sel" : ""}" data-status="${status}" data-key="${s.key}" tabindex="0">
       <span class="node" aria-hidden="true">${mark}</span>
       <div class="name">${esc(s.name)}</div><div class="who">${esc(s.who)}</div>
-      <div class="state s-${status}">${STATUS_TEXT[status] || status}</div></li>`;
+      <div class="state s-${status}">${STATUS_TEXT[status] || status}${railTime(st ? st[s.key] : {}, status)}</div></li>`;
   }).join("");
   $("#flow").querySelectorAll("li").forEach((li) => {
     const go = () => { if (!data) return; selected = li.dataset.key; renderFlow(); renderWork(); };
@@ -327,9 +338,12 @@ async function renderWork() {
   let html = `<span class="kind ${s.gate ? "gate" : ""}">${esc(s.kind)}</span>
     <h2 class="stage-title">${esc(s.name)}</h2><p class="lede">${esc(s.lede)}</p>
     <dl class="meta"><dt>Reads</dt><dd><code>${esc(s.reads)}</code></dd><dt>Writes</dt><dd><code>${esc(s.writes)}</code></dd>
+    <dt>Estimated time</dt><dd>${s.gate ? esc(s.est.agent) : `With agents: ${esc(s.est.agent)}`}</dd>
+    ${st.status === "running" && st.started_at ? `<dt>Running for</dt><dd><span id="elapsed" data-start="${esc(st.started_at)}"></span></dd>` : ""}
     ${st.mode ? `<dt>Mode</dt><dd>${st.mode === "agent" ? "Run by the agents" : "Replayed from Part A outputs"}</dd>` : ""}
     ${st.started_at ? `<dt>Started</dt><dd>${esc(st.started_at.replace("T", " "))}</dd>` : ""}
     ${st.finished_at ? `<dt>Finished</dt><dd>${esc(st.finished_at.replace("T", " "))}</dd>` : ""}</dl>`;
+  if (st.status === "running") html += `<p class="hint">Estimates are for agent runs on Render's free plan and vary with how much the agents read and revise. Keep this tab open while a step runs.</p>`;
   if (st.error) html += `<div class="notice bad"><strong>What went wrong:</strong> ${esc(st.error)}</div>`;
   if (["extract_rules", "analysis", "risk", "team"].includes(s.key)) html += automatedControls(s, st);
   if (st.verdict) html += `<div class="notice ${st.verdict === "BLOCKED" ? "bad" : "good"}">QA verdict: <strong>${esc(st.verdict)}</strong></div>`;
@@ -342,22 +356,38 @@ async function renderWork() {
     try { await api(`/api/runs/${runId}/stop`, { method: "POST" }); toast("Stopping after the current step.", "good"); risksCache = null; renderWork(); refresh(); }
     catch (e) { toast(e.message, "bad"); }
   };
-  if (s.key === "gate1" && ["waiting", "failed"].includes(st.status)) await renderGate1();
+  if (s.key === "gate1" && ["waiting", "failed", "stopped"].includes(st.status)) await renderGate1();
   if (s.key === "signoff" && st.status === "waiting") renderSignoff();
   if (s.key === "signoff" && st.status === "done") $("#gate-area").innerHTML = `<div class="notice good">Signed off by ${esc(st.signed_by)}. Download the pack below.</div>`;
   renderFiles(true);
 }
 
+function railTime(st, status) {
+  if (!st || !st.started_at) return "";
+  if (status === "running") return ` · <span class="tick" data-start="${esc(st.started_at)}">${fmtElapsed(Date.now() - Date.parse(st.started_at))}</span>`;
+  if (st.finished_at && ["done", "failed", "stopped", "blocked", "waiting"].includes(status) && Date.parse(st.finished_at) >= Date.parse(st.started_at))
+    return ` · took ${fmtElapsed(Date.parse(st.finished_at) - Date.parse(st.started_at))}`;
+  return "";
+}
+
+function fmtElapsed(ms) {
+  const t = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), sec = t % 60;
+  return h ? `${h} h ${m} min` : m ? `${m} min ${sec} s` : `${sec} s`;
+}
+setInterval(() => {
+  document.querySelectorAll("#elapsed, .tick").forEach((el) => { el.textContent = fmtElapsed(Date.now() - Date.parse(el.dataset.start)); });
+}, 1000);
+
 function automatedControls(s, st) {
   const busy = data.state.busy;
   const can = !busy && st.status !== "locked" && st.status !== "running";
-  const again = ["done", "failed", "blocked"].includes(st.status);
+  const again = ["done", "failed", "blocked", "stopped"].includes(st.status);
   const noKey = !cfg.api_key_configured;
   return `<div class="actions">
     <button class="btn" data-run-mode="agent" ${can && !noKey ? "" : "disabled"}>${again ? "Run again with agents" : "Run with agents"}</button>
     <button class="btn ghost" data-run-mode="replay" ${can ? "" : "disabled"}>Replay Part A output</button>
     ${st.status === "running" ? `<button class="btn pen" id="stop-run" ${data.state.stop_requested ? "disabled" : ""}>${data.state.stop_requested ? "Stopping…" : "Stop"}</button>` : ""}
-    <span class="hint">${st.status === "running" ? "Stop ends the agents before their next model call, so no further API credit is spent." : st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
+    <span class="hint">${st.status === "running" ? (st.mode === "agent" ? "Stop ends any running script at once and stops the agents before their next model call, so no further API credit is spent." : "Stop ends the replay's Python script at once.") : st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
       again ? "Running a step again resets every step after it." : "Replay restores your teammate's Part A result and re-runs the Python, with no API cost."}</span>
   </div>`;
 }

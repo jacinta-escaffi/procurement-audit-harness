@@ -57,7 +57,8 @@ class Signoff(BaseModel):
 
 @app.get("/")
 def index():
-    return FileResponse(STATIC / "index.html")
+    # Never cache the page itself, so a redeploy's UI changes show up on the next load.
+    return FileResponse(STATIC / "index.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
 
 
 @app.get("/healthz")

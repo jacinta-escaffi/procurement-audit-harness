@@ -11,13 +11,9 @@ import json
 from pathlib import Path
 
 from . import config
-from .tools import Toolbox, ToolError, tool_schemas, summarize_args
+from .tools import StoppedByUser, Toolbox, ToolError, tool_schemas, summarize_args
 
 ELIDED = "[older tool output removed by the harness to keep the context small; re-run the tool if you need it again]"
-
-
-class StoppedByUser(Exception):
-    pass
 
 
 class Agent:
@@ -105,6 +101,9 @@ class Agent:
                 try:
                     output = self.toolbox.execute(call["name"], call["input"] or {})
                     is_error = False
+                except StoppedByUser:
+                    self._save()
+                    raise
                 except ToolError as exc:
                     output, is_error = f"ERROR: {exc}", True
                 except TypeError as exc:

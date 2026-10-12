@@ -272,8 +272,7 @@ def test_stop_button_halts_agents_before_next_model_call(orch):
     o.start_stage(run.id, "risk", "agent")
     gate.wait(30)
     o.stop(run.id)
-    assert wait(run, "risk") == "failed"
-    assert "stopped by the user" in run.stage("risk")["error"]
+    assert wait(run, "risk", statuses=("stopped", "failed", "done")) == "stopped"
     assert calls["n"] < 10
 
 
@@ -313,6 +312,21 @@ def test_stop_halts_agent_before_next_model_call(orch):
     o.start_stage(run.id, "risk", "agent")
     assert third_call.wait(30)
     o.stop(run.id)
-    assert wait(run, "risk") == "failed"
-    assert "stopped by the user" in run.stage("risk")["error"]
+    assert wait(run, "risk", statuses=("stopped", "failed", "done")) == "stopped"
     assert calls["n"] < 10
+
+
+def test_stop_ends_a_replay_script(orch):
+    o = orch()
+    run = o.store.create()
+    o.start_stage(run.id, "extract_rules", "replay")
+    wait(run, "extract_rules")
+    o.start_stage(run.id, "analysis", "replay")   # runs analyze_spend.py (tens of seconds)
+    time.sleep(3)
+    started = time.time()
+    o.stop(run.id)
+    assert wait(run, "analysis", statuses=("stopped", "failed", "done")) == "stopped"
+    assert time.time() - started < 5
+    assert run.stage("risk")["status"] == "locked"
+    o.start_stage(run.id, "analysis", "replay")   # a stopped step can be run again
+    assert wait(run, "analysis") == "done"

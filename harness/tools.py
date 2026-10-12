@@ -12,6 +12,7 @@ import re
 import shlex
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from . import config
@@ -20,6 +21,29 @@ from .permissions import Policy, TEAM
 TEXT_SUFFIXES = {".md", ".json", ".txt", ".csv", ".py", ".yaml", ".yml", ".jsonl", ""}
 BINARY_HINT = {".pdf": "PDFs are binary: use run_command with `pdftotext -layout <file> <out.txt>` and then read_file.",
                ".xlsx": "Excel workbooks are binary: inspect them with pandas (run_python) or the project scripts."}
+
+
+class StoppedByUser(Exception):
+    """The user pressed Stop: abandon the current stage."""
+
+
+def run_stoppable(argv, cwd, timeout, should_stop=None) -> subprocess.CompletedProcess:
+    """Run a command, checking twice a second whether the user pressed Stop; kill it if so."""
+    proc = subprocess.Popen(argv, cwd=cwd, env=scrubbed_env(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    started = time.time()
+    while True:
+        try:
+            out, err = proc.communicate(timeout=0.5)
+            return subprocess.CompletedProcess(argv, proc.returncode, out, err)
+        except subprocess.TimeoutExpired:
+            if should_stop and should_stop():
+                proc.kill()
+                proc.communicate()
+                raise StoppedByUser("stopped by the user")
+            if time.time() - started > timeout:
+                proc.kill()
+                proc.communicate()
+                raise subprocess.TimeoutExpired(argv, timeout)
 
 
 class ToolError(Exception):
@@ -80,7 +104,8 @@ def tool_schemas(policy: Policy) -> list:
 
 
 class Toolbox:
-    def __init__(self, workspace: Path, agent: str, policy: Policy, outbox=None):
+    def __init__(self, workspace: Path, agent: str, policy: Policy, outbox=None, should_stop=None):
+        self.should_stop = should_stop
         self.root = workspace.resolve()
         self.agent = agent
         self.policy = policy
@@ -183,8 +208,7 @@ class Toolbox:
 
     def _run(self, argv: list, timeout: int = None) -> str:
         try:
-            proc = subprocess.run(argv, cwd=self.root, env=scrubbed_env(), capture_output=True, text=True,
-                                  timeout=timeout or config.COMMAND_TIMEOUT_S)
+            proc = run_stoppable(argv, self.root, timeout or config.COMMAND_TIMEOUT_S, self.should_stop)
         except subprocess.TimeoutExpired:
             raise ToolError(f"command timed out after {timeout or config.COMMAND_TIMEOUT_S}s")
         out = f"exit code: {proc.returncode}\n"

@@ -24,7 +24,7 @@ from .agent_loop import Agent
 from .permissions import POLICIES, TEAM
 from .prompts import system_prompt
 from .store import Run, RunStore
-from .tools import Toolbox, scrubbed_env
+from .tools import StoppedByUser, Toolbox, run_stoppable, scrubbed_env
 
 PREREQS = {
     "extract_rules": [],
@@ -54,8 +54,8 @@ class Orchestrator:
 
     def script(self, run: Run, *args, check=True, label=None) -> subprocess.CompletedProcess:
         """Run one of the project's Python scripts in the run's workspace (a harness hook, not an agent action)."""
-        proc = subprocess.run([sys.executable, *args], cwd=run.workspace, env=scrubbed_env(),
-                              capture_output=True, text=True, timeout=900)
+        self.check_stop(run)
+        proc = run_stoppable([sys.executable, *args], run.workspace, 900, lambda: run.state.get("stop_requested", False))
         output = (proc.stdout + ("\n" + proc.stderr if proc.stderr.strip() else "")).strip()
         run.emit({"type": "hook", "text": f"{label or 'harness'} ran `python {' '.join(args)}` → exit {proc.returncode}",
                   "detail": output[-1500:]})
@@ -63,14 +63,20 @@ class Orchestrator:
             raise StageError(f"`{' '.join(args)}` failed: {output[-800:]}")
         return proc
 
+    def check_stop(self, run: Run):
+        if run.state.get("stop_requested"):
+            raise StoppedByUser("stopped by the user")
+
     def agent(self, run: Run, name: str, outbox=None, suffix: str = "") -> Agent:
-        toolbox = Toolbox(run.workspace, name, POLICIES[name], outbox=outbox)
+        toolbox = Toolbox(run.workspace, name, POLICIES[name], outbox=outbox,
+                          should_stop=lambda: run.state.get("stop_requested", False))
         return Agent(name, system_prompt(run.workspace, name), toolbox, self.llm(), run.emit,
                      transcript_path=run.folder / "transcripts" / f"{name}{suffix}.json",
                      should_stop=lambda: run.state.get("stop_requested", False))
 
     def restore(self, run: Run, *rels):
         """Replay mode: copy Part A outputs into the run's workspace."""
+        self.check_stop(run)
         for rel in rels:
             src = config.BASELINE_OUTPUTS / rel
             dst = run.workspace / "outputs" / rel
@@ -111,6 +117,9 @@ class Orchestrator:
                     nxt = NEXT.get(stage)
                     if nxt and run.stage(nxt)["status"] in ("locked", "failed", "done", "ready"):
                         run.set_stage(nxt, status="waiting" if nxt in ("gate1", "signoff") else "ready")
+            except StoppedByUser:
+                run.emit({"type": "warning", "text": "Stopped. Run this step again when you are ready."})
+                run.set_stage(stage, status="stopped", error=None, finished_at=_now())
             except Exception as exc:  # report every failure in the UI instead of crashing the server
                 run.emit({"type": "error", "text": f"{type(exc).__name__}: {exc}"})
                 run.set_stage(stage, status="failed", error=str(exc)[:1500], finished_at=_now())
@@ -143,7 +152,7 @@ class Orchestrator:
         with run.lock:
             run.state["stop_requested"] = True
             run.save()
-        run.emit({"type": "warning", "text": "Stop requested: agents will stop before their next model call."})
+        run.emit({"type": "warning", "text": "Stop requested: running scripts are ended now; agents stop before their next model call."})
 
     def start_stage(self, run_id: str, stage: str, mode: str = "agent"):
         run = self.store.get(run_id)
@@ -184,6 +193,8 @@ class Orchestrator:
             def work(name, brief):
                 try:
                     reports[name] = self.agent(run, name).run(brief)
+                except StoppedByUser:
+                    errors[name] = "stopped"
                 except Exception as exc:
                     errors[name] = f"{type(exc).__name__}: {exc}"
 
@@ -196,6 +207,7 @@ class Orchestrator:
                 t.start()
             for t in threads:
                 t.join()
+            self.check_stop(run)
             if errors:
                 raise StageError("; ".join(f"{k}: {v}" for k, v in errors.items()))
         # Verification hooks: the stage is done only if both outputs pass their own checkers.
@@ -255,7 +267,7 @@ class Orchestrator:
         """decisions: {risk_id: {"decision": Approve|Reject|Change, "comment": str}}"""
         run = self.store.get(run_id)
         st = run.stage("gate1")
-        if st["status"] not in ("waiting", "failed"):
+        if st["status"] not in ("waiting", "failed", "stopped"):
             raise StageError("the auditor gate is not open")
         ids = [r["id"] for r in self.risks(run_id)]
         clean = {}
