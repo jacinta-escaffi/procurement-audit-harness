@@ -58,7 +58,7 @@ The steps outlined in the guide have been completed: rules, analytics, history, 
 
 In Part A, Claude Code was the harness: it gave the agents their tools, ran the agent loop, enforced permissions and carried messages between teammates. Part B replaces Claude Code with our own harness, in `harness/`. It runs the same agents and skills as a web application that works without anyone's local machine.
 
-**Deployed app:** _add the Render URL here_
+**Deployed app:** https://procurement-audit-harness.onrender.com/
 
 ## What the harness provides
 
