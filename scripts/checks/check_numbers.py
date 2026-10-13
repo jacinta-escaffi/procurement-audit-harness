@@ -42,7 +42,8 @@ def check(root):
         return ["no sample CSV files"]
     for path in samples:
         source.extend(numbers(csv_file(path)))
-    allowed = set(source)
+    # A figure may be displayed rounded to 2 decimal places (the builders format money that way).
+    allowed = set(source) | {value.quantize(Decimal("0.01")) for value in source if value == value and abs(value) < Decimal(10) ** 15}
     issues = []
     for name in ("planning-memo.md", "risk-control-matrix.md", "audit-program.md"):
         for line_number, line in enumerate((out / name).read_text(encoding="utf-8").splitlines(), 1):

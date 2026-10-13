@@ -67,11 +67,11 @@ The harness implements each layer of the agent-harness model from class:
 | Layer | Part A (Claude Code) | Part B (`harness/`) |
 | --- | --- | --- |
 | LLM | Claude inside Claude Code | Claude API, called directly (`llm.py`) |
-| Tools | Read, Write, Edit, Glob, Grep, Bash | `list_files`, `read_file`, `write_file`, `edit_file`, `search_files`, `run_command`, `run_python`, `send_message` (`tools.py`) |
+| Tools | Read, Write, Edit, Glob, Grep, Bash | `list_files`, `read_file`, `json_query`, `write_file`, `edit_file`, `search_files`, `run_command`, `run_python`, `send_message` (`tools.py`). `json_query` reads one part of a JSON file in a single call, so agents don't page through large files |
 | Agent loop | Built in | `agent_loop.py`: the LLM picks an action, the harness runs it, the result goes back, and this repeats until the LLM stops calling tools |
 | Permissions | Approval prompts, plus "you own only X" in the prompts | Enforced in code (`permissions.py`): each agent can write only its own files and run only its own scripts. The challenger cannot read `data/` at all |
 | Memory | Files in `outputs/` | The same files, in a separate workspace per run, plus a saved transcript for each agent |
-| Context management | Built in | Long tool outputs are truncated, and older tool results are dropped once the context gets large. The system prompt, the tool list and the growing conversation are all prompt-cached, so each step re-reads earlier history at the cached rate |
+| Context management | Built in | Long tool outputs are truncated, and older tool results are dropped once the context passes 150,000 tokens (late, because trimming forces the cache to be rebuilt). The system prompt, the tool list and the growing conversation are all prompt-cached, so each step re-reads earlier history at the cached rate |
 | Hooks | Settings | After each stage, the harness re-runs the project's own verification scripts and records every tool call in the activity log |
 | Orchestration (the lead) | The main Claude Code session | `orchestrator.py`: a state machine with two human gates and a message bus for the agent team |
 

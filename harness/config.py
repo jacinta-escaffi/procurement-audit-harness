@@ -21,7 +21,8 @@ COMMAND_TIMEOUT_S = int(os.environ.get("HARNESS_COMMAND_TIMEOUT_S", "300"))
 
 # Context management.
 TOOL_OUTPUT_LIMIT = int(os.environ.get("HARNESS_TOOL_OUTPUT_LIMIT", "12000"))  # characters per tool result
-COMPACT_AFTER_INPUT_TOKENS = int(os.environ.get("HARNESS_COMPACT_AFTER", "80000"))
+# Cached history is cheap to keep ($0.10/M) but trimming it forces a full cache re-write ($2.50/M), so trim late.
+COMPACT_AFTER_INPUT_TOKENS = int(os.environ.get("HARNESS_COMPACT_AFTER", "150000"))
 KEEP_RECENT_TOOL_RESULTS = int(os.environ.get("HARNESS_KEEP_RECENT_RESULTS", "8"))
 
 # Mutating API calls need this code (blank = open, for local development).

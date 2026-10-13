@@ -12,5 +12,7 @@ services:
         sync: false       # entered in the Render dashboard, never committed
       - key: APP_ACCESS_CODE
         sync: false       # share this code with your grader so they can run the workflow
+      - key: ANTHROPIC_WORKSPACE_ID
+        sync: false       # optional: only if your API key is not scoped to a workspace
       - key: HARNESS_MODEL
         value: claude-sonnet-5-5

@@ -81,8 +81,18 @@ def citations(text, rules, analytics):
     return {ref for kind, ref in refs if kind == "rule"}
 
 
+def format_figure(value):
+    """Display a computed figure: money/decimals to 2 places, large numbers with thousands separators."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, float) and not value.is_integer():
+        return f"{value:,.2f}"
+    number = int(value)
+    return f"{number:,}" if abs(number) >= 10000 else str(number)
+
+
 def render(text, figures):
-    rendered = FIGURE.sub(lambda m: str(scalar(figures, m[1])), text)
+    rendered = FIGURE.sub(lambda m: format_figure(scalar(figures, m[1])), text)
     if "{{" in rendered or "}}" in rendered:
         raise ValueError("malformed figure placeholder")
     return rendered

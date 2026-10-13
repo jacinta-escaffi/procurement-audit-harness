@@ -40,6 +40,8 @@ def preamble(name: str) -> str:
         + (" and `pdftotext`" if policy.pdftotext else "") + " are allowed.",
         f"- The harness enforces file ownership. You may write only: {', '.join(policy.writable)}; scratch space: outputs/.scratch/{name}/.",
         "- Tool output longer than about 12,000 characters is truncated; read long files in pages with offset/limit.",
+        "- For JSON files (rules.json, analytics.json, history.json, audit-plan.json ...) use json_query to read exactly the part "
+        "you need, e.g. `$` for the top-level keys, then `$.tests.split_purchases.overall`. It is one call instead of many page reads.",
         "- The human auditor uses the web interface, not this conversation. Do not ask questions and wait; if you are blocked, "
         "say so in your final report.",
         "- When your work is complete, give your final report as plain text with no tool call. That ends your turn.",

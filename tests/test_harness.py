@@ -330,3 +330,21 @@ def test_stop_ends_a_replay_script(orch):
     assert run.stage("risk")["status"] == "locked"
     o.start_stage(run.id, "analysis", "replay")   # a stopped step can be run again
     assert wait(run, "analysis") == "done"
+
+
+def test_json_query_reads_one_part_of_a_json_file(tmp_path):
+    ws = tmp_path / "ws"
+    (ws / "outputs").mkdir(parents=True)
+    (ws / "data").mkdir()
+    doc = {"tests": {"dup": {"overall": {"pairs": 5, "gbp": 12.5}, "top_20": [{"id": i} for i in range(20)]}}}
+    (ws / "outputs/a.json").write_text(json.dumps(doc))
+    (ws / "data/d.json").write_text("{}")
+    tb = Toolbox(ws, "planner", POLICIES["planner"])
+    assert json.loads(tb.execute("json_query", {"path": "outputs/a.json", "query": "$.tests.dup.overall"})) == {"pairs": 5, "gbp": 12.5}
+    top = json.loads(tb.execute("json_query", {"path": "outputs/a.json", "depth": 1}))
+    assert top["tests"].startswith("{...1 keys")
+    assert json.loads(tb.execute("json_query", {"path": "outputs/a.json", "query": "tests.dup.top_20[2:4]"})) == [{"id": 2}, {"id": 3}]
+    with pytest.raises(ToolError, match="no such path"):
+        tb.execute("json_query", {"path": "outputs/a.json", "query": "$.tests.missing"})
+    with pytest.raises(ToolError, match="may not read"):
+        Toolbox(ws, "challenger", POLICIES["challenger"]).execute("json_query", {"path": "data/d.json"})

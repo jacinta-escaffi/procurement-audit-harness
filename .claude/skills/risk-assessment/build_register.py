@@ -62,8 +62,18 @@ def resolve(text, rules, analytics, history):
     return found
 
 
+def format_figure(value):
+    """Display a computed figure: money/decimals to 2 places, large numbers with thousands separators."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, float) and not value.is_integer():
+        return f"{value:,.2f}"
+    number = int(value)
+    return f"{number:,}" if abs(number) >= 10000 else str(number)
+
+
 def render_text(value, analytics):
-    return FIGURE.sub(lambda match: str(path_value(analytics, match[1])), value).replace("|", "\\|").replace("\n", " ")
+    return FIGURE.sub(lambda match: format_figure(path_value(analytics, match[1])), value).replace("|", "\\|").replace("\n", " ")
 
 
 def flatten(risk, field):

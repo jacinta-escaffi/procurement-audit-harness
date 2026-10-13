@@ -76,6 +76,13 @@ def tool_schemas(policy: Policy) -> list:
         {"name": "read_file", "description": "Read a text file with line numbers. Long files are read in pages: pass offset (1-based line) and limit (lines).",
          "input_schema": {"type": "object", "properties": {
              "path": {"type": "string"}, "offset": {"type": "integer"}, "limit": {"type": "integer"}}, "required": ["path"]}},
+        {"name": "json_query", "description": "Read one part of a JSON file in a single call, by path, e.g. '$' (top-level keys), "
+                                              "'$.tests.split_purchases.overall', '$.rules[37]', '$.risk_method.matrix[0:5]'. Containers deeper than "
+                                              "`depth` are summarised as {...N keys} / [...N items] so you can drill down. Prefer this to paging through JSON with read_file.",
+         "input_schema": {"type": "object", "properties": {
+             "path": {"type": "string", "description": "JSON file, e.g. 'outputs/analytics.json'"},
+             "query": {"type": "string", "description": "Path starting with $, dot keys, [index] or [start:end] slices. Default '$'"},
+             "depth": {"type": "integer", "description": "How many levels to expand (default 2)"}}, "required": ["path"]}},
         {"name": "search_files", "description": "Regex search across text files (like grep). Returns matching lines with file and line number.",
          "input_schema": {"type": "object", "properties": {
              "pattern": {"type": "string"}, "path": {"type": "string", "description": "File or directory. Default '.'"},
@@ -101,6 +108,49 @@ def tool_schemas(policy: Policy) -> list:
                       "input_schema": {"type": "object", "properties": {
                           "to": {"type": "string", "enum": [*TEAM, "lead"]}, "message": {"type": "string"}}, "required": ["to", "message"]}})
     return tools
+
+
+def _json_path_tokens(path: str) -> list:
+    """Parse '.a.b[3][1:4]' into [("key","a"), ("key","b"), ("index",3), ("slice",1,4)]."""
+    tokens, i = [], 0
+    while i < len(path):
+        if path[i] == ".":
+            j = i + 1
+            while j < len(path) and path[j] not in ".[":
+                j += 1
+            if j == i + 1:
+                raise ToolError(f"empty key in path near '{path[i:]}'")
+            tokens.append(("key", path[i + 1:j], None))
+            i = j
+        elif path[i] == "[":
+            j = path.find("]", i)
+            if j == -1:
+                raise ToolError("unclosed [ in path")
+            inner = path[i + 1:j].strip().strip("'\"")
+            if ":" in inner:
+                a, b = inner.split(":", 1)
+                tokens.append(("slice", int(a) if a else None, int(b) if b else None))
+            elif re.fullmatch(r"-?\d+", inner):
+                tokens.append(("index", int(inner), None))
+            else:
+                tokens.append(("key", inner, None))
+            i = j + 1
+        else:
+            raise ToolError(f"cannot parse path near '{path[i:]}'; use $.key[0].key")
+    return tokens
+
+
+def _summarise(value, depth: int):
+    """Expand `depth` levels; deeper containers become short placeholders."""
+    if isinstance(value, dict):
+        if depth <= 0:
+            return f"{{...{len(value)} keys: {', '.join(list(value)[:12])}{', ...' if len(value) > 12 else ''}}}"
+        return {k: _summarise(v, depth - 1) for k, v in value.items()}
+    if isinstance(value, list):
+        if depth <= 0:
+            return f"[...{len(value)} items]"
+        return [_summarise(v, depth - 1) for v in value]
+    return value
 
 
 class Toolbox:
@@ -164,6 +214,34 @@ class Toolbox:
         body = "\n".join(f"{i:>6}\t{line[:2000]}" for i, line in enumerate(chunk, start=offset))
         more = f"\n[lines {offset}-{offset + len(chunk) - 1} of {len(lines)}]" if len(lines) > len(chunk) else ""
         return body + more
+
+    def t_json_query(self, path: str, query: str = "$", depth: int = 2) -> str:
+        p, rel = self._resolve(path)
+        self._check_read(rel)
+        if not p.is_file():
+            raise ToolError(f"file not found: {rel}")
+        try:
+            data = json.loads(p.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise ToolError(f"{rel} is not valid JSON: {exc}")
+        value = data
+        query = (query or "$").strip()
+        if not query.startswith("$"):
+            query = "$." + query
+        for token in _json_path_tokens(query[1:]):
+            kind, a, b = token
+            try:
+                if kind == "key":
+                    value = value[a]
+                elif kind == "index":
+                    value = value[a]
+                else:
+                    value = value[a:b]
+            except (KeyError, IndexError, TypeError):
+                where = f"keys: {', '.join(list(value)[:40])}" if isinstance(value, dict) else (
+                    f"list of {len(value)} items" if isinstance(value, list) else f"a {type(value).__name__}")
+                raise ToolError(f"{query}: no such path (at that point the value has {where})")
+        return json.dumps(_summarise(value, max(0, depth if depth is not None else 2)), indent=1, ensure_ascii=False)
 
     def t_search_files(self, pattern: str, path: str = ".", max_results: int = 100) -> str:
         base, _ = self._resolve(path)
