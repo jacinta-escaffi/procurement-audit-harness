@@ -4,6 +4,7 @@ The system prompt = a short harness preamble + CLAUDE.md (project rules shared b
 + the agent's own .claude/agents/<name>.md body + any skill it loads (.claude/skills/<skill>/SKILL.md).
 That mirrors what Claude Code loads, so the agents behave as specified in Part A.
 """
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .permissions import POLICIES, TEAM
@@ -44,6 +45,10 @@ def preamble(name: str) -> str:
         "you need, e.g. `$` for the top-level keys, then `$.tests.split_purchases.overall`. It is one call instead of many page reads.",
         "- The human auditor uses the web interface, not this conversation. Do not ask questions and wait; if you are blocked, "
         "say so in your final report.",
+        "- Write large files (over about 40 KB, such as rules.json or history.json) in parts from the start: the first part with "
+        "write_file mode 'w', then the rest with mode 'a', each part well under 15,000 words. One response cannot hold a very large file.",
+        f"- The current date and time is {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')} (when this run's step began). "
+        "Use it for any timestamp your instructions ask for.",
         "- When your work is complete, give your final report as plain text with no tool call. That ends your turn.",
     ]
     if policy.inline_python:

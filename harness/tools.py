@@ -23,6 +23,10 @@ BINARY_HINT = {".pdf": "PDFs are binary: use run_command with `pdftotext -layout
                ".xlsx": "Excel workbooks are binary: inspect them with pandas (run_python) or the project scripts."}
 
 
+# pdftotext options followed by a value (so the value is not mistaken for a file name).
+PDFTOTEXT_VALUE_OPTIONS = {"-f", "-l", "-r", "-x", "-y", "-W", "-H", "-enc", "-eol", "-opw", "-upw"}
+
+
 class StoppedByUser(Exception):
     """The user pressed Stop: abandon the current stage."""
 
@@ -316,7 +320,15 @@ class Toolbox:
         if prog == "pdftotext":
             if not self.policy.pdftotext:
                 raise ToolError(f"permission denied: {self.agent} may not run pdftotext")
-            files = [a for a in argv[1:] if not a.startswith("-") and a != "UTF-8"]
+            files, args, i = [], argv[1:], 0
+            while i < len(args):  # skip option values, e.g. -f 14 -l 15 -enc UTF-8
+                if args[i] in PDFTOTEXT_VALUE_OPTIONS:
+                    i += 2
+                    continue
+                if not args[i].startswith("-") or args[i] == "-":
+                    files.append(args[i])
+                i += 1
+            files = [f for f in files if f != "-"] + (["-"] if "-" in files[1:] else [])
             if not files:
                 raise ToolError("pdftotext needs an input PDF")
             src, src_rel = self._resolve(files[0])

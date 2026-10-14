@@ -59,6 +59,7 @@ Transcribe, without applying, the council's:
 - impact ratings 1-5 and every printed dimension;
 - likelihood ratings 1-5, incident descriptions, and probability ranges;
 - all 25 matrix cells as `{impact, likelihood, score, band}`;
+- each `likelihood_scale` and `impact_scale` row with an integer `rating` (1-5) and the printed `label` (for example `Likely`, `Major`), plus its other printed fields; the risk register builder reads `rating` and `label`, and the verifier rejects rows without them;
 - RAG/score bands, escalation, and responses;
 - appetite levels and stated appetite by risk category;
 - tolerance and response definitions that affect interpretation.

@@ -348,3 +348,38 @@ def test_json_query_reads_one_part_of_a_json_file(tmp_path):
         tb.execute("json_query", {"path": "outputs/a.json", "query": "$.tests.missing"})
     with pytest.raises(ToolError, match="may not read"):
         Toolbox(ws, "challenger", POLICIES["challenger"]).execute("json_query", {"path": "data/d.json"})
+
+
+def test_pdftotext_page_options_are_not_mistaken_for_files(tmp_path):
+    ws = tmp_path / "ws"
+    shutil.copytree(ROOT / "data", ws / "data")
+    (ws / "outputs").mkdir()
+    tb = Toolbox(ws, "findings-analyst", POLICIES["findings-analyst"])
+    out = tb.execute("run_command", {"command": "pdftotext -enc UTF-8 -layout -f 1 -l 1 "
+                                                "data/committee/internal-audit-plan-2025-28.pdf outputs/.scratch/findings-analyst/p1.txt"})
+    assert out.startswith("exit code: 0") and (ws / "outputs/.scratch/findings-analyst/p1.txt").exists()
+    with pytest.raises(ToolError, match="may not write"):
+        tb.execute("run_command", {"command": "pdftotext -f 1 -l 1 data/committee/internal-audit-plan-2025-28.pdf outputs/x.txt"})
+
+
+def test_history_verifier_requires_the_fields_the_register_builder_reads(tmp_path):
+    import subprocess, sys
+    history = json.loads((config.BASELINE_OUTPUTS / "history.json").read_text())
+    for row in history["risk_method"]["likelihood_scale"]:
+        row["likelihood"] = row.pop("rating")       # the shape that broke the 2026-10-14 run
+    bad = tmp_path / "history.json"
+    bad.write_text(json.dumps(history))
+    proc = subprocess.run([sys.executable, "scripts/verify_history.py", str(bad), "data/committee"],
+                          cwd=ROOT, capture_output=True, text=True)
+    assert proc.returncode == 1 and "under the key 'rating'" in proc.stderr
+    # ...and the builder now tolerates that shape anyway
+    sys.path.insert(0, str(ROOT / ".claude/skills/risk-assessment"))
+    import build_register
+    labels = build_register.scale_labels(history["risk_method"]["likelihood_scale"], "likelihood")
+    assert sorted(labels) == [1, 2, 3, 4, 5]
+
+
+def test_agents_are_told_the_date_and_to_write_big_files_in_parts():
+    from harness.prompts import preamble
+    text = preamble("extract-rules")
+    assert "current date and time is" in text and "in parts from the start" in text

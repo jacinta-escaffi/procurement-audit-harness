@@ -113,6 +113,48 @@ def validate_citation(
         errors.append(f"{label}.quote: not found on {source} PDF page {page}")
 
 
+def validate_scoring_fields(method: Any, errors: list[str]) -> None:
+    """The register builder reads these exact fields, so a scoring method that is present must use them.
+    An empty scale is allowed: the strategy may genuinely lack a usable method (CLAUDE.md fallback)."""
+    if not isinstance(method, dict):
+        return
+    for name in ("likelihood_scale", "impact_scale"):
+        rows = method.get(name)
+        if not isinstance(rows, list) or not rows:
+            continue
+        ratings = []
+        for index, row in enumerate(rows):
+            label = f"risk_method.{name}[{index}]"
+            if not isinstance(row, dict):
+                continue
+            rating = row.get("rating")
+            if type(rating) is not int or not 1 <= rating <= 5:
+                errors.append(f"{label}.rating: expected an integer 1-5 under the key 'rating' "
+                              "(the risk register builder reads row['rating'] and row['label'])")
+            else:
+                ratings.append(rating)
+            if not nonempty(row.get("label")):
+                errors.append(f"{label}.label: expected the printed level name, e.g. 'Likely' or 'Major'")
+        if ratings and sorted(ratings) != [1, 2, 3, 4, 5]:
+            errors.append(f"risk_method.{name}: expected exactly one row for each rating 1-5, found {sorted(ratings)}")
+    matrix = method.get("matrix")
+    if isinstance(matrix, list) and matrix:
+        cells = set()
+        for index, row in enumerate(matrix):
+            label = f"risk_method.matrix[{index}]"
+            if not isinstance(row, dict):
+                continue
+            likelihood, impact, score = row.get("likelihood"), row.get("impact"), row.get("score")
+            if not all(type(v) is int for v in (likelihood, impact, score)):
+                errors.append(f"{label}: expected integer 'likelihood', 'impact' and 'score'")
+                continue
+            if not nonempty(row.get("band")):
+                errors.append(f"{label}.band: expected the printed band name")
+            cells.add((likelihood, impact))
+        if len(cells) != 25:
+            errors.append(f"risk_method.matrix: expected 25 distinct (likelihood, impact) cells, found {len(cells)}")
+
+
 def validate(data: Any, pages: dict[str, dict[str, list[str]]]) -> list[str]:
     errors: list[str] = []
     if not isinstance(data, dict):
@@ -182,6 +224,8 @@ def validate(data: Any, pages: dict[str, dict[str, list[str]]]) -> list[str]:
                 continue
             for evidence_index, cited in enumerate(evidence):
                 validate_citation(cited, f"{label}.evidence[{evidence_index}]", pages, errors)
+
+    validate_scoring_fields(data.get("risk_method"), errors)
 
     verification = data.get("verification")
     if not isinstance(verification, dict) or verification.get("status") not in {"pending", "passed", "failed"}:

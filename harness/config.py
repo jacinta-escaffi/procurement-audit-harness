@@ -17,7 +17,8 @@ MAX_TOKENS = int(os.environ.get("HARNESS_MAX_TOKENS", "32000"))
 # Agent-loop limits: the harness, not the model, decides when enough is enough.
 MAX_TOOL_ITERATIONS = int(os.environ.get("HARNESS_MAX_TOOL_ITERATIONS", "60"))
 MAX_TEAM_TURNS = int(os.environ.get("HARNESS_MAX_TEAM_TURNS", "30"))
-COMMAND_TIMEOUT_S = int(os.environ.get("HARNESS_COMMAND_TIMEOUT_S", "300"))
+# The spend analysis takes ~7 min on Render's free plan, so commands get 15 minutes.
+COMMAND_TIMEOUT_S = int(os.environ.get("HARNESS_COMMAND_TIMEOUT_S", "900"))
 
 # Context management.
 TOOL_OUTPUT_LIMIT = int(os.environ.get("HARNESS_TOOL_OUTPUT_LIMIT", "12000"))  # characters per tool result

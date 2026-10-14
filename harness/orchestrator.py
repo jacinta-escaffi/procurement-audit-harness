@@ -394,6 +394,7 @@ class Orchestrator:
         started = set()
         inbox["planner"].append(("lead", "Start building the pack."))
         nudged = set()
+        last_turn = {}
         turns = 0
         while not all(flags.get(n) for n in TEAM):
             ready = [n for n in TEAM if inbox[n]]
@@ -408,7 +409,9 @@ class Orchestrator:
                 continue
             if turns >= config.MAX_TEAM_TURNS:
                 raise StageError(f"team exceeded {config.MAX_TEAM_TURNS} turns without finishing")
-            name = ready[0]
+            # Fair turn-taking: of the teammates with messages waiting, the one idle longest goes next.
+            name = min(ready, key=lambda n: (last_turn.get(n, -1), TEAM.index(n)))
+            last_turn[name] = turns
             batch, inbox[name] = inbox[name], []
             text = "\n\n".join(f"Message from {sender}:\n{msg}" for sender, msg in batch)
             if name not in started:

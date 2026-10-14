@@ -143,6 +143,12 @@ python -m pytest -q                      # 23 tests, including the harness tests
 
 ## Design notes and limits
 
+- **Fixes from live runs on Render.**
+  - **History field names.** The findings-analyst once named the likelihood and impact scale fields differently from what the register builder expects. Its definition now names the fields, the history verifier rejects any other names, and the builder accepts both.
+  - **Time limit.** Commands get 15 minutes, because the spend analysis takes about 7 minutes on Render's free plan.
+  - **Instructions.** Agents are told the date and told to write large files in parts.
+  - **Turn-taking.** Agent-team turns go to whichever teammate has waited longest.
+
 - **Cost control.** Each agent step resends that agent's history, so the harness caches the conversation as it grows. A **Stop** button ends a running stage before the agents' next model call. A first version without conversation caching cost about $10 for a run with the risk and team stages live.
 
 - **Python computes, the LLM judges.** The harness never asks an agent for a number it could compute. Every figure comes from the project's scripts.

@@ -132,6 +132,17 @@ def validate_revision(current, snapshot, decisions, revision):
     return notes
 
 
+def scale_labels(rows, axis):
+    """Map rating -> label. Accepts 'rating' (the documented key) or the axis name ('likelihood'/'impact')."""
+    labels = {}
+    for row in rows:
+        rating = row.get("rating", row.get(axis))
+        label = row.get("label") or row.get("name")
+        if type(rating) is int and label:
+            labels[rating] = label
+    return labels
+
+
 def build(directory):
     rules_doc = load(directory / "rules.json")
     rules = {item["rule_id"] for item in rules_doc["rules"]}
@@ -142,8 +153,8 @@ def build(directory):
     if len({risk["id"] for risk in risks}) != len(risks):
         raise ValueError("duplicate risk ID")
     matrix = {(row["likelihood"], row["impact"]): row for row in history["risk_method"]["matrix"]}
-    likelihood_labels = {row["rating"]: row["label"] for row in history["risk_method"]["likelihood_scale"]}
-    impact_labels = {row["rating"]: row["label"] for row in history["risk_method"]["impact_scale"]}
+    likelihood_labels = scale_labels(history["risk_method"]["likelihood_scale"], "likelihood")
+    impact_labels = scale_labels(history["risk_method"]["impact_scale"], "impact")
     if len(matrix) != 25 or len(likelihood_labels) != 5 or len(impact_labels) != 5:
         raise ValueError("incomplete council scoring method")
     snapshot_path = directory / "risk-ratings.gate.json"
