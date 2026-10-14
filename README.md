@@ -143,6 +143,13 @@ python -m pytest -q                      # 23 tests, including the harness tests
 
 ## Design notes and limits
 
+- **After the first complete run (about $7.65 with every step run by agents):**
+  - **Output limit.** extract-rules gets a 64,000-token output limit so `rules.json` fits in one response. If the model rejects that, the harness falls back to 32,000.
+  - **Per-agent model.** Any agent can use a different model, e.g. `HARNESS_MODEL_QA_REVIEWER=claude-haiku-5-5`.
+  - **Fewer wasted turns.** QA reports open challenge rows in one line until the challenger is done, and teammates that have finished aren't woken just to read others' DONE messages.
+  - **json_query `[*]`.** `json_query` supports `[*]`, e.g. `$.risks[*].tests[*].sample`.
+  - **Clearer instructions.** Agents are told that `python -c` is unavailable.
+  - **Private scratch folders.** Agents can no longer read each other's scratch folders.
 - **Fixes from live runs on Render.**
   - **History field names.** The findings-analyst once named the likelihood and impact scale fields differently from what the register builder expects. Its definition now names the fields, the history verifier rejects any other names, and the builder accepts both.
   - **Time limit.** Commands get 15 minutes, because the spend analysis takes about 7 minutes on Render's free plan.

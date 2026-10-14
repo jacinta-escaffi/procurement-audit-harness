@@ -14,6 +14,24 @@ BASELINE_OUTPUTS = PROJECT_ROOT / "outputs"
 MODEL = os.environ.get("HARNESS_MODEL", "claude-sonnet-5-5")
 MAX_TOKENS = int(os.environ.get("HARNESS_MAX_TOKENS", "32000"))
 
+# Per-agent overrides, e.g. HARNESS_MODEL_QA_REVIEWER=claude-haiku-5-5 or HARNESS_MAX_TOKENS_PLANNER=48000.
+# extract-rules writes rules.json (often 40k+ tokens) in one go, and its context stays small, so it gets a
+# larger output limit; if the model rejects it, the client falls back to MAX_TOKENS automatically.
+AGENT_MAX_TOKENS_DEFAULTS = {"extract-rules": 64000}
+
+
+def _agent_env(prefix: str, agent: str):
+    return os.environ.get(f"{prefix}_{agent.upper().replace('-', '_')}")
+
+
+def model_for(agent: str) -> str:
+    return _agent_env("HARNESS_MODEL", agent) or MODEL
+
+
+def max_tokens_for(agent: str) -> int:
+    value = _agent_env("HARNESS_MAX_TOKENS", agent)
+    return int(value) if value else AGENT_MAX_TOKENS_DEFAULTS.get(agent, MAX_TOKENS)
+
 # Agent-loop limits: the harness, not the model, decides when enough is enough.
 MAX_TOOL_ITERATIONS = int(os.environ.get("HARNESS_MAX_TOOL_ITERATIONS", "60"))
 MAX_TEAM_TURNS = int(os.environ.get("HARNESS_MAX_TEAM_TURNS", "30"))

@@ -38,7 +38,8 @@ def preamble(name: str) -> str:
         "- Tool mapping from your instructions: Read -> read_file, Write -> write_file, Edit -> edit_file, Glob -> list_files, "
         "Grep -> search_files, Bash -> run_command. `python` in run_command is the project virtual environment's Python.",
         "- run_command runs one command with no shell: no pipes, redirects or `&&`. Only `python <permitted script> [args]`"
-        + (" and `pdftotext`" if policy.pdftotext else "") + " are allowed.",
+        + (" and `pdftotext`" if policy.pdftotext else "") + " are allowed. `python -c`, `pdfinfo` and other programs are not "
+        "available; use read_file, json_query and search_files to inspect files" + (", or run_python for pandas inspection." if policy.inline_python else "."),
         f"- The harness enforces file ownership. You may write only: {', '.join(policy.writable)}; scratch space: outputs/.scratch/{name}/.",
         "- Tool output longer than about 12,000 characters is truncated; read long files in pages with offset/limit.",
         "- For JSON files (rules.json, analytics.json, history.json, audit-plan.json ...) use json_query to read exactly the part "
@@ -53,6 +54,10 @@ def preamble(name: str) -> str:
     ]
     if policy.inline_python:
         lines.append("- run_python executes a short inspection snippet (pandas available). Print summaries only, never full datasets.")
+    if name == "qa-reviewer":
+        lines.append("- Until the challenger sends CHALLENGER DONE, challenge rows that are still open are expected. If the trace "
+                     "check fails only because of open challenge rows, tell the planner in one line (no full failure report) and "
+                     "run the full checks again on the next PACK READY. The run after PLANNER DONE and CHALLENGER DONE decides.")
     if name in PRE_EXISTING_CODE:
         lines.append(f"- {PRE_EXISTING_CODE[name]}")
     if policy.team:

@@ -383,3 +383,60 @@ def test_agents_are_told_the_date_and_to_write_big_files_in_parts():
     from harness.prompts import preamble
     text = preamble("extract-rules")
     assert "current date and time is" in text and "in parts from the start" in text
+
+
+def test_per_agent_model_and_output_limit(monkeypatch):
+    import importlib
+    monkeypatch.setenv("HARNESS_MODEL_QA_REVIEWER", "claude-haiku-5-5")
+    monkeypatch.setenv("HARNESS_MAX_TOKENS_PLANNER", "48000")
+    assert config.model_for("qa-reviewer") == "claude-haiku-5-5"
+    assert config.model_for("planner") == config.MODEL
+    assert config.max_tokens_for("planner") == 48000
+    assert config.max_tokens_for("extract-rules") == 64000
+    assert config.max_tokens_for("challenger") == config.MAX_TOKENS
+
+
+def test_output_limit_falls_back_when_the_model_rejects_it(monkeypatch):
+    from types import SimpleNamespace
+    from harness.llm import AnthropicLLM
+    monkeypatch.setattr(config, "ANTHROPIC_API_KEY", "sk-test")
+    llm = AnthropicLLM(max_tokens=64000)
+    llm._bad_request = ValueError
+    seen = []
+
+    def fake_call(limit, *rest):
+        seen.append(limit)
+        if limit > config.MAX_TOKENS:
+            raise ValueError("max_tokens: 64000 > the maximum allowed for this model")
+        return SimpleNamespace(content=[SimpleNamespace(type="text", text="ok")], stop_reason="end_turn",
+                               usage=SimpleNamespace(input_tokens=1, output_tokens=1))
+    llm._call = fake_call
+    out = llm.create("system", [], [{"role": "user", "content": "hi"}])
+    assert out.content[0]["text"] == "ok" and seen == [64000, config.MAX_TOKENS]
+    llm.create("system", [], [{"role": "user", "content": "again"}])
+    assert seen[-1] == config.MAX_TOKENS  # remembered
+
+
+def test_json_query_wildcard_and_private_scratch(tmp_path):
+    ws = tmp_path / "ws"
+    (ws / "outputs/.scratch/extract-rules").mkdir(parents=True)
+    (ws / "outputs/.scratch/extract-rules/plain.txt").write_text("rulebook text")
+    plan = {"risks": [{"id": "R-01", "tests": [{"id": "T-1", "sample": {"count": 5}}, {"id": "T-2", "sample": {"count": 7}}]},
+                      {"id": "R-02", "tests": [{"id": "T-3", "sample": {"count": 9}}]}]}
+    (ws / "outputs/audit-plan.json").write_text(json.dumps(plan))
+    tb = Toolbox(ws, "challenger", POLICIES["challenger"])
+    got = json.loads(tb.execute("json_query", {"path": "outputs/audit-plan.json", "query": "$.risks[*].tests[*].sample.count"}))
+    assert got == [[5, 7], [9]]
+    with pytest.raises(ToolError, match="may not read"):
+        tb.execute("read_file", {"path": "outputs/.scratch/extract-rules/plain.txt"})
+    assert "plain.txt" not in tb.execute("list_files", {"path": "outputs"})
+    assert "(no matches)" in tb.execute("search_files", {"pattern": "rulebook", "path": "outputs"})
+    own = Toolbox(ws, "extract-rules", POLICIES["extract-rules"])
+    assert "rulebook text" in own.execute("read_file", {"path": "outputs/.scratch/extract-rules/plain.txt"})
+
+
+def test_preamble_steers_away_from_wasted_calls():
+    from harness.prompts import preamble
+    assert "`python -c`" in preamble("challenger")
+    assert "still open are expected" in preamble("qa-reviewer")
+    assert "still open are expected" not in preamble("planner")

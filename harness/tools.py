@@ -134,6 +134,8 @@ def _json_path_tokens(path: str) -> list:
             if ":" in inner:
                 a, b = inner.split(":", 1)
                 tokens.append(("slice", int(a) if a else None, int(b) if b else None))
+            elif inner == "*":
+                tokens.append(("all", None, None))
             elif re.fullmatch(r"-?\d+", inner):
                 tokens.append(("index", int(inner), None))
             else:
@@ -142,6 +144,23 @@ def _json_path_tokens(path: str) -> list:
         else:
             raise ToolError(f"cannot parse path near '{path[i:]}'; use $.key[0].key")
     return tokens
+
+
+def _json_apply(value, tokens, query):
+    """Walk the parsed path; [*] maps the rest of the path over every item of a list (or value of a dict)."""
+    for i, (kind, a, b) in enumerate(tokens):
+        if kind == "all":
+            items = value if isinstance(value, list) else list(value.values()) if isinstance(value, dict) else None
+            if items is None:
+                raise ToolError(f"{query}: [*] needs a list or object")
+            return [_json_apply(item, tokens[i + 1:], query) for item in items]
+        try:
+            value = value[a] if kind in ("key", "index") else value[a:b]
+        except (KeyError, IndexError, TypeError):
+            where = f"keys: {', '.join(list(value)[:40])}" if isinstance(value, dict) else (
+                f"list of {len(value)} items" if isinstance(value, list) else f"a {type(value).__name__}")
+            raise ToolError(f"{query}: no such path (at that point the value has {where})")
+    return value
 
 
 def _summarise(value, depth: int):
@@ -175,8 +194,14 @@ class Toolbox:
         rel = candidate.relative_to(self.root).as_posix()
         return candidate, ("." if rel == "" else rel)
 
+    def _readable(self, rel: str) -> bool:
+        # Each agent's scratch folder is private: no reading another agent's working copies.
+        if rel.startswith("outputs/.scratch/") and not rel.startswith(f"outputs/.scratch/{self.agent}/"):
+            return False
+        return self.policy.can_read(rel)
+
     def _check_read(self, rel: str):
-        if not self.policy.can_read(rel):
+        if not self._readable(rel):
             raise ToolError(f"permission denied: {self.agent} may not read {rel}")
 
     def _check_write(self, rel: str):
@@ -198,7 +223,7 @@ class Toolbox:
         found = []
         for p in sorted(base.rglob(pattern or "*")):
             r = p.relative_to(self.root).as_posix()
-            if p.is_file() and not any(part in (".git", "__pycache__", ".venv") for part in p.parts) and self.policy.can_read(r):
+            if p.is_file() and not any(part in (".git", "__pycache__", ".venv") for part in p.parts) and self._readable(r):
                 found.append(f"{r}  ({p.stat().st_size} bytes)")
         if len(found) > 400:
             found = found[:400] + [f"... {len(found) - 400} more"]
@@ -232,19 +257,7 @@ class Toolbox:
         query = (query or "$").strip()
         if not query.startswith("$"):
             query = "$." + query
-        for token in _json_path_tokens(query[1:]):
-            kind, a, b = token
-            try:
-                if kind == "key":
-                    value = value[a]
-                elif kind == "index":
-                    value = value[a]
-                else:
-                    value = value[a:b]
-            except (KeyError, IndexError, TypeError):
-                where = f"keys: {', '.join(list(value)[:40])}" if isinstance(value, dict) else (
-                    f"list of {len(value)} items" if isinstance(value, list) else f"a {type(value).__name__}")
-                raise ToolError(f"{query}: no such path (at that point the value has {where})")
+        value = _json_apply(value, _json_path_tokens(query[1:]), query)
         return json.dumps(_summarise(value, max(0, depth if depth is not None else 2)), indent=1, ensure_ascii=False)
 
     def t_search_files(self, pattern: str, path: str = ".", max_results: int = 100) -> str:
@@ -257,7 +270,7 @@ class Toolbox:
         hits = []
         for f in files:
             r = f.relative_to(self.root).as_posix()
-            if not f.is_file() or f.suffix.lower() not in TEXT_SUFFIXES or not self.policy.can_read(r):
+            if not f.is_file() or f.suffix.lower() not in TEXT_SUFFIXES or not self._readable(r):
                 continue
             if any(part in (".git", "__pycache__", ".venv") for part in f.parts) or f.stat().st_size > 5_000_000:
                 continue

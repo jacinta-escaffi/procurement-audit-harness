@@ -16,3 +16,6 @@ services:
         sync: false       # optional: only if your API key is not scoped to a workspace
       - key: HARNESS_MODEL
         value: claude-sonnet-5-5
+      # Optional per-agent model, e.g. a cheaper model for the QA reviewer:
+      # - key: HARNESS_MODEL_QA_REVIEWER
+      #   value: claude-haiku-5-5

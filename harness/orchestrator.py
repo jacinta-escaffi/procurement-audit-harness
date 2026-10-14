@@ -46,11 +46,13 @@ class Orchestrator:
         self._llm_factory = llm_factory
 
     # ------------------------------------------------------------------ helpers
-    def llm(self):
+    def llm(self, agent: str = None):
         if self._llm_factory:
             return self._llm_factory()
         from .llm import AnthropicLLM
-        return AnthropicLLM()
+        if agent is None:
+            return AnthropicLLM()
+        return AnthropicLLM(model=config.model_for(agent), max_tokens=config.max_tokens_for(agent))
 
     def script(self, run: Run, *args, check=True, label=None) -> subprocess.CompletedProcess:
         """Run one of the project's Python scripts in the run's workspace (a harness hook, not an agent action)."""
@@ -70,7 +72,7 @@ class Orchestrator:
     def agent(self, run: Run, name: str, outbox=None, suffix: str = "") -> Agent:
         toolbox = Toolbox(run.workspace, name, POLICIES[name], outbox=outbox,
                           should_stop=lambda: run.state.get("stop_requested", False))
-        return Agent(name, system_prompt(run.workspace, name), toolbox, self.llm(), run.emit,
+        return Agent(name, system_prompt(run.workspace, name), toolbox, self.llm(name), run.emit,
                      transcript_path=run.folder / "transcripts" / f"{name}{suffix}.json",
                      should_stop=lambda: run.state.get("stop_requested", False))
 
@@ -397,6 +399,11 @@ class Orchestrator:
         last_turn = {}
         turns = 0
         while not all(flags.get(n) for n in TEAM):
+            # A teammate that has already reported DONE needs no turn just to read others' DONE notices.
+            for n in TEAM:
+                if flags.get(n) and inbox[n] and all("DONE" in msg for _, msg in inbox[n]):
+                    run.emit({"type": "info", "text": f"{n} is done; not waking it for DONE notices only"})
+                    inbox[n] = []
             ready = [n for n in TEAM if inbox[n]]
             if not ready:
                 pending = [n for n in TEAM if not flags.get(n) and n not in nudged]
