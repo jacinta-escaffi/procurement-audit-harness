@@ -109,6 +109,24 @@ p.lede { color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
 textarea, input.field { width: 100%; border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--paper); resize: vertical; }
 .form-row { margin: 12px 0; } .form-row label { display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
 
+.pack { margin: 18px 0 8px; }
+.pack h3 { font-size: 17px; margin: 22px 0 8px; }
+.pack p.intro { max-width: 68ch; margin: 0 0 14px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 10px; margin: 0 0 16px; }
+.fact { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 14px; }
+.fact b { display: block; font-size: 22px; line-height: 1.2; }
+.fact span { font-size: 13px; color: var(--ink-2); }
+.attention { background: var(--amber-bg); border-left: 3px solid var(--amber); border-radius: 0 6px 6px 0; padding: 10px 14px; margin: 0 0 16px; }
+.attention h4 { margin: 0 0 6px; font-size: 14.5px; }
+.attention ul { margin: 0; padding-left: 18px; }
+.attention li { margin: 4px 0; font-size: 14px; }
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); }
+.tabs button { border: 1px solid transparent; border-bottom: 0; background: transparent; padding: 7px 12px; border-radius: 6px 6px 0 0; cursor: pointer; font-size: 14px; color: var(--ink-2); }
+.tabs button[aria-selected="true"] { background: var(--sheet); border-color: var(--rule); color: var(--ink); font-weight: 600; margin-bottom: -1px; }
+.doc { background: var(--sheet); border: 1px solid var(--rule); border-top: 0; border-radius: 0 0 8px 8px; padding: 6px 20px; max-height: 65vh; overflow: auto; }
+.doc .what { color: var(--ink-2); font-size: 13px; margin: 10px 0 0; }
+.confirm { display: flex; gap: 8px; align-items: flex-start; margin: 16px 0 4px; font-size: 14.5px; }
+.confirm input { margin-top: 4px; }
 .files { margin-top: 30px; border-top: 1px solid var(--rule); padding-top: 18px; }
 .files h3 { font-size: 15px; margin: 0 0 10px; }
 .filelist { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
@@ -235,7 +253,7 @@ async function api(path, opts = {}) {
 
 async function init() {
   cfg = await api("/api/config");
-  $("#model-pill").textContent = `model ${cfg.model}` + (cfg.api_key_configured ? "" : " · no API key: replay only");
+  $("#model-pill").textContent = `model ${cfg.model}` + (cfg.api_key_configured ? "" : " · no API key configured");
   $("#code-box").hidden = !cfg.access_code_required;
   $("#code").value = code;
   $("#code-save").onclick = async () => {
@@ -287,10 +305,13 @@ async function refresh() {
     const events = fresh.events.filter((e) => e.seq > lastSeq);
     const all = (data?.events || []).concat(events);
     const prevStages = JSON.stringify(data?.state?.stages || {});
+    const prevRunning = runningKey(data);
     data = { ...fresh, events: all };
     if (events.length) { lastSeq = events[events.length - 1].seq; renderFeed(events); }
     const changed = prevStages !== JSON.stringify(data.state.stages) || events.some((e) => e.type === "gate" || e.type === "stage");
     if (changed) risksCache = null;
+    // A finished step hands over to the next one on its own: follow it if you were watching the finished step.
+    if (prevRunning && selected === prevRunning && data.state.stages[prevRunning].status !== "running") selected = null;
     renderFlow();
     if (changed || !$("#work").dataset.run) renderWork();
     else renderFiles(false);
@@ -302,6 +323,11 @@ async function refresh() {
   top.disabled = !!data?.state?.stop_requested;
   top.textContent = data?.state?.stop_requested ? "Stopping…" : "Stop the running step";
   pollTimer = setTimeout(refresh, busy ? 2000 : 6000);
+}
+
+function runningKey(d) {
+  const st = d?.state?.stages || {};
+  return Object.keys(st).find((k) => st[k].status === "running") || null;
 }
 
 function currentStage() {
@@ -357,8 +383,11 @@ async function renderWork() {
     catch (e) { toast(e.message, "bad"); }
   };
   if (s.key === "gate1" && ["waiting", "failed", "stopped"].includes(st.status)) await renderGate1();
-  if (s.key === "signoff" && st.status === "waiting") renderSignoff();
-  if (s.key === "signoff" && st.status === "done") $("#gate-area").innerHTML = `<div class="notice good">Signed off by ${esc(st.signed_by)}. Download the pack below.</div>`;
+  if (s.key === "signoff" && st.status === "waiting") await renderSignoff();
+  if (s.key === "signoff" && st.status === "done") {
+    $("#gate-area").innerHTML = `<div class="notice good">Signed off by ${esc(st.signed_by)}. The signed pack is below; download it from Outputs.</div>`;
+    await renderPackReview($("#gate-area"), true);
+  }
   renderFiles(true);
 }
 
@@ -385,10 +414,10 @@ function automatedControls(s, st) {
   const noKey = !cfg.api_key_configured;
   return `<div class="actions">
     <button class="btn" data-run-mode="agent" ${can && !noKey ? "" : "disabled"}>${again ? "Run again with agents" : "Run with agents"}</button>
-    <button class="btn ghost" data-run-mode="replay" ${can ? "" : "disabled"}>Replay Part A output</button>
     ${st.status === "running" ? `<button class="btn pen" id="stop-run" ${data.state.stop_requested ? "disabled" : ""}>${data.state.stop_requested ? "Stopping…" : "Stop"}</button>` : ""}
-    <span class="hint">${st.status === "running" ? (st.mode === "agent" ? "Stop ends any running script at once and stops the agents before their next model call, so no further API credit is spent." : "Stop ends the replay's Python script at once.") : st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
-      again ? "Running a step again resets every step after it." : "Replay restores your teammate's Part A result and re-runs the Python, with no API cost."}</span>
+    <span class="hint">${st.status === "running" ? "Stop ends any running script at once and stops the agents before their next model call, so no further API credit is spent." : st.status === "locked" ? "Finish the previous step first." : busy ? "Another step is running." :
+      noKey ? "The server has no API key configured." : again ? "Running a step again resets every step after it."
+      : s.key === "team" ? "This step starts on its own once you approve the risks." : s.key === "extract_rules" ? "When this step finishes, Analyse and Rate the risks run on their own; the run then pauses for you to approve the risks." : "This step starts on its own when the previous one finishes."}</span>
   </div>`;
 }
 
@@ -432,14 +461,80 @@ async function renderGate1() {
   };
 }
 
-function renderSignoff() {
-  $("#gate-area").innerHTML = `<div class="notice good">The QA reviewer marked this pack ready for sign-off. Read the review and the challenge log before signing.</div>
-    <div class="actions"><button class="btn ghost" id="o-review">Open review.md</button><button class="btn ghost" id="o-chal">Open challenges.md</button></div>
+const PACK_DOCS = [
+  { path: "outputs/planning-memo.md", label: "Planning memo", what: "The brief for the audit: scope, the risks in scope, the approach and its limits." },
+  { path: "outputs/risk-control-matrix.md", label: "Risk-control matrix", what: "For each approved risk: the control the Contract Rules require, the rule it comes from, and the tests that check it." },
+  { path: "outputs/audit-program.md", label: "Audit program", what: "The fieldwork: each test step, the evidence to inspect, the payments to pull, and the documents to request from the council." },
+  { path: "outputs/review.md", label: "QA review", what: "The four automated checks (quotes, numbers, traceability, samples) and the verdict." },
+  { path: "outputs/challenges.md", label: "Challenge log", what: "Every challenge the challenger raised, the planner's response, and how it was closed." },
+];
+
+async function fetchText(path) {
+  try { return await api(`/api/runs/${runId}/file?path=${encodeURIComponent(path)}`); } catch (e) { return ""; }
+}
+
+function auditorItems(challenges) {
+  // Rows of the challenge table whose status is "for the auditor".
+  const rows = challenges.split("\n").filter((l) => l.trim().startsWith("|")).map((l) => l.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim()));
+  if (rows.length < 2) return [];
+  const head = rows[0].map((h) => h.toLowerCase());
+  const col = (name) => head.indexOf(name);
+  const iStatus = col("status"), iRisk = col("risk"), iAsk = col("ask"), iNum = col("#");
+  return rows.slice(2).filter((r) => (iStatus >= 0 ? r[iStatus] : r.join(" ")).toLowerCase().includes("for the auditor"))
+    .map((r) => ({ num: iNum >= 0 ? r[iNum] : "", risk: iRisk >= 0 ? r[iRisk] : "", ask: iAsk >= 0 ? r[iAsk] : r.join(" ") }));
+}
+
+async function renderPackReview(area, signed) {
+  const [figuresText, review, challenges] = await Promise.all(
+    ["outputs/pack-figures.json", "outputs/review.md", "outputs/challenges.md"].map(fetchText));
+  let pack = {};
+  try { pack = JSON.parse(figuresText).pack || {}; } catch (e) {}
+  const samples = Object.values(pack.samples || {});
+  const tests = samples.length;
+  const transactions = samples.reduce((n, x) => n + (x.transactions || 0), 0);
+  const verdict = (review.match(/Verdict:\s*([A-Z \-]+)/) || [])[1] || "—";
+  const items = auditorItems(challenges);
+  const total = challenges.split("\n").filter((l) => /^\|\s*\d+\s*\|/.test(l.trim())).length;
+  let html = `<div class="pack">
+    <h3>What you are signing</h3>
+    <p class="intro">The agent team produced this <strong>audit planning pack</strong>. It plans the audit: what to test, which payments to pull and what to ask the council for.
+      It does not perform the audit or reach findings. Signing records your name, the date and your decision at the end of <code>review.md</code>.</p>
+    <div class="facts">
+      <div class="fact"><b>${esc(pack.risks_in_scope ?? "—")}</b><span>approved risks in scope</span></div>
+      <div class="fact"><b>${tests || "—"}</b><span>tests in the audit program</span></div>
+      <div class="fact"><b>${transactions || "—"}</b><span>payments to pull for testing</span></div>
+      <div class="fact"><b>${total || "—"}</b><span>challenges raised and closed</span></div>
+      <div class="fact"><b style="font-size:15px">${esc(verdict.trim())}</b><span>QA verdict</span></div>
+    </div>`;
+  if (items.length) {
+    html += `<div class="attention"><h4>Needs your decision before you sign</h4><p style="margin:0 0 6px;font-size:14px">The team could not decide these because they are rating or scope questions for the auditor.</p><ul>
+      ${items.map((i) => `<li><strong>#${esc(i.num)} ${esc(i.risk)}</strong>: ${esc(i.ask)}</li>`).join("")}</ul>
+      <p style="margin:6px 0 0;font-size:13px">Record your answer in the comments below, or return the pack to the team.</p></div>`;
+  }
+  html += `<div class="tabs" role="tablist">${PACK_DOCS.map((d, i) => `<button role="tab" data-doc="${i}" aria-selected="${i === 0}">${esc(d.label)}</button>`).join("")}</div>
+    <div class="doc" id="pack-doc" role="tabpanel"></div></div>`;
+  area.insertAdjacentHTML("beforeend", html);
+  const show = async (i) => {
+    area.querySelectorAll(".tabs button").forEach((b) => b.setAttribute("aria-selected", String(Number(b.dataset.doc) === i)));
+    const d = PACK_DOCS[i];
+    const text = await fetchText(d.path);
+    $("#pack-doc").innerHTML = `<p class="what">${esc(d.what)}</p><div class="md">${text ? md(text) : "<p>This document was not produced.</p>"}</div>`;
+  };
+  area.querySelectorAll(".tabs button").forEach((b) => (b.onclick = () => show(Number(b.dataset.doc))));
+  await show(0);
+}
+
+async function renderSignoff() {
+  const area = $("#gate-area");
+  area.innerHTML = `<div class="notice good">The QA reviewer marked this pack ready for sign-off. Review it below, then record your decision.</div>`;
+  await renderPackReview(area, false);
+  area.insertAdjacentHTML("beforeend", `<h3 style="font-size:17px;margin:26px 0 8px">Your decision</h3>
     <div class="form-row"><label for="so-name">Auditor name</label><input class="field" id="so-name" autocomplete="name"></div>
-    <div class="form-row"><label for="so-comments">Comments</label><textarea id="so-comments" rows="3"></textarea></div>
-    <div class="actions"><button class="btn pen" id="so-sign">Sign off the pack</button><button class="btn ghost" id="so-return">Return to the team</button></div>`;
-  $("#o-review").onclick = () => openFile("outputs/review.md");
-  $("#o-chal").onclick = () => openFile("outputs/challenges.md");
+    <div class="form-row"><label for="so-comments">Comments (including your answer to any item above)</label><textarea id="so-comments" rows="3"></textarea></div>
+    <label class="confirm"><input type="checkbox" id="so-read"> I have reviewed the planning memo, risk-control matrix and audit program above.</label>
+    <div class="actions"><button class="btn pen" id="so-sign" disabled>Sign off the pack</button><button class="btn ghost" id="so-return">Return to the team</button></div>
+    <p class="hint">Return to the team sends the pack back to the agent team instead of signing it.</p>`);
+  $("#so-read").onchange = (e) => { $("#so-sign").disabled = !e.target.checked; };
   const send = async (decision) => {
     try { await api(`/api/runs/${runId}/signoff`, { method: "POST", body: JSON.stringify({ decision, name: $("#so-name").value, comments: $("#so-comments").value }) });
       toast(decision === "Sign off" ? "Pack signed off." : "Returned to the team.", "good"); refresh(); }

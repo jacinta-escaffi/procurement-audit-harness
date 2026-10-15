@@ -112,9 +112,12 @@ def risks(run_id: str):
 def start_stage(run_id: str, stage: str, body: StageStart, x_access_code: str = Header("")):
     require_code(x_access_code)
     get_run(run_id)
-    if body.mode == "agent" and not config.ANTHROPIC_API_KEY and orch._llm_factory is None:
-        raise HTTPException(400, "ANTHROPIC_API_KEY is not configured on the server; use replay mode or set the key")
-    orch.start_stage(run_id, stage, body.mode)
+    # The web app runs every automated step with the LLM agents (replay is kept only for the offline tests).
+    if body.mode != "agent":
+        raise HTTPException(400, "only mode 'agent' is available")
+    if not config.ANTHROPIC_API_KEY and orch._llm_factory is None:
+        raise HTTPException(400, "ANTHROPIC_API_KEY is not configured on the server")
+    orch.start_stage(run_id, stage, "agent")
     return {"ok": True}
 
 

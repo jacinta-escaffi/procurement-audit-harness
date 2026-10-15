@@ -94,9 +94,12 @@ Each agent's instructions are built from the Part A files (`prompts.py`): a shor
    - It then re-runs `run_checks.py` itself and doesn't take the QA agent's word for it. A `BLOCKED` pack goes back to the team and never reaches the auditor.
 6. **Human gate 2.** The auditor signs off in the web form, which writes the sign-off block in `review.md`. The full pack can be downloaded as a zip.
 
-Every automated stage can run in one of two modes:
-- **Run with agents:** the full workflow, run by the LLM agents.
-- **Replay Part A output:** restores this repo's Part A outputs and re-runs the deterministic Python, with no API cost. This is useful for demos or for jumping straight to a gate.
+Every automated step is run by the LLM agents, and the run moves on by itself:
+- Pressing **Run with agents** on Extract rules runs Extract rules, then Analyse, then Rate the risks, one after the other. The run then pauses at gate 1 for the auditor.
+- Once the auditor's decisions pass the gate, Build and challenge the pack starts by itself. The run pauses again at sign-off.
+- A step that fails, is stopped or is blocked does not hand over to the next one. Use **Run again with agents** on that step to resume from there.
+
+The orchestrator still has a replay mode, which restores the Part A outputs and re-runs the Python. Only the offline tests use it, to reach a gate without calling the API. The web app and its API offer agent runs only.
 
 ### Files
 
@@ -121,10 +124,10 @@ Dockerfile, render.yaml  deployment
 ```sh
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt          # also needs poppler (pdftotext): brew install poppler
-export ANTHROPIC_API_KEY=sk-ant-...      # optional; without it only replay mode works
+export ANTHROPIC_API_KEY=sk-ant-...      # required to run the agents
 export APP_ACCESS_CODE=choose-a-code     # optional locally
 uvicorn harness.app:app --reload         # open http://localhost:8000
-python -m pytest -q                      # 23 tests, including the harness tests
+python -m pytest -q                      # 37 tests, including the harness tests
 ```
 
 ## Deploy on Render

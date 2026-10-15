@@ -6,10 +6,12 @@ Stages (each one produces files the next one reads):
   extract_rules -> analysis (spend-analyst || findings-analyst) -> risk -> gate1 (human)
   -> team (planner, challenger, qa-reviewer) -> signoff (human)
 
-Every stage runs in one of two modes:
-  agent  : the LLM agents do the work through the agent loop (the real workflow)
-  replay : the Part A outputs are restored and the deterministic scripts re-run (no API cost;
-           useful for demos and for jumping straight to a human gate)
+The web app runs every automated stage in agent mode: the LLM agents do the work through the
+agent loop. When an agent stage finishes, the next automated stage starts on its own; the run
+pauses only at the two human gates (and the team starts on its own once gate 1 passes).
+
+replay mode (restore the Part A outputs and re-run the deterministic scripts) is kept only for
+the offline test suite, which needs to reach a gate without calling the API. The API rejects it.
 """
 import json
 import re
@@ -33,7 +35,10 @@ PREREQS = {
     "team": ["outputs/risk-register.md", "outputs/auditor-comments.md"],
 }
 NEXT = {"extract_rules": "analysis", "analysis": "risk", "risk": "gate1", "gate1": "team", "team": "signoff"}
+AUTOMATED = ("extract_rules", "analysis", "risk", "team")
 DECISIONS = ("Approve", "Reject", "Change")
+STAGE_NAMES = {"extract_rules": "Extract rules", "analysis": "Analyse", "risk": "Rate the risks",
+               "gate1": "Approve the risks", "team": "Build and challenge the pack", "signoff": "Sign off"}
 
 
 class StageError(Exception):
@@ -100,8 +105,11 @@ class Orchestrator:
         if missing:
             raise StageError(f"cannot start {stage}: missing {', '.join(missing)}")
 
-    def _launch(self, run: Run, stage: str, work, *args):
-        """Run a stage in a background thread; mark it done/failed; unlock the next stage."""
+    def _launch(self, run: Run, stage: str, work, *args, chain: str = None):
+        """Run a stage in a background thread; mark it done/failed; unlock the next stage.
+
+        chain: if set ("agent"), and the stage finishes done, the next stage is started
+        automatically when it is an automated one (it is not when it is a human gate)."""
         with run.lock:
             if run.state["busy"]:
                 raise StageError("another step is still running for this run")
@@ -110,6 +118,7 @@ class Orchestrator:
             run.save()
 
         def worker():
+            auto_next = None
             try:
                 outcome = work(run, *args) or {}
                 if outcome.get("status"):
@@ -119,6 +128,8 @@ class Orchestrator:
                     nxt = NEXT.get(stage)
                     if nxt and run.stage(nxt)["status"] in ("locked", "failed", "done", "ready"):
                         run.set_stage(nxt, status="waiting" if nxt in ("gate1", "signoff") else "ready")
+                    if chain and nxt in AUTOMATED and not run.state.get("stop_requested"):
+                        auto_next = nxt
             except StoppedByUser:
                 run.emit({"type": "warning", "text": "Stopped. Run this step again when you are ready."})
                 run.set_stage(stage, status="stopped", error=None, finished_at=_now())
@@ -129,6 +140,13 @@ class Orchestrator:
                 with run.lock:
                     run.state["busy"] = False
                     run.save()
+            if auto_next:
+                # The next step is run by agents, so it starts straight away (busy is released above).
+                run.emit({"type": "info", "text": f"{STAGE_NAMES[stage]} finished: starting {STAGE_NAMES[auto_next]} automatically."})
+                try:
+                    self.start_stage(run.id, auto_next, chain)
+                except Exception as exc:
+                    run.emit({"type": "error", "text": f"Could not start {STAGE_NAMES[auto_next]} automatically: {exc}"})
 
         threading.Thread(target=worker, daemon=True, name=f"{run.id}-{stage}").start()
 
@@ -167,7 +185,8 @@ class Orchestrator:
         self._require(run, stage)
         self._reset_downstream(run, stage)
         run.set_stage(stage, status="running", mode=mode, started_at=_now(), error=None, report=None)
-        self._launch(run, stage, getattr(self, f"_stage_{stage}"), mode)
+        run.state["mode"] = mode
+        self._launch(run, stage, getattr(self, f"_stage_{stage}"), mode, chain="agent" if mode == "agent" else None)
 
     # ------------------------------------------------------------------ stage 1: /extract-rules (skill)
     def _stage_extract_rules(self, run: Run, mode: str):
@@ -294,7 +313,8 @@ class Orchestrator:
         run.save()
         run.set_stage("gate1", status="running", error=None)
         run.emit({"type": "gate", "text": "Auditor decisions: " + ", ".join(f"{k} {v['decision']}" for k, v in clean.items())})
-        self._launch(run, "gate1", self._apply_gate1, clean)
+        # Once the gate passes, the agent team starts on its own (if this run's steps are run by agents).
+        self._launch(run, "gate1", self._apply_gate1, clean, chain="agent" if run.state.get("mode", "agent") == "agent" else None)
 
     def _write_comments(self, run: Run, rows: dict):
         lines = ["# Auditor decisions", "", "Enter Approve, Reject, or Change. Describe the requested fields in Comment for Change.", "",

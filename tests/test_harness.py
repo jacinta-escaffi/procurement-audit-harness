@@ -210,10 +210,12 @@ def run_team(orch, challenge_text=None):
 
     o = orch({"planner": planner, "challenger": challenger, "qa-reviewer": qa})
     run = replay_to_gate(o)
+    run.state["mode"] = "agent"  # as in the web app: the team then starts on its own once gate 1 passes
     o.submit_gate1(run.id, {r["id"]: {"decision": "Approve", "comment": ""} for r in o.risks(run.id)})
-    assert wait(run, "gate1") == "done"
-    o.start_stage(run.id, "team", "agent")
-    return run, wait(run, "team")
+    assert wait(run, "team", statuses=("done", "blocked", "failed")) in ("done", "blocked", "failed")
+    assert run.stage("gate1")["status"] == "done"
+    assert any("starting Build and challenge the pack automatically" in e.get("text", "") for e in run.events)
+    return run, run.stage("team")["status"]
 
 
 def test_agent_team_message_bus(orch):
@@ -440,3 +442,27 @@ def test_preamble_steers_away_from_wasted_calls():
     assert "`python -c`" in preamble("challenger")
     assert "still open are expected" in preamble("qa-reviewer")
     assert "still open are expected" not in preamble("planner")
+
+
+def test_finished_agent_step_starts_the_next_agent_step(orch):
+    rules = (config.BASELINE_OUTPUTS / "rules.json").read_text()
+    scripts = {"extract-rules": [[[("write_file", {"path": "outputs/rules.json", "content": rules})], "Rules written."]],
+               "spend-analyst": [["Nothing done."]], "findings-analyst": [["Nothing done."]]}
+    o = orch(scripts)
+    run = o.store.create()
+    o.start_stage(run.id, "extract_rules", "agent")
+    assert wait(run, "analysis", statuses=("done", "failed", "stopped")) == "failed"  # the fake analysts wrote nothing
+    assert run.stage("extract_rules")["status"] == "done"
+    assert run.stage("analysis")["mode"] == "agent"       # started by the harness, not by a click
+    assert run.stage("risk")["status"] == "locked"         # a failed step does not hand over
+
+
+def test_replay_mode_is_not_offered_by_the_api(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+    from harness import app as app_module
+    monkeypatch.setattr(app_module, "orch", Orchestrator(RunStore(tmp_path / "runs"), llm_factory=lambda: ScriptedLLM({})))
+    monkeypatch.setattr(config, "ACCESS_CODE", "")
+    client = TestClient(app_module.app)
+    run_id = client.post("/api/runs", json={}).json()["id"]
+    r = client.post(f"/api/runs/{run_id}/stages/extract_rules", json={"mode": "replay"})
+    assert r.status_code == 400 and "agent" in r.json()["detail"]
